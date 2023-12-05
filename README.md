@@ -1,6 +1,6 @@
 ## 타입(Commit Type)
 
-> 타입은 " 태그(tag) + 제목(subject) " 으로 구성되며, 태그는 영어로 쓰되, 첫 문자는 대문자 로 합니다.
+타입은 " 태그(tag) + 제목(subject) " 으로 구성되며, 태그는 영어로 쓰되, 첫 문자는 대문자 로 합니다.
 "태그: 제목" 의 형태이며, ":" 뒤에 space 가 있음에 유의합니다.<br/>
 ```ex) Feat: buy album api (Feat 가 태그이고, buy album api 가 제목입니다.)```
 
