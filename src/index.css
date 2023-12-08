@@ -4,4 +4,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=K2D&display=swap');
 
-
+* {
+  background-color: #646FA9;
+}
