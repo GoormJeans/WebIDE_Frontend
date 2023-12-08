@@ -23,9 +23,6 @@ export const langs: any = {
 export const lang: any = ['java', 'py', 'cpp'];
 
 
-
-
-
 export interface scripts {
   theme: string;
   another: string;
@@ -37,7 +34,7 @@ export interface scripts {
 const initialState: scripts = {
   theme: 'vs-dark',
   another: 'vs-light',
-  path: 'java-dark',
+  path: '.java',
   defaultLanguage: 'java',
   defaultValue: 'i love java',
 };
@@ -49,7 +46,7 @@ export const scripts = createSlice({
     setScript: (state) => {
       state.theme = 'vs-dark';
       state.another = 'vs-light';
-      state.path = 'py-dark';
+      state.path = '.py';
       state.defaultLanguage = 'python';
       state.defaultValue = 'i love python';
     },
