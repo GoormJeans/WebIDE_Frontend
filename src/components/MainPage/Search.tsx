@@ -12,6 +12,7 @@ const Search = () => {
   return (
     <div className="w-full h-[70px] ">
       <div className="w-auto h-full flex flex-row justify-between items-center bg-[#c4c4c4] m-5 rounded-xl py-5">
+        {/* 모양까지만 완성 알고리즘 레벨 필터 이벤트 추가 예정 */}
         <select className="pl-4 pr-2 h-full bg-black text-white ml-8 rounded-xl">
           <option value="none" className="text-black">레벨</option>
           {levels.map((element: string) =>
@@ -25,6 +26,7 @@ const Search = () => {
           onChange={handleChange}
           placeholder="문제 검색"
         />
+        {/* 모양까지만 완성 알고리즘 검색 이벤트 추가 예정 */}
         <button className="px-8 h-full bg-black text-white mr-8 rounded-xl">검색</button>
       </div>
     </div>

@@ -11,6 +11,7 @@ const LastAlgo = () => {
           <div className="bg-transparent">
             마지막으로 푼 문제
           </div>
+          {/* 임시로 넣은 값, 문제 불러오면 ID, 문제 제목 불러오는 기능 추가 예정 */}
           <div className="bg-transparent text-4xl ml-10 mt-7">문제번호: 무슨무슨문제</div>
         </div>
         {/* 클릭 시 editor 페이지로 이동 */}
