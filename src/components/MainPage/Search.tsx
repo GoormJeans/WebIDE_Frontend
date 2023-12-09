@@ -16,7 +16,7 @@ const Search = () => {
         <select className="pl-4 pr-2 h-full bg-black text-white ml-8 rounded-xl">
           <option value="none" className="text-black">레벨</option>
           {levels.map((element: string) =>
-          <option value={element} className="text-black">{element}</option>
+          <option value={element} className="text-black" key={element}>{element}</option>
           )}
         </select>
         <input
