@@ -1,6 +1,6 @@
 import React from 'react'
-import { useDispatch, useSelector } from "react-redux"
-import { AppDispatch, RootState } from "../../api/store"
+import { useSelector } from "react-redux"
+import { RootState } from "../../api/store"
 import { Problem } from "../../api/algoprob";
 import { useNavigate } from "react-router-dom";
 
@@ -11,9 +11,17 @@ interface AlgoListType {
 
 const AlgoList: React.FC<AlgoListType> = ({ searchTerm }) => {
 
-  const dispatch = useDispatch<AppDispatch>();
-  const probs: Problem[] = useSelector((state: RootState) => state.problems);
+  let probs: Problem[] = useSelector((state: RootState) => state.problems);
   const navigate = useNavigate();
+
+  const setting: any = useSelector((state: RootState) => state.filter);
+  console.log(setting);
+
+
+  //필터에 따라 prob 정리
+  if(setting.level !== '레벨') {
+    probs = probs.filter((element) => element.level === setting.level)
+  }
 
   //알고리즘 리스트 항목 타입
   interface AlgoProbsProps {
@@ -21,7 +29,7 @@ const AlgoList: React.FC<AlgoListType> = ({ searchTerm }) => {
   }
   //알고리즘 리스트 항목
   const AlgoProbs: React.FC<AlgoProbsProps> = ({ prob }) => (
-    <div className="w-full bg-[#c4c4c4] h-[60px] flex flex-row items-center justify-between p-6 mb-5 rounded-xl hover:cursor-pointer hover:bg-white"
+    <div className="w-full bg-[#c4c4c4] h-[60px] flex flex-row items-center justify-between p-6 mb-5 rounded-xl shadow-xl whitespace-nowrap hover:cursor-pointer hover:bg-white"
       onClick={() => navigate('/editor')}//클릭 시 editor 페이지로 이동, 나중에 id를 이용해서 문제 페이지로 이동시키는 방식으로 하면 될 듯
     >
       <div className="bg-transparent flex flex-row">
@@ -36,7 +44,7 @@ const AlgoList: React.FC<AlgoListType> = ({ searchTerm }) => {
   if (searchTerm === null || searchTerm.length === 0) { // 그냥 메인페이지이거나 검색어가 없는 경우
     return (
       <div className="w-full h-full ">
-        <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent m-5 rounded-xl px-5 pt-5 border-2">
+        <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent m-5 rounded-xl px-5 pt-5 border-2 whitespace-nowrap">
           {
             probs.map((element) => <AlgoProbs prob={element} key={element.id} />)//아직 Pagination 미구현
           }
@@ -53,7 +61,7 @@ const AlgoList: React.FC<AlgoListType> = ({ searchTerm }) => {
       return (
         <div>
           <div className="w-full h-full ">
-            <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent m-5 rounded-xl px-5 pt-5 border-2">
+            <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent m-5 rounded-xl px-5 pt-5 border-2 whitespace-nowrap">
               {
                 searchResult.map((element) => <AlgoProbs prob={element} key={element.id} />)//아직 Pagination 미구현
               }

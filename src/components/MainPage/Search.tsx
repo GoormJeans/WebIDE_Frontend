@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "../../api/store";
+import { levels, setFilterLevel } from "../../api/filter";
 
 const Search = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [searchValue, setSearchValue] = useState('');
   const navigate = useNavigate();
-
-  const levels: string[] = ['Lv.1', 'Lv.2', 'Lv.3']
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
@@ -18,14 +21,18 @@ const Search = () => {
     navigate(`/search?q=${value}`);
   }
 
+  //필터 선택 이벤트
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setFilterLevel(e.target.value));
+  }
+
   return (
-    <div className="w-full h-[70px] ">
-      <form className="w-auto h-full flex flex-row justify-between items-center bg-[#c4c4c4] m-5 rounded-xl py-5" onSubmit={handleSubmit}>
-        {/* 모양까지만 완성 알고리즘 레벨 필터 이벤트 추가 예정 */}
-        <select className="pl-4 pr-2 h-full bg-black text-white ml-8 rounded-xl">
-          <option value="none" className="text-black">레벨</option>
+    <div className="w-full h-[70px]">
+      <form className="w-auto h-full flex flex-row justify-between items-center bg-[#c4c4c4] m-5 rounded-xl py-5 shadow-xl whitespace-nowrap" onSubmit={handleSubmit}>
+        {/* 레벨 선택에 따라 redux에 level state 변경 */}
+        <select className="pl-4 pr-2 h-full bg-black text-white ml-8 rounded-xl" onChange={handleFilterChange}>
           {levels.map((element: string) =>
-            <option value={element} className="text-black" key={element}>{element}</option>
+            <option value={element} className="text-black whitespace-nowrap" key={element}>{element}</option>
           )}
         </select>
         <input
@@ -35,7 +42,7 @@ const Search = () => {
           onChange={handleChange}
           placeholder="문제 검색"
         />
-        <button className="px-8 h-full bg-black text-white mr-8 rounded-xl" type="submit">검색</button>
+        <button className="px-8 h-full bg-black text-white mr-8 rounded-xl whitespace-nowrap" type="submit">검색</button>
       </form>
     </div>
   )

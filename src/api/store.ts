@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import scripts from './scripts';
-import problems from "./algoprob";
+import algoprobs from "./algoprob";
+import filter from "./filter";
 
 export const store = configureStore({
   reducer: {
     scripts: scripts,
-    problems: problems,//문제 목록 관리용
+    problems: algoprobs,//문제 목록 관리용
+    filter: filter,//레벨 필터 설정용
   },
 });
 

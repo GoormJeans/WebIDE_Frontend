@@ -1,8 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-export const levels: string[] = ['Lv.1', 'Lv.2', 'Lv.3'];
-
 //임시로 설정한 타입, API 명세 나오면 변경 가능
 export interface Problem {
   id: number;
@@ -30,18 +27,36 @@ const initialState: Problem[] = [
     level: 'Lv.3',
     title: '문제3번',
     solved: false,
+  },
+  {
+    id: 4,
+    level: 'Lv.4',
+    title: '문제4번',
+    solved: false,
+  },
+  {
+    id: 5,
+    level: 'Lv.2',
+    title: '문제5번',
+    solved: true,
+  },
+  {
+    id: 6,
+    level: 'Lv.2',
+    title: '문제6번',
+    solved: true,
   }
 ]
 
-export const problems = createSlice({
+export const algoprobs = createSlice({
   name: 'problem',
   initialState,
   reducers: {
     // 문제 추가 등 액션 추가
     // addProblems: (state, prob) =>{
-      
+
     // }
   }
 })
 
-export default problems.reducer;
+export default algoprobs.reducer;
