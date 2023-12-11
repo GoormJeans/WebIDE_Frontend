@@ -31,7 +31,7 @@ const Achievement = () => {
   }, []);
 
   return (
-    <div className='circle-chart bg-white p-3 mr-7 rounded-2xl shadow-xl'>
+    <div className='circle-chart bg-white p-3 mr-7 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>
       <div className='chart-background bg-transparent'>
         <p className='font-k2d text-sm font-medium bg-transparent'>Your achievement</p>
         <div className='bg-transparent flex flex-row'>
@@ -62,7 +62,7 @@ const Achievement = () => {
               height={200}
             />
           </div>
-          <TableContainer className='bg-white' sx={{ marginTop: 1, marginBottom: 1 }}>
+          <TableContainer className='bg-white hidden lg:block xl:block' sx={{ marginTop: 1, marginBottom: 1 }}>
             <Table sx={{ backgroundColor: "white" }}>
               <TableHead sx={{ backgroundColor: "white" }}>
                 <TableRow sx={{ borderBottom: 1, borderColor: 'grey.500' }}>
