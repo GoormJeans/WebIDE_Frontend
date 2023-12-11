@@ -5,8 +5,8 @@ const LastAlgo = () => {
 
   const navigate = useNavigate();
   return (
-    <div className="w-full h-72 ">
-      <div className="w-auto h-full flex flex-col items-center bg-indigo-500 mx-5 rounded-xl pt-12 px-10 pb-4">
+    <div className="w-full h-72 mt-5">
+      <div className="w-auto h-full flex flex-col items-center bg-nav-color mx-5 rounded-xl pt-12 px-10 pb-4 shadow-xl">
         <div className="bg-white w-full h-40 p-5 rounded-xl">
           <div className="bg-transparent">
             마지막으로 푼 문제
