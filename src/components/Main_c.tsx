@@ -7,6 +7,7 @@ import { lang } from '../api/scripts';
 const Main_c = () => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.scripts_c);
+  const filenameRef: any = useRef(null);
   // const handleChange = () => {
   //   dispatch(setTheme(true));
   //   console.log(setting.theme);
@@ -22,6 +23,25 @@ const Main_c = () => {
     alert(editorRef.current.getValue());
   }
 
+  function saveAsFile(str: string, filename: string) {
+    const blob = new Blob([str], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const handleExtract = () => {
+    const selectedLanguage = setting.defaultLanguage;
+    const customFilename = filenameRef.current.value || 'solution'; // Use input or default filename
+    const fullFilename = `${customFilename}.${langs[selectedLanguage].path.substring(1)}`;
+
+    saveAsFile(editorRef.current.getValue(), fullFilename);
+  };
+
+
   return (
     <div>
       <div>
@@ -32,6 +52,8 @@ const Main_c = () => {
         </select>
         <button onClick={() => alert("없음")}>change_theme</button>
         <button onClick={()=> handleSumit()}>submit</button>
+        <input type='text' placeholder='solution' ref={filenameRef} /> {setting.path} 
+        <button onClick={() => handleExtract()}>file save</button>
       </div>
       <CodeMirror height='100vh' width='100%' 
       extensions={[setting.ex_lang, setting.ex_autocompletion]}
