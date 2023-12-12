@@ -9,6 +9,7 @@ import AdminPage from "./pages/AdminPage";
 import AdminNav from "./components/AdminPage/AdminNav";
 import AdminAlgoPage from "./pages/AdminAlgoPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
+import AddAlgoPage from './pages/AddAlgoPage';
 
 function App() {
   const Layout = () => {
@@ -42,6 +43,7 @@ function App() {
             <Route index element={<AdminPage/>}/>
             <Route path="algorithm" element={<AdminAlgoPage/>} />
             <Route path="user" element={<AdminUsersPage/>} />
+            <Route path="algorithm/addalgo" element={<AddAlgoPage/>} />
           </Route>
         </Route>
         <Route path="/editor" element={<Main />} />
