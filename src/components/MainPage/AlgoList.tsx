@@ -1,28 +1,9 @@
 import React, { useState } from 'react'
-import { useSelector } from "react-redux"
-import { RootState } from "../../api/store"
 import { Problem } from "../../api/algoprob";
 import AlgoProbs from './AlgoProbs';
 
 // Prop을 넘기기위한 Type, 이 방법보다 더 좋은 방법이 있다면 알려주세요 ㅠ
-interface AlgoListType {
-  searchTerm: string | null;
-}
-
-const AlgoList: React.FC<AlgoListType> = ({ searchTerm }) => {
-
-  let probs: Problem[] = useSelector((state: RootState) => state.problems);
-  const setting: any = useSelector((state: RootState) => state.filter);
-
-  //필터에 따라 prob 정리
-  if (setting.level !== '레벨') {
-    probs = probs.filter((element) => element.level === setting.level)
-  }
-
-  //검색어가 있는 경우 probs 필터
-  if (searchTerm !== null && searchTerm.length !== 0) {
-    probs = probs.filter((element) => element.title.includes(searchTerm))
-  }
+const AlgoList: React.FC<{probs: Problem[]}> = ({ probs }) => {
 
   // Pagination용 데이터
   const [page, setPage] = useState(1);
