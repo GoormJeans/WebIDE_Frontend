@@ -5,6 +5,7 @@ import { useMediaQuery } from '@mui/material'
 import { mobileMaxWidthMediaQuery } from '../utils/mediaQueries'
 import BannerText from '../components/Login/BannerText'
 import LoginForm from '../components/Login/LoginForm'
+import FadeIn from '../components/FadeIn'
 
 const Login = () => {
   const isMobile = useMediaQuery(mobileMaxWidthMediaQuery);
@@ -20,12 +21,18 @@ const Login = () => {
           <LoginForm />
         </div>
       </div> : <div className='w-full flex flex-row items-baseline justify-around'>
-        <div>
-          <AnimatedHighFive isMobile={isMobile} />
-          <BannerText isMobile={isMobile} />
-        </div>
-        <div>
-          <LoginForm />
+        <FadeIn index={0}>
+          <div className='ml-10'>
+            <AnimatedHighFive isMobile={isMobile} />
+            <BannerText isMobile={isMobile} />
+          </div>
+        </FadeIn>
+        <div className='mr-10'>
+          <FadeIn index={1}>
+            <div>
+              <LoginForm />
+            </div>
+          </FadeIn>
         </div>
       </div>}
     </>
