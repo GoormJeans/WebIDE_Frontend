@@ -1,7 +1,5 @@
 import React from 'react';
 import Main from './components/Main';
-
-function App() {
 import { Outlet, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
@@ -21,7 +19,18 @@ function App() {
   }
   return (
     <div className='App'>
-      <Main />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route path="algorithms" element={<DetailPage />} />
+          <Route path="mypage" element={<MyPage />} />
+          <Route path="detail" element={<DetailPage />} />
+          <Route path="settings" element={<DetailPage />} />
+
+        </Route>
+        <Route path="/editor" element={<Main />} />
+      </Routes>
+
     </div>
   );
 }
