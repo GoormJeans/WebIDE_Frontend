@@ -36,7 +36,7 @@ const Main_c = () => {
   const handleExtract = () => {
     const selectedLanguage = setting.defaultLanguage;
     const customFilename = filenameRef.current.value || 'solution'; // Use input or default filename
-    const fullFilename = `${customFilename}.${langs[selectedLanguage].path.substring(1)}`;
+    const fullFilename = `${customFilename}.${lang[selectedLanguage].path.substring(1)}`;
 
     saveAsFile(editorRef.current.getValue(), fullFilename);
   };

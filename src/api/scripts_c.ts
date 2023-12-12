@@ -134,15 +134,15 @@ export interface scripts_c {
 }
 
 const initialState: scripts_c = {
-    ex_lang: cpp(),
-    ex_autocompletion: autocompletion({ override: [(context) => languageSpecificCompletions("cpp", context)] }),
+    ex_lang: java(),
+    ex_autocompletion: autocompletion({ override: [(context) => languageSpecificCompletions("java", context)] }),
     value:
-        `#include <bits/stdc++.h>
-        using namespace std;
-        int solution(vector<int> num_list) {
-            int answer = 0;
-            return answer;
-        }`,
+        `class Solution {
+    public int solution(int[] num_list) {
+        int answer = 0;
+        return answer;
+    }
+}`,
     theme: myTheme,
 };
 
