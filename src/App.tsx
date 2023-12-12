@@ -5,6 +5,8 @@ import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
 import DetailPage from './pages/DetailPage';
 import MyPage from "./pages/MyPage";
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   const Layout = () => {
@@ -24,8 +26,9 @@ function App() {
           <Route path="mypage" element={<MyPage />} />
           <Route path="detail" element={<DetailPage />} />
           <Route path="settings" element={<DetailPage />} />
-
         </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign-up" element={<Signup />} />
         <Route path="/editor" element={<Main />} />
       </Routes>
 
