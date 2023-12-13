@@ -7,6 +7,7 @@ import DetailPage from './pages/DetailPage';
 import MyPage from "./pages/MyPage";
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Main_c from './components/Main_c';
 
 function App() {
   const Layout = () => {
@@ -14,6 +15,7 @@ function App() {
       <div>
         <Nav />
         <Outlet />
+        <Main_c />
       </div>
     )
   }
