@@ -15,7 +15,6 @@ function App() {
       <div>
         <Nav />
         <Outlet />
-        <Main_c />
       </div>
     )
   }
