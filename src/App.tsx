@@ -4,16 +4,30 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
 import DetailPage from './pages/DetailPage';
-import MyPage from "./pages/MyPage";
+import MyPage from "./pages/Mypage";
+import AdminPage from "./pages/AdminPage";
+import AdminNav from "./components/AdminPage/AdminNav";
+import AdminAlgoPage from "./pages/AdminAlgoPage";
+import AdminUsersPage from "./pages/AdminUsersPage";
+import AddAlgoPage from './pages/AddAlgoPage';
+import Main_c from "./components/Main_c";
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Main_c from './components/Main_c';
 
 function App() {
   const Layout = () => {
     return (
       <div>
         <Nav />
+        <Outlet />
+      </div>
+    )
+  }
+
+  const AdminLayout = () => {
+    return (
+      <div>
+        <AdminNav />
         <Outlet />
       </div>
     )
@@ -27,12 +41,19 @@ function App() {
           <Route path="mypage" element={<MyPage />} />
           <Route path="detail" element={<DetailPage />} />
           <Route path="settings" element={<DetailPage />} />
+
+          <Route path="admin" element={<AdminLayout />} >
+            <Route index element={<AdminPage/>}/>
+            <Route path="algorithm" element={<AdminAlgoPage/>} />
+            <Route path="user" element={<AdminUsersPage/>} />
+            <Route path="algorithm/addalgo" element={<AddAlgoPage/>} />
+          </Route>
           <Route path="Search" element={<MainPage />} />
 
         </Route>
+        <Route path="/editor" element={<Main_c />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
-        <Route path="/editor" element={<Main />} />
       </Routes>
 
     </div>
