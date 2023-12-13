@@ -1,9 +1,9 @@
 import React from 'react'
 import LoginSignupHeader from '../components/LoginSignupHeader'
-import AnimatedHighFive from '../components/Login/AnimatedHand'
+import {AnimatedHighFive} from '../components/AnimatedHand'
 import { useMediaQuery } from '@mui/material'
 import { mobileMaxWidthMediaQuery } from '../utils/mediaQueries'
-import BannerText from '../components/Login/BannerText'
+import BannerText from '../components/Login/BannerTextLogin'
 import LoginForm from '../components/Login/LoginForm'
 import FadeIn from '../components/FadeIn'
 
