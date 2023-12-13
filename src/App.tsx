@@ -15,7 +15,6 @@ function App() {
       <div>
         <Nav />
         <Outlet />
-        <Main_c />
       </div>
     )
   }
@@ -28,6 +27,8 @@ function App() {
           <Route path="mypage" element={<MyPage />} />
           <Route path="detail" element={<DetailPage />} />
           <Route path="settings" element={<DetailPage />} />
+          <Route path="Search" element={<MainPage />} />
+
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
