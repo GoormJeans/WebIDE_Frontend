@@ -172,4 +172,5 @@ export const scripts_c = createSlice({
 
 export const { setScript_c, setlang_c } = scripts_c.actions;
 
+
 export default scripts_c.reducer;

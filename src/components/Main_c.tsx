@@ -67,4 +67,5 @@ const Main_c = () => {
     </div>
   );
 };
+
 export default Main_c;

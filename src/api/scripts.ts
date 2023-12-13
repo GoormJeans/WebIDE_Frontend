@@ -14,8 +14,8 @@ export const langs: any = {
     defaultLanguage: 'python',
     defaultValue: 'i love pyhton',
   },
-  cpp : {
-    path : '.cpp',
+  cpp: {
+    path: '.cpp',
     defaultLanguage: 'cpp',
     defaultValue: 'i love cpp',
   }
