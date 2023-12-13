@@ -4,7 +4,7 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
 import DetailPage from './pages/DetailPage';
-import MyPage from "./pages/Mypage";
+import MyPage from "./pages/MyPage";
 import AdminPage from "./pages/AdminPage";
 import AdminNav from "./components/AdminPage/AdminNav";
 import AdminAlgoPage from "./pages/AdminAlgoPage";
