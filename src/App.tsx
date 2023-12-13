@@ -46,12 +46,12 @@ function App() {
             <Route index element={<AdminPage/>}/>
             <Route path="algorithm" element={<AdminAlgoPage/>} />
             <Route path="user" element={<AdminUsersPage/>} />
-            <Route path="algorithm/addalgo" element={<AddAlgoPage/>} />
+            <Route path="algorithm/:id" element={<AddAlgoPage/>} />
           </Route>
           <Route path="Search" element={<MainPage />} />
 
         </Route>
-        <Route path="/editor" element={<Main_c />} />
+        <Route path=":id" element={<Main_c />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
       </Routes>
