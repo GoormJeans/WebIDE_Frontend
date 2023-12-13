@@ -40,7 +40,7 @@ const Achievement = () => {
               colors={['#14B8A6', '#3B82F6', '#EC4899', '#6366F1', '#F59E0B',]}
               series={[
                 {
-                  arcLabel: (item) => `${item.label} (${item.value})`,
+                  arcLabel: (item: { label: any; value: any; }) => `${item.label} (${item.value})`,
                   highlightScope: { faded: 'global', highlighted: 'item' },
                   highlighted: { additionalRadius: 2 },
                   data: chartData,
