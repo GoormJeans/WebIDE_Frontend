@@ -1,8 +1,9 @@
-import {useRef} from 'react';
+import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../api/store';
 import { Editor } from '@monaco-editor/react';
 import { setlang,setTheme, lang, langs } from '../api/scripts';
+
 const Main = () => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.scripts);
@@ -11,17 +12,17 @@ const Main = () => {
     dispatch(setTheme(true));
     console.log(setting.theme);
   };
-  const editorRef : any = useRef(null);
-  const handlelangs = (e : any) =>{
+  const editorRef: any = useRef(null);
+  const handlelangs = (e: any) => {
     console.log(e.target.value);
     dispatch(setlang(e.target.value));
   }
-  function handleEditorDidMount(editor : any) {
+  function handleEditorDidMount(editor: any) {
     editorRef.current = editor;
   }
-  const handleSumit = ()=>{
-    if(editorRef.current == null)
-      return ;
+  const handleSumit = () => {
+    if (editorRef.current == null)
+      return;
     alert(editorRef.current.getValue());
   }
 
@@ -46,18 +47,19 @@ const Main = () => {
   return (
     <div>
       <div>
-        <select onChange={(e)=>{handlelangs(e)}}>
+        <select onChange={(e) => { handlelangs(e) }}>
           {lang.map((element: any) => {
             return <option value={element}>{element}</option>
           })}
         </select>
         <button onClick={() => handleChange()}>change_theme</button>
+
         <button onClick={()=> handleSumit()}>submit</button>
         <input type='text' placeholder='solution' ref={filenameRef} /> {setting.path} 
         <button onClick={() => handleExtract()}>file save</button>
       </div>
       <Editor height='100vh' width='100%' onMount={handleEditorDidMount}
-       theme={setting.theme} defaultLanguage={setting.defaultLanguage} path={setting.path} defaultValue={setting.defaultValue} />
+        theme={setting.theme} defaultLanguage={setting.defaultLanguage} path={setting.path} defaultValue={setting.defaultValue} />
     </div>
   );
 };

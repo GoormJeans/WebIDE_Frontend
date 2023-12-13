@@ -1,11 +1,13 @@
 import React from 'react';
 import Main from './components/Main';
+
 import { Outlet, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
 import DetailPage from './pages/DetailPage';
 import MyPage from "./pages/MyPage";
 import Main_c from './components/Main_c';
+
 
 function App() {
   const Layout = () => {
@@ -17,6 +19,7 @@ function App() {
     )
   }
   return (
+
     <div className='App'>
       <Routes>
         <Route path="/" element={<Layout />}>
