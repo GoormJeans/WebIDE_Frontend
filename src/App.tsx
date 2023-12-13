@@ -13,6 +13,7 @@ import AddAlgoPage from './pages/AddAlgoPage';
 import Main_c from "./components/Main_c";
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import MessageTmpPage from "./pages/MessageTmpPage";
 
 function App() {
   const Layout = () => {
@@ -54,6 +55,7 @@ function App() {
         <Route path=":id" element={<Main_c />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
+        <Route path="/message" element={<MessageTmpPage />} />
       </Routes>
 
     </div>
