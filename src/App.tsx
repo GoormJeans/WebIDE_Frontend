@@ -5,12 +5,13 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
 import DetailPage from './pages/DetailPage';
-import MyPage from "./pages/MyPage";
+import MyPage from "./pages/Mypage";
 import AdminPage from "./pages/AdminPage";
 import AdminNav from "./components/AdminPage/AdminNav";
 import AdminAlgoPage from "./pages/AdminAlgoPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
 import AddAlgoPage from './pages/AddAlgoPage';
+import Main_c from "./components/Main_c";
 
 
 function App() {
@@ -50,7 +51,7 @@ function App() {
           </Route>
           <Route path="Search" element={<MainPage />} />
         </Route>
-        <Route path="/editor" element={<Main />} />
+        <Route path="/editor" element={<Main_c />} />
       </Routes>
 
     </div>
