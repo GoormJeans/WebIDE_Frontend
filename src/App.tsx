@@ -6,6 +6,7 @@ import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
 import DetailPage from './pages/DetailPage';
 import MyPage from "./pages/MyPage";
+import Main_c from './components/Main_c';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <div>
         <Nav />
         <Outlet />
+        <Main_c />
       </div>
     )
   }
