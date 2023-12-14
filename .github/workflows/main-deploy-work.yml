@@ -13,21 +13,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: ${{ secrete.NODE_VERSION }}
 
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
+        id: cache
         with:
           path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
+          key: npm-packages-${{ hashFiles('**/package-lock.json') }}
             
       - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
 
       - name: Build
