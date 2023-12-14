@@ -1,5 +1,4 @@
 import React from 'react';
-import Main from './components/Main';
 import { Outlet, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
@@ -10,9 +9,9 @@ import AdminNav from "./components/AdminPage/AdminNav";
 import AdminAlgoPage from "./pages/AdminAlgoPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
 import AddAlgoPage from './pages/AddAlgoPage';
-import Main_c from "./components/Main_c";
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import MainC from './components/MainC';
 
 function App() {
   const Layout = () => {
@@ -51,7 +50,7 @@ function App() {
           <Route path="Search" element={<MainPage />} />
 
         </Route>
-        <Route path="/editor" element={<Main_c />} />
+        <Route path="/editor" element={<MainC />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
       </Routes>

@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../api/store';
 import CodeMirror from '@uiw/react-codemirror';
 import { setlang_c} from '../api/scripts_c';
 import { lang } from '../api/scripts';
-const Main_c = () => {
+const MainC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.scripts_c);
   const filenameRef: any = useRef(null);
@@ -68,4 +68,4 @@ const Main_c = () => {
   );
 };
 
-export default Main_c;
+export default MainC;
