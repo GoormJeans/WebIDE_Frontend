@@ -20,10 +20,10 @@ const MessageComponent: React.FC<MessageType> = ({ message, user }) => {
   }
 
   return (
-    <div className="mb-1">
+    <div className={`flex mb-3 ${isMessageMine(message, user) ? 'justify-end' : 'justify-start' /* 내 메시지면 다르게 표시 */} `}>
       {/* user profile 이미지 미정, 나중에 DB에 프로필 이미지 링크도 넣어달라 해야할 수도 있음 */}
       {/* <img className="mr-3 rounded-xl w-12 h-12" src={message.user.image} alt={message.user.name} /> */}
-      <div className={`${isMessageMine(message, user) ? 'bg-[#ececec]' : 'bg-blue-200' /* 내 메시지면 다르게 표시 */} `} >
+      <div className="w-fit bg-white px-5 py-2 rounded-xl">
         <h6 className="mt-0">{message.nickname}{' '}
           <span className="text-[10px] text-gray-600">
             {message.created_at.toLocaleString()}

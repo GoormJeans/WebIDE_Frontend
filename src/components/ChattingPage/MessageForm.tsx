@@ -25,6 +25,10 @@ const MessageForm: React.FC<{ user: UserInfo; messages: Message[]; setMessages: 
     //   return;
     // }
     e.preventDefault()
+
+    if(content.length===0){
+      return;
+    }
     //메시지를 저장하는 부분
     setMessages([...messages, createMessage()])
     setContent("");
@@ -32,9 +36,9 @@ const MessageForm: React.FC<{ user: UserInfo; messages: Message[]; setMessages: 
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input className="w-full" onChange={(e)=>setContent(e.target.value)} value={content}/>
-        <button className="w-full" onClick={handleSubmit}>Send</button>
+      <form onSubmit={handleSubmit} className="w-full flex flex-row">
+        <input className="w-full rounded-xl px-5" onChange={(e)=>setContent(e.target.value)} value={content} placeholder="Message Input"/>
+        <button className="ml-5 bg-slate-400 px-5 py-2 text-white rounded-xl" onClick={handleSubmit}>Send</button>
       </form>
     </div>
   )
