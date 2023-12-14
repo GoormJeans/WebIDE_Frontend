@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../api/store';
-import { setlang_c } from '../api/scripts_c';
+import { setlang_c, setSubmit } from '../api/scripts_c';
 import { lang } from '../api/scripts';
 import MainCM from '../components/EditorPage/Main_c';
 import { useNavigate } from 'react-router-dom';
@@ -14,10 +14,26 @@ const Edit_code = () => {
     const setting: any = useSelector((state: RootState) => state.scripts_c);
     const filenameRef: any = useRef(null);
     const handlelangs = (e: any) => {
-        console.log(e.target.value);
         dispatch(setlang_c(e.target.value));
     }
+    const AlertSameCode = () => {
+        alert("이미 동일한 코드로 제출한 적이 있습니다");
+    }
     const handleSumit = () => {
+
+        if (setting.now_lang === "cpp" && setting.cpp_submit === setting.cpp_val) {
+            AlertSameCode();
+            return;
+        }
+        if (setting.now_lang === "java" && setting.java_submit === setting.java_val) {
+            AlertSameCode();
+            return;
+        }
+        if (setting.now_lang === "py" && setting.py_submit === setting.py_val) {
+            AlertSameCode();
+            return;
+        }
+        dispatch(setSubmit());
         if (setting.now_lang === "cpp")
             alert(setting.cpp_val);
         if (setting.now_lang === "java")

@@ -118,6 +118,9 @@ export interface scripts_c {
     java_val: string,
     py_val: string,
     cpp_val: string,
+    java_submit: string,
+    py_submit: string,
+    cpp_submit: string,
     theme: any,
 }
 
@@ -151,6 +154,9 @@ int solution(vector<int> num_list) {
     return answer;
 }`,
     theme: myTheme,
+    java_submit: "",
+    py_submit: "",
+    cpp_submit: "",
 };
 
 export const scripts_c = createSlice({
@@ -162,7 +168,6 @@ export const scripts_c = createSlice({
         }
         ,
         setlang_c: (state, action: PayloadAction<string>) => {
-            state.theme = langs_c[action.payload].theme;
             if (state.now_lang === "cpp")
                 state.cpp_val = state.value;
             if (state.now_lang === "java")
@@ -180,10 +185,26 @@ export const scripts_c = createSlice({
             state.now_lang = langs_c[action.payload].now_lang;
             state.ex_autocompletion = langs_c[action.payload].ex_autocompletion;
         },
+        setsave: (state) => {
+            if (state.now_lang === "cpp")
+                state.cpp_val = state.value;
+            if (state.now_lang === "java")
+                state.java_val = state.value;
+            if (state.now_lang === "py")
+                state.py_val = state.value;
+        },
+        setSubmit: (state) => {
+            if (state.now_lang === "cpp")
+                state.cpp_submit = state.value;
+            if (state.now_lang === "java")
+                state.java_submit = state.value;
+            if (state.now_lang === "py")
+                state.py_submit = state.value;
+        }
     },
 });
 
-export const { setValue_c, setlang_c } = scripts_c.actions;
+export const { setValue_c, setlang_c, setsave, setSubmit } = scripts_c.actions;
 
 
 export default scripts_c.reducer;

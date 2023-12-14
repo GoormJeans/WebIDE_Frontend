@@ -1,4 +1,3 @@
-import { Provider } from "rc-motion";
 import React from 'react';
 import Tree from 'rc-tree';
 import '../../assets/File_tree/index.css';
@@ -111,7 +110,7 @@ function getTreeData() {
 }
 
 
-
+//교체할 커스텀 icon
 const arrowPath =
     'M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88' +
     '.5c-7.4 0-10.8 9.2-5.2 14l350.2 304H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.' +
@@ -139,8 +138,9 @@ const getSvgIcon = (path: any, iStyle = {}, style = {}) => (
 
 const File_tree = () => {
     const treeRef: any = React.useRef();
-    const [enableMotion] = React.useState(true);
-
+    const onSelect = (obj: any) => {
+        console.log(obj);
+    }
     const switcherIcon = (obj: any) => {
         if (obj.data.key?.startsWith('0-0-3')) {
             return false;
@@ -154,14 +154,12 @@ const File_tree = () => {
             { transform: `rotate(${obj.expanded ? 90 : 0}deg)` },
         );
     };
-
-    const treeCls = `myCls${(' customIcon') || ''}`;
-    if (treeRef == undefined)
+    if (treeRef === undefined)
         return (<div></div>);
     return (
-        <div>
+        <div className="overflow-hidden">
             <style dangerouslySetInnerHTML={{ __html: STYLE }} />
-            <div style={{ display: 'flex' }}>
+            <div style={{ overflow: 'hidden', display: 'flex' }}>
                 <div style={{ display: 'flex-start' }}>
                     <Tree
                         ref={treeRef}
@@ -172,6 +170,7 @@ const File_tree = () => {
                         style={{ height: '50vh' }}
                         treeData={getTreeData()}
                         //icon={ }
+                        onSelect={onSelect}
                         showIcon={false}
                         switcherIcon={switcherIcon}
                         virtual={true}

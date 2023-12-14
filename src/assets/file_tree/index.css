@@ -3,6 +3,8 @@
   border: 1px solid transparent;
 }
 
+
+
 .rc-tree-focused:not(.rc-tree-active-focused) {
   border-color: cyan;
 }
@@ -240,5 +242,5 @@
 .rc-tree-draggable-icon {
   display: flex;
   justify-content: center;
-  width: 16px;
+  width: 8px;
 }
