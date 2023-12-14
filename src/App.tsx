@@ -13,6 +13,7 @@ import AddAlgoPage from './pages/AddAlgoPage';
 import Main_c from "./components/Main_c";
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import EditUserInfo from './pages/EditUserInfo';
 
 function App() {
   const Layout = () => {
@@ -39,17 +40,17 @@ function App() {
           <Route index element={<MainPage />} />
           <Route path="algorithms" element={<DetailPage />} />
           <Route path="mypage" element={<MyPage />} />
+          <Route path="mypage/edit" element={<EditUserInfo />} />
           <Route path="detail" element={<DetailPage />} />
           <Route path="settings" element={<DetailPage />} />
 
           <Route path="admin" element={<AdminLayout />} >
-            <Route index element={<AdminPage/>}/>
-            <Route path="algorithm" element={<AdminAlgoPage/>} />
-            <Route path="user" element={<AdminUsersPage/>} />
-            <Route path="algorithm/addalgo" element={<AddAlgoPage/>} />
+            <Route index element={<AdminPage />} />
+            <Route path="algorithm" element={<AdminAlgoPage />} />
+            <Route path="user" element={<AdminUsersPage />} />
+            <Route path="algorithm/addalgo" element={<AddAlgoPage />} />
           </Route>
           <Route path="Search" element={<MainPage />} />
-
         </Route>
         <Route path="/editor" element={<Main_c />} />
         <Route path="/login" element={<Login />} />
