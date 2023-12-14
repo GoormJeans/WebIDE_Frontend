@@ -1,3 +1,4 @@
+[![Deploy to S3](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/main-deploy-work.yml/badge.svg)](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/main-deploy-work.yml)
 # WebIDE_Frontend
 
 ### 🪄 프로젝트 개요
