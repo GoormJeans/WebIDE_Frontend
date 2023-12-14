@@ -1,25 +1,21 @@
 import React, { useState } from 'react'
-import { message, user } from "./type/type"
+import { UserInfo } from "../../types/UserInfo.type";
+import { Message } from "../../types/Message.type";
 
-const MessageForm: React.FC<{ user: user; messages: message[]; setMessages: any }> = ({ user, messages, setMessages }) => {
+const MessageForm: React.FC<{ user: UserInfo; messages: Message[]; setMessages: any }> = ({ user, messages, setMessages }) => {
 
   const [content, setContent] = useState("");
+  const [messageId, setMessageId] = useState(0); // message ID 부여방식 확인 전까지 임시 ID
 
   const createMessage = () => {
-    const date = new Date();
-
-    const message: message = {
-      created_at: date.toLocaleString(),
-      user: {
-        id: user.id,
-        name: user.name,
-        image: user.image
-      },
+    const message: Message = {
+      created_at: new Date(),
+      nickname: user.name,
       content: content,
       aid: 1,
-      name: 'message' + user.id,
-      id: user.id
+      id: messageId,
     }
+    setMessageId(messageId+1);
     return message;
   }
 

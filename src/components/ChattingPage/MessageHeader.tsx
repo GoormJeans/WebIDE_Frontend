@@ -1,7 +1,7 @@
 import React from 'react'
 
 const MessageHeader: React.FC<{ handleSearchChange: any }> = ({ handleSearchChange }) => {
-
+  // 검색어 입력 창
 
   return (
     <div style={{

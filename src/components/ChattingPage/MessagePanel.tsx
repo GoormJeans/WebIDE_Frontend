@@ -1,51 +1,32 @@
 import React, { useState } from 'react'
-import { message, user } from "./type/type";
-import Message from './Message';
 import MessageForm from "./MessageForm";
 import MessageHeader from "./MessageHeader";
+import MessageComponent from "./MessageComponent";
+import { UserInfo } from "../../types/UserInfo.type";
+import { Message } from "../../types/Message.type";
 
-const MessagePanel: React.FC<{ user: user }> = ({ user }) => {
+const MessagePanel = () => {
 
-  //dummy user2
-
-  const user2: user = {
-    id: 2,
-    image: "user2_image_url",
-    name: "user2"
+  //dummy user2, 로그인해서 user에 대한 state가 생기기 전까지 일단 임시로 넣은 user
+  const user2: UserInfo = {
+    name: 'Kim Goorm',
+    address: 'Seoul, Korea',
+    email: 'kimgoorm@gmail.com',
+    bio: 'https://github.com/kimgoorm',
   }
 
-  //dummy messages
-  const dummies: message[] = [
-    {
-      id: 1,
-      name: 'message1',
-      content: 'hi',
-      user: user,
-      aid: 1,
-      created_at: "2023. 12. 13. 오후 11:06:06"
-    },
-    {
-      id: 2,
-      name: 'message2',
-      content: 'no hi',
-      user: user2,
-      aid: 1,
-      created_at: "2023. 12. 23. 오후 11:06:06"
-    },
-  ]
-
   const [searchTerm, setSearchTerm] = useState("");
-  const [messages, setMessages] = useState(dummies);
-  const [searchResults, setSearchResults] = useState<message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [searchResults, setSearchResults] = useState<Message[]>([]);
 
 
-  const renderMessages = (messages: message[]) =>
+  const renderMessages = (messages: Message[]) =>
     messages.length > 0 &&
     messages.map(message =>
-      <Message
-        key={message.created_at}
+      <MessageComponent
+        key={message.created_at.toLocaleString()}
         message={message}
-        user={user}
+        user={user2}
       />
     )
 
@@ -53,8 +34,8 @@ const MessagePanel: React.FC<{ user: user }> = ({ user }) => {
   const handleSearchMessages = () => {
     const chatRoomMessages = [...messages];
     const regex = new RegExp(searchTerm, "gi");
-    const searchResults = chatRoomMessages.reduce((acc: message[], message: message) => {
-      if ((message.content && message.content.match(regex)) || message.user.name.match(regex)) {
+    const searchResults = chatRoomMessages.reduce((acc: Message[], message: Message) => {
+      if ((message.content && message.content.match(regex)) || message.nickname.match(regex)) {
         acc.push(message)
       }
       return acc;
@@ -64,8 +45,8 @@ const MessagePanel: React.FC<{ user: user }> = ({ user }) => {
   }
 
   const handleSearchChange = (event: any) => {
-      setSearchTerm(event.target.value);
-      handleSearchMessages()
+    setSearchTerm(event.target.value);
+    handleSearchMessages()
   }
 
   return (
@@ -77,7 +58,7 @@ const MessagePanel: React.FC<{ user: user }> = ({ user }) => {
           :
           renderMessages(messages)
         }
-        </div>
+      </div>
 
       <MessageForm user={user2} messages={messages} setMessages={setMessages} />
     </div>
