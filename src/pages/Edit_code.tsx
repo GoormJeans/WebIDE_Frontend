@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../api/store';
 import { setlang_c } from '../api/scripts_c';
 import { lang } from '../api/scripts';
-import MainCM from '../components/Main_c';
+import MainCM from '../components/EditorPage/Main_c';
 import { useNavigate } from 'react-router-dom';
+import File_tree from '../components/EditorPage/File_tree';
 
 const Edit_code = () => {
     const navigate = useNavigate();
@@ -59,24 +60,9 @@ const Edit_code = () => {
                     <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold mt-1 mb-1 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={() => handleSumit()}>submit</button>
                 </div>
             </div>
-            <div className='flex w-full bg-white'>
+            <div className='flex w-full h-100vh bg-white'>
                 <div className="w-2/12 font-mono bg-editor-color p-4">
-                    <ul className="list-none">
-                        <li className="mb-2">
-                            <span className="font-semibold">/project</span>
-                            <ul className="pl-4 mt-2">
-                                <li className="mb-2">
-                                    <span className="font-semibold">/src</span>
-                                    <ul className="pl-4 mt-2">
-                                        <li className="mb-2">index.js</li>
-                                        <li className="mb-2">style.css</li>
-                                    </ul>
-                                </li>
-                                <li>README.md</li>
-                                <li>package.json</li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <File_tree />
 
                 </div>
                 <MainCM />

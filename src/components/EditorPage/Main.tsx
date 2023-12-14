@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../api/store';
+import { AppDispatch, RootState } from '../../api/store';
 import { Editor } from '@monaco-editor/react';
-import { setlang,setTheme, lang, langs } from '../api/scripts';
+import { setlang, setTheme, lang } from '../../api/scripts';
 
 const Main = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -54,8 +54,8 @@ const Main = () => {
         </select>
         <button onClick={() => handleChange()}>change_theme</button>
 
-        <button onClick={()=> handleSumit()}>submit</button>
-        <input type='text' placeholder='solution' ref={filenameRef} /> {setting.path} 
+        <button onClick={() => handleSumit()}>submit</button>
+        <input type='text' placeholder='solution' ref={filenameRef} /> {setting.path}
         <button onClick={() => handleExtract()}>file save</button>
       </div>
       <Editor height='100vh' width='100%' onMount={handleEditorDidMount}
