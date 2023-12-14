@@ -16,7 +16,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ secrete.NODE_VERSION }}
+          node-version: ${{ secrets.NODE_VERSION }}
 
       - name: Cache node modules
         uses: actions/cache@v2
