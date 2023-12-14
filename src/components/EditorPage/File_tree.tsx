@@ -3,8 +3,6 @@ import Tree from "rc-tree";
 import React from 'react';
 import '../../assets/file_tree/index.less';
 import '../../assets/file_tree/animation.less';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../api/store';
 import "rc-tree/assets/index.css"
 const STYLE = `
 .rc-tree-child-tree {
