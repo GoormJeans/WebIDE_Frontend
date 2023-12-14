@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'nav-color': '#8A9BED',
+        'editor-color' : '#7C7B7B73',
       },
       fontFamily: {
         'k2d': ['K2D', "sans-serif"],
