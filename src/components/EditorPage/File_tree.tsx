@@ -1,9 +1,8 @@
 import { Provider } from "rc-motion";
-import Tree from "rc-tree";
 import React from 'react';
-import '../../assets/file_tree/index.less';
-import '../../assets/file_tree/animation.less';
-import "rc-tree/assets/index.css"
+import Tree from 'rc-tree';
+import '../../assets/File_tree/index.css';
+import '../../assets/File_tree/animation.less';
 const STYLE = `
 .rc-tree-child-tree {
   display: block;
@@ -12,6 +11,10 @@ const STYLE = `
 .node-motion {
   transition: all .3s;
   overflow-y: hidden;
+}
+&-node-selected{
+    background-color : #000000;
+
 }
 `;
 
@@ -26,6 +29,7 @@ const motion = {
     onLeaveActive: () => ({ height: 0 }),
 };
 
+// JSON 파일로 받아올 부분
 function getTreeData() {
     // big-data: generateData(1000, 3, 2)
     return [
@@ -106,45 +110,75 @@ function getTreeData() {
     ];
 }
 
+
+
+const arrowPath =
+    'M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88' +
+    '.5c-7.4 0-10.8 9.2-5.2 14l350.2 304H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.' +
+    '6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-0.7 5.' +
+    '2-2L869 536.2c14.7-12.8 14.7-35.6 0-48.4z';
+
+const getSvgIcon = (path: any, iStyle = {}, style = {}) => (
+    <i style={iStyle}>
+        <svg
+            viewBox="0 0 1024 1024"
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            style={{ verticalAlign: '-.125em', ...style }}
+        >
+            <path d={path} />
+        </svg>
+    </i>
+);
+
+
+
+
+
+
 const File_tree = () => {
     const treeRef: any = React.useRef();
-    const [enableMotion, setEnableMotion] = React.useState(true);
+    const [enableMotion] = React.useState(true);
 
-    setTimeout(() => {
-        if (treeRef == undefined)
+    const switcherIcon = (obj: any) => {
+        if (obj.data.key?.startsWith('0-0-3')) {
+            return false;
+        }
+        if (obj.isLeaf) {
             return;
-        treeRef.current.scrollTo({ key: '0-9-2' });
-    }, 100);
+        }
+        return getSvgIcon(
+            arrowPath,
+            { cursor: 'pointer', backgroundColor: 'white' },
+            { transform: `rotate(${obj.expanded ? 90 : 0}deg)` },
+        );
+    };
+
+    const treeCls = `myCls${(' customIcon') || ''}`;
     if (treeRef == undefined)
         return (<div></div>);
     return (
-        <Provider motion={enableMotion}>
-            <button
-                onClick={() => {
-                    setEnableMotion(e => !e);
-                }}
-            >
-            </button>
-
-            <React.StrictMode>
-                <div className="animation">
-                    <style dangerouslySetInnerHTML={{ __html: STYLE }} />
-                    <div style={{ display: 'flex' }}>
-                        <div style={{}}>
-                            <Tree
-                                ref={treeRef}
-                                // defaultExpandAll={false}
-                                defaultExpandAll
-                                defaultExpandedKeys={defaultExpandedKeys}
-                                motion={motion}
-                                style={{ height: '50vh' }}
-                                treeData={getTreeData()}
-                            />
-                        </div>
-                    </div>
+        <div>
+            <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+            <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex-start' }}>
+                    <Tree
+                        ref={treeRef}
+                        // defaultExpandAll={false}
+                        defaultExpandAll
+                        defaultExpandedKeys={defaultExpandedKeys}
+                        motion={motion}
+                        style={{ height: '50vh' }}
+                        treeData={getTreeData()}
+                        //icon={ }
+                        showIcon={false}
+                        switcherIcon={switcherIcon}
+                        virtual={true}
+                    />
                 </div>
-            </React.StrictMode>
-        </Provider>
+            </div>
+        </div>
     );
 };
 
