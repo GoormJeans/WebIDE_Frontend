@@ -7,19 +7,19 @@ const MyPage = () => {
   return (
     <>
       <div className='profile-card w-full h-80 z-1' >
-        <div className="px-5 w-auto h-full flex  mx-5 mt-5 rounded-3xl bg-nav-color shadow-xl	">
+        <div className="px-5 w-auto h-full flex mx-5 mt-5 rounded-3xl bg-nav-color shadow-xl">
           <div className='bg-transparent w-full'>
-            <button onClick={() => navi("edit")} className='font-k2d text-xs font-thin rounded-lg px-4 py-1.5 mr-3 mt-5 bg-white bg-opacity-40 hover:opacity-75'>
+            <button onClick={() => navi("edit")} className='font-k2d text-xs font-thin rounded-lg px-4 py-1.5 mr-3 mt-5 bg-white bg-opacity-40 hover:opacity-75 active:opacity-25'>
               edit profile
             </button>
-            <div className='w-full bg-transparent flex justify-center'>
+            <div className='w-full bg-transparent flex justify-center items-stretch'>
               <ProfileInfo />
               <Achievement />
             </div>
           </div>
         </div>
       </div>
-      <div className='problems-card w-full h-96 z-1 shadow-xl' >
+      <div className='problems-card w-full h-96 z-1' >
         <div className="px-5 w-auto h-full mx-5 mt-5 rounded-3xl bg-nav-color shadow-xl">
           <CategoryBtn />
         </div>
