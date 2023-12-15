@@ -166,7 +166,7 @@ int solution(vector<int> num_list) {
     cpp_submit: "",
 };
 
-export const scriptsC = createSlice({
+export const scriptsCSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
@@ -211,8 +211,8 @@ export const scriptsC = createSlice({
     },
 });
 
-export const { setValue_c, setlang_c, setsave, setSubmit } = scriptsC.actions;
+export const { setValue_c, setlang_c, setsave, setSubmit } = scriptsCSlice.actions;
 
 
 
-export default scriptsC.reducer;
+export default scriptsCSlice.reducer;

@@ -4,7 +4,7 @@ import MessageHeader from "./MessageHeader";
 import MessageComponent from "./MessageComponent";
 import { UserInfo } from "../../types/UserInfo.type";
 import { Message } from "../../types/Message.type";
-import axios from "../../api/axios";
+// import axios from "../../api/axios";
 
 const MessagePanel = () => {
 
