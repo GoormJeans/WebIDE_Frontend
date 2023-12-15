@@ -1,55 +1,56 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Algorithm } from "../types/Algorithm.type";
 
-//임시로 설정한 타입, API 명세 나오면 변경 가능
-export interface Problem {
-  id: number;
-  level: string;
-  title: string;
-  solved: boolean;
-}
-
-//임시 문제 목록
-const initialState: Problem[] = [
+//임시 문제 목록, solved는 일단 제외
+const initialState: Algorithm[] = [
   {
     id: 1,
-    level: 'Lv.1',
-    title: '문제1번',
-    solved: false,
+    name: '문제1번',
+    url: 'algo1',
+    tag: 'dummy',
+    level: 1
   },
   {
     id: 2,
-    level: 'Lv.2',
-    title: '문제2번',
-    solved: true,
+    name: '문제2번',
+    url: 'algo2',
+    tag: 'dummmmy',
+    level: 2
   },
   {
     id: 3,
-    level: 'Lv.3',
-    title: '문제3번',
-    solved: false,
+    name: '문제3번',
+    url: 'algo3',
+    tag: 'tummy',
+    level: 3
   },
   {
     id: 4,
-    level: 'Lv.4',
-    title: '문제4번',
-    solved: false,
+    name: '문제4번',
+    url: 'algo4',
+    tag: 'dummy',
+    level: 3,
   },
   {
     id: 5,
-    level: 'Lv.2',
-    title: '문제5번',
-    solved: true,
+    name: '문제5번',
+    url: 'algo5',
+    tag:'gummy',
+    level: 2
   },
   {
     id: 6,
-    level: 'Lv.2',
-    title: '문제6번',
-    solved: true,
+    name: '문제6번',
+    url: 'algo6',
+    tag: 'six',
+    level: 2
   }
 ]
 
+export const solved: number[] = [1, 3, 4, 6];
+
 export const algoprobs = createSlice({
-  name: 'problem',
+  name: 'algorithm',
   initialState,
   reducers: {
     // 문제 추가 등 액션 추가

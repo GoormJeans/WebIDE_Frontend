@@ -3,5 +3,5 @@ export interface Algorithm{
   name: string;
   url: string;
   tag: string;
-  level?: string;
+  level: number;
 }

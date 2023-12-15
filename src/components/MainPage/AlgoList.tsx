@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Problem } from "../../api/algoprob";
 import AlgoProbs from './AlgoProbs';
+import { Algorithm } from "../../types/Algorithm.type";
 
-// Prop을 넘기기위한 Type, 이 방법보다 더 좋은 방법이 있다면 알려주세요 ㅠ
-const AlgoList: React.FC<{probs: Problem[]}> = ({ probs }) => {
+const AlgoList: React.FC<{probs: Algorithm[]}> = ({ probs }) => {
 
   // Pagination용 데이터
   const [page, setPage] = useState(1);
@@ -19,7 +18,7 @@ const AlgoList: React.FC<{probs: Problem[]}> = ({ probs }) => {
       <div className="w-full h-full ">
         <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent m-5 rounded-xl px-5 pt-5 border-2 whitespace-nowrap">
           {
-            probs.map((element) => <AlgoProbs prob={element} key={element.id} />)//아직 Pagination 미구현
+            probs.map((element) => <AlgoProbs prob={element} key={element.id} />)
           }
 
           {/* Pagination 1페이지 하나 이상 나올 경우에 보여주기*/}
