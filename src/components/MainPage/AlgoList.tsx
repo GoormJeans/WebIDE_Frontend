@@ -10,7 +10,6 @@ const AlgoList: React.FC<{probs: Problem[]}> = ({ probs }) => {
   const limit = 10; // 한 번에 보여줄 문제 수
   const offset = (page - 1) * limit; // 문제 번호 단위
   const numPages = Math.ceil(probs.length / limit); // pagination 개수
-  console.log(numPages)
   if (numPages > 1) { probs = probs.slice(offset, offset + limit) } //1페이지 이상일 경우에만 작동
 
   const pageButtons = new Array(numPages).fill(0);

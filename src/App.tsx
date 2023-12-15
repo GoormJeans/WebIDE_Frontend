@@ -44,14 +44,14 @@ function App() {
           <Route path="settings" element={<DetailPage />} />
 
           <Route path="admin" element={<AdminLayout />} >
-            <Route index element={<AdminPage />} />
-            <Route path="algorithm" element={<AdminAlgoPage />} />
-            <Route path="user" element={<AdminUsersPage />} />
-            <Route path="algorithm/addalgo" element={<AddAlgoPage />} />
+            <Route index element={<AdminPage/>}/>
+            <Route path="algorithm" element={<AdminAlgoPage/>} />
+            <Route path="user" element={<AdminUsersPage/>} />
+            <Route path="algorithm/:id" element={<AddAlgoPage/>} />
           </Route>
           <Route path="Search" element={<MainPage />} />
         </Route>
-        <Route path="/editor" element={<MainC />} />
+        <Route path=":id" element={<Main_c />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
       </Routes>
