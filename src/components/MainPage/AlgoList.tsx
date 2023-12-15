@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import AlgoProbs from './AlgoProbs';
 import { Algorithm } from "../../types/Algorithm.type";
 
-const AlgoList: React.FC<{probs: Algorithm[]}> = ({ probs }) => {
+const AlgoList: React.FC<{probs: Algorithm[]; solved: number[]}> = ({ probs, solved }) => {
 
   // Pagination용 데이터
   const [page, setPage] = useState(1);
@@ -18,7 +18,7 @@ const AlgoList: React.FC<{probs: Algorithm[]}> = ({ probs }) => {
       <div className="w-full h-full ">
         <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent m-5 rounded-xl px-5 pt-5 border-2 whitespace-nowrap">
           {
-            probs.map((element) => <AlgoProbs prob={element} key={element.id} />)
+            probs.map((element) => <AlgoProbs prob={element} key={element.id} solved={solved} />)
           }
 
           {/* Pagination 1페이지 하나 이상 나올 경우에 보여주기*/}

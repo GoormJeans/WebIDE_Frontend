@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import LastAlgo from "../components/MainPage/LastAlgo"
 import Search from "../components/MainPage/Search"
 import AlgoList from "../components/MainPage/AlgoList"
@@ -7,8 +7,11 @@ import { useSelector } from "react-redux"
 import { RootState } from "../api/store"
 import { Algorithm } from "../types/Algorithm.type"
 import { levels } from './../api/filter';
+import axios from "../api/axios"
 
 const MainPage = () => {
+
+  const [solved, setSolved] = useState<number[]>([]);
 
   // url에서 검색어 찾아내기
   const useQuery = () => {
@@ -17,7 +20,18 @@ const MainPage = () => {
   let searchTerm = useQuery().get("q");
 
   // DB에서 probs 가져오기
+  useEffect(()=>{
+    fetchProbs();
+  })
 
+  const fetchProbs = async () => {
+    try {
+      const request = await axios.get('/~~');
+      setSolved(request.data.solved); //문제 푼 목록 id 가져오기
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 
   // 여기서 검색결과 필터링 해서 AlgoList에 prop으로 넘겨줌
   let probs: Algorithm[] = useSelector((state: RootState) => state.problems);
@@ -37,7 +51,7 @@ const MainPage = () => {
     <div>
       <LastAlgo />
       <Search />
-      <AlgoList probs={probs} />
+      <AlgoList probs={probs} solved={solved} />
     </div >
   )
 }
