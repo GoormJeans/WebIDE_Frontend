@@ -89,27 +89,19 @@ const myTheme = createTheme({
 
 export const langs_c: any = {
     java: {
+        now_lang: "java",
         ex_lang: java(),
         ex_autocompletion: autocompletion({ override: [(context) => languageSpecificCompletions("java", context)] }),
-        value:
-            `class Solution {
-            public int solution(int[] num_list) {
-                int answer = 0;
-                return answer;
-            }
-        }`,
         theme: myTheme,
     },
     py: {
+        now_lang: "py",
         ex_lang: python(),
         ex_autocompletion: autocompletion({ override: [(context) => languageSpecificCompletions("python", context)] }),
-        value:
-            `def solution(num_list):
-        answer = 0
-        return answer`,
         theme: myTheme,
     },
     cpp: {
+        now_lang: "cpp",
         ex_lang: cpp(),
         ex_autocompletion: autocompletion({ override: [(context) => languageSpecificCompletions("cpp", context)] }),
         value:
@@ -120,20 +112,27 @@ export const langs_c: any = {
             int answer = 0;
             return answer;
         }`,
-        theme: myTheme,
     }
 };
 
 
 
-export interface scripts_c {
+export interface scriptsC {
+    now_lang: string,
     ex_lang: any,
     ex_autocompletion: any,
     value: string,
+    java_val: string,
+    py_val: string,
+    cpp_val: string,
+    java_submit: string,
+    py_submit: string,
+    cpp_submit: string,
     theme: any,
 }
 
-const initialState: scripts_c = {
+let initialState: scriptsC = {
+    now_lang: "java",
     ex_lang: java(),
     ex_autocompletion: autocompletion({ override: [(context) => languageSpecificCompletions("java", context)] }),
     value:
@@ -143,34 +142,77 @@ const initialState: scripts_c = {
         return answer;
     }
 }`,
+    java_val:
+        `class Solution {
+    public int solution(int[] num_list) {
+        int answer = 0;
+        return answer;
+    }
+}`,
+    py_val:
+        `def solution(num_list):
+    answer = 0
+    return answer`,
+    cpp_val:
+        `#include <bits/stdc++.h>
+using namespace std;
+int solution(vector<int> num_list) {
+    int answer = 0;
+    return answer;
+}`,
     theme: myTheme,
+    java_submit: "",
+    py_submit: "",
+    cpp_submit: "",
 };
 
-export const scripts_cSlice = createSlice({
+export const scriptsC = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setScript_c: (state) => {
-            state.theme = myTheme;
-            state.ex_autocompletion = autocompletion({ override: [(context) => languageSpecificCompletions("cpp", context)] });
-            state.value = `#include <bits/stdc++.h>
-            using namespace std;
-            int solution(vector<int> num_list) {
-                int answer = 0;
-                return answer;
-            }`;
-            state.ex_lang = cpp();
-        },
+        setValue_c: (state, action: PayloadAction<string>) => {
+            state.value = action.payload;
+        }
+        ,
         setlang_c: (state, action: PayloadAction<string>) => {
-            state.theme = langs_c[action.payload].theme;
-            state.value = langs_c[action.payload].value;
+            if (state.now_lang === "cpp")
+                state.cpp_val = state.value;
+            if (state.now_lang === "java")
+                state.java_val = state.value;
+            if (state.now_lang === "py")
+                state.py_val = state.value;
+
+            if (langs_c[action.payload].now_lang === "cpp")
+                state.value = state.cpp_val;
+            if (langs_c[action.payload].now_lang === "java")
+                state.value = state.java_val;
+            if (langs_c[action.payload].now_lang === "py")
+                state.value = state.py_val;
             state.ex_lang = langs_c[action.payload].ex_lang;
+            state.now_lang = langs_c[action.payload].now_lang;
             state.ex_autocompletion = langs_c[action.payload].ex_autocompletion;
         },
+        setsave: (state) => {
+            if (state.now_lang === "cpp")
+                state.cpp_val = state.value;
+            if (state.now_lang === "java")
+                state.java_val = state.value;
+            if (state.now_lang === "py")
+                state.py_val = state.value;
+        },
+        setSubmit: (state) => {
+            if (state.now_lang === "cpp")
+                state.cpp_submit = state.value;
+            if (state.now_lang === "java")
+                state.java_submit = state.value;
+            if (state.now_lang === "py")
+                state.py_submit = state.value;
+        }
     },
 });
 
-export const { setScript_c, setlang_c } = scripts_cSlice.actions;
+export const { setValue_c, setlang_c, setsave, setSubmit } = scriptsC.actions;
 
 
-export default scripts_cSlice.reducer;
+
+export default scriptsC.reducer;
