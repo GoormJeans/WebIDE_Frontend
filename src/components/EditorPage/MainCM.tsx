@@ -5,7 +5,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { setValue_c, setsave } from '../../api/scripts_c';
 const MainCM = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const setting: any = useSelector((state: RootState) => state.scripts_c);
+  const setting: any = useSelector((state: RootState) => state.scriptsC);
   const onchange = (e: any, en: any) => {
     dispatch(setValue_c(e));
     dispatch(setsave());

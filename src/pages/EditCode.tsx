@@ -10,7 +10,7 @@ import Filetree from '../components/EditorPage/FileTree';
 const EditCode = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const setting: any = useSelector((state: RootState) => state.scripts_c);
+    const setting: any = useSelector((state: RootState) => state.scriptsC);
     //const filenameRef: any = useRef(null);
     const handlelangs = (e: any) => {
         dispatch(setlang_c(e.target.value));
