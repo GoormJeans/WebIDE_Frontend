@@ -4,10 +4,10 @@ const MessageHeader: React.FC<{ handleSearchChange: any; handleSearchMessages: a
 
   return (
     <div className="w-full flex justify-end">
-      <form className="w-fit h-fit border-solid border-[.2rem] border-[#ececec] p-5 mb-5 rounded-xl" onSubmit={handleSearchMessages}>
+      <form className="w-fit h-fit border-solid border-[.2rem] border-[#ececec] p-5 mb-5 rounded-xl whitespace-nowrap flex justify-center" onSubmit={handleSearchMessages}>
         {visible && <button type="button" className="bg-slate-400 px-5 py-2 text-white rounded-xl mr-5" onClick={() => setVisible(false)}>&lt;-</button>}
         <input
-          className="p-2 rounded-xl w-60"
+          className="p-2 rounded-xl w-full"
           placeholder="Search Messages"
           aria-label="Search"
           aria-describedby="basic-addon1"
