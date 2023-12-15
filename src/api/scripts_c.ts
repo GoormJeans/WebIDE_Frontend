@@ -115,7 +115,7 @@ export const langs_c: any = {
         value:
             `#include <bits/stdc++.h>
         using namespace std;
-          
+        
         int solution(vector<int> num_list) {
             int answer = 0;
             return answer;
@@ -146,7 +146,7 @@ const initialState: scripts_c = {
     theme: myTheme,
 };
 
-export const scripts_c = createSlice({
+export const scripts_cSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
@@ -170,7 +170,7 @@ export const scripts_c = createSlice({
     },
 });
 
-export const { setScript_c, setlang_c } = scripts_c.actions;
+export const { setScript_c, setlang_c } = scripts_cSlice.actions;
 
 
-export default scripts_c.reducer;
+export default scripts_cSlice.reducer;
