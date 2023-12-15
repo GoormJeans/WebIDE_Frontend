@@ -1,5 +1,5 @@
 // import { useRef } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../api/store';
 import { setlang_c, setSubmit } from '../api/scripts_c';
@@ -7,6 +7,7 @@ import { lang } from '../api/scripts';
 import MainCM from '../components/EditorPage/MainCM';
 import { useNavigate } from 'react-router-dom';
 import Filetree from '../components/EditorPage/FileTree';
+import MessagePanel from "../components/ChattingPage/MessagePanel";
 const EditCode = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -59,6 +60,12 @@ const EditCode = () => {
             //saveAsFile(editorRef.current.getValue(), fullFilename);
         };
     */
+
+
+    //채팅 페이지 보이게하기용
+    const [visible, setVisible] = useState(true);
+
+
     return (
         <>
             <div className='flex flex-row bg-black'>
@@ -71,6 +78,15 @@ const EditCode = () => {
                             return <option value={element}>{element}</option>
                         })}
                     </select>
+                    {/* 채팅 페이지 버튼 */}
+                    <div className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out">
+                        <button onClick={() => {
+                            setVisible(!visible)
+                        }}>
+                            Chat
+                        </button>
+
+                    </div>
                     <div className='bg-black ml-1 mr-1'></div>
                     <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold mt-1 mb-1 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={() => handleSumit()}>submit</button>
                 </div>
@@ -82,7 +98,10 @@ const EditCode = () => {
                 </div>
                 <MainCM />
                 <div className='w-4/12 bg-editor-color'>
-
+                    {/* 채팅 페이지 보이게하기 */}
+                    <div className="max-w-[500px]">
+                        {visible && <MessagePanel />}
+                    </div>
                 </div>
 
             </div>
