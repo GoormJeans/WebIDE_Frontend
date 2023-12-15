@@ -11,9 +11,9 @@ import AdminUsersPage from "./pages/AdminUsersPage";
 import AddAlgoPage from './pages/AddAlgoPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import EditCode from './pages/EditCode';
 import MessageTmpPage from "./pages/MessageTmpPage";
 import EditUserInfo from './pages/EditUserInfo';
-import MainC from './components/MainC';
 
 function App() {
   const Layout = () => {
@@ -45,14 +45,14 @@ function App() {
           <Route path="settings" element={<DetailPage />} />
 
           <Route path="admin" element={<AdminLayout />} >
-            <Route index element={<AdminPage/>}/>
-            <Route path="algorithm" element={<AdminAlgoPage/>} />
-            <Route path="user" element={<AdminUsersPage/>} />
-            <Route path="algorithm/:id" element={<AddAlgoPage/>} />
+            <Route index element={<AdminPage />} />
+            <Route path="algorithm" element={<AdminAlgoPage />} />
+            <Route path="user" element={<AdminUsersPage />} />
+            <Route path="algorithm/:id" element={<AddAlgoPage />} />
           </Route>
           <Route path="Search" element={<MainPage />} />
         </Route>
-        <Route path=":id" element={<MainC />} />
+        <Route path="/editor" element={<EditCode />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/message" element={<MessageTmpPage />} />
