@@ -14,8 +14,8 @@ module.exports = {
       },
       screens: {
         'sm': '640px',  // customize the screen size as needed
-        'md': '1024px',
-        'lg': '1160px',
+        'md': '980px',
+        'lg': '1145px',
         'xl': '1536px',
       }
     },

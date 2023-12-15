@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { AppDispatch, RootState } from '../../api/store';
 import { Editor } from '@monaco-editor/react';
 import { setlang, setTheme, lang } from '../../api/scripts';
@@ -63,4 +64,5 @@ const Main = () => {
     </div>
   );
 };
+
 export default Main;

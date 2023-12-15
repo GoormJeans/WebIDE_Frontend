@@ -104,13 +104,20 @@ export const langs_c: any = {
         now_lang: "cpp",
         ex_lang: cpp(),
         ex_autocompletion: autocompletion({ override: [(context) => languageSpecificCompletions("cpp", context)] }),
-        theme: myTheme,
+        value:
+            `#include <bits/stdc++.h>
+        using namespace std;
+        
+        int solution(vector<int> num_list) {
+            int answer = 0;
+            return answer;
+        }`,
     }
 };
 
 
 
-export interface scripts_c {
+export interface scriptsC {
     now_lang: string,
     ex_lang: any,
     ex_autocompletion: any,
@@ -124,7 +131,7 @@ export interface scripts_c {
     theme: any,
 }
 
-let initialState: scripts_c = {
+let initialState: scriptsC = {
     now_lang: "java",
     ex_lang: java(),
     ex_autocompletion: autocompletion({ override: [(context) => languageSpecificCompletions("java", context)] }),
@@ -159,7 +166,7 @@ int solution(vector<int> num_list) {
     cpp_submit: "",
 };
 
-export const scripts_c = createSlice({
+export const scriptsC = createSlice({
     name: 'user',
     initialState,
     reducers: {
@@ -204,7 +211,8 @@ export const scripts_c = createSlice({
     },
 });
 
-export const { setValue_c, setlang_c, setsave, setSubmit } = scripts_c.actions;
+export const { setValue_c, setlang_c, setsave, setSubmit } = scriptsC.actions;
 
 
-export default scripts_c.reducer;
+
+export default scriptsC.reducer;

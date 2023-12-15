@@ -23,9 +23,6 @@ export const langs: any = {
 export const lang: any = ['java', 'py', 'cpp'];
 
 
-
-
-
 export interface scripts {
   theme: string;
   another: string;
@@ -42,7 +39,7 @@ const initialState: scripts = {
   defaultValue: 'i love java',
 };
 
-export const scripts = createSlice({
+export const scriptsSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -66,6 +63,6 @@ export const scripts = createSlice({
   },
 });
 
-export const { setScript, setlang, setTheme } = scripts.actions;
+export const { setScript, setlang, setTheme } = scriptsSlice.actions;
 
-export default scripts.reducer;
+export default scriptsSlice.reducer;
