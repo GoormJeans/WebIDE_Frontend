@@ -1,13 +1,16 @@
+/* eslint-disable no-console, react/no-access-state-in-setstate */
 import React from 'react';
-import Tree from 'rc-tree';
+import { gData } from '../../assets/file_tree/dataUtil';
 import '../../assets/file_tree/index.css';
 import '../../assets/file_tree/animation.less';
+import '../../assets/file_tree/draggable.less';
+import Tree from 'rc-tree';
+
 
 const STYLE = `
 .rc-tree-child-tree {
   display: block;
 }
-
 .node-motion {
   transition: all .3s;
   overflow-y: hidden;
@@ -18,7 +21,12 @@ const STYLE = `
 }
 `;
 
-const defaultExpandedKeys = ['0', '0-2', '0-9-2'];
+const allowDrop: any = (paramobj: { dropNode: any, dropPosition: any }) => {
+    if (!paramobj.dropNode.children) {
+        if (paramobj.dropPosition === 0) return false;
+    }
+    return true;
+}
 
 const motion = {
     motionName: 'node-motion',
@@ -28,88 +36,6 @@ const motion = {
     onLeaveStart: (node: any) => ({ height: node.offsetHeight }),
     onLeaveActive: () => ({ height: 0 }),
 };
-
-// JSON 파일로 받아올 부분
-function getTreeData() {
-    // big-data: generateData(1000, 3, 2)
-    return [
-        {
-            key: '0',
-            title: 'node 0',
-            children: [
-                { key: '0-0', title: 'node 0-0' },
-                { key: '0-1', title: 'node 0-1' },
-                {
-                    key: '0-2',
-                    title: 'node 0-2',
-                    children: [
-                        { key: '0-2-0', title: 'node 0-2-0' },
-                        { key: '0-2-1', title: 'node 0-2-1' },
-                        { key: '0-2-2', title: 'node 0-2-2' },
-                    ],
-                },
-                { key: '0-3', title: 'node 0-3' },
-                { key: '0-4', title: 'node 0-4' },
-                { key: '0-5', title: 'node 0-5' },
-                { key: '0-6', title: 'node 0-6' },
-                { key: '0-7', title: 'node 0-7' },
-                { key: '0-8', title: 'node 0-8' },
-                {
-                    key: '0-9',
-                    title: 'node 0-9',
-                    children: [
-                        { key: '0-9-0', title: 'node 0-9-0' },
-                        {
-                            key: '0-9-1',
-                            title: 'node 0-9-1',
-                            children: [
-                                { key: '0-9-1-0', title: 'node 0-9-1-0' },
-                                { key: '0-9-1-1', title: 'node 0-9-1-1' },
-                                { key: '0-9-1-2', title: 'node 0-9-1-2' },
-                                { key: '0-9-1-3', title: 'node 0-9-1-3' },
-                                { key: '0-9-1-4', title: 'node 0-9-1-4' },
-                            ],
-                        },
-                        {
-                            key: '0-9-2',
-                            title: 'node 0-9-2',
-                            children: [
-                                { key: '0-9-2-0', title: 'node 0-9-2-0' },
-                                { key: '0-9-2-1', title: 'node 0-9-2-1' },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            key: '1',
-            title: 'node 1',
-            // children: new Array(1000)
-            //   .fill(null)
-            //   .map((_, index) => ({ title: `auto ${index}`, key: `auto-${index}` })),
-            children: [
-                {
-                    key: '1-0',
-                    title: 'node 1-0',
-                    children: [
-                        { key: '1-0-0', title: 'node 1-0-0' },
-                        {
-                            key: '1-0-1',
-                            title: 'node 1-0-1',
-                            children: [
-                                { key: '1-0-1-0', title: 'node 1-0-1-0' },
-                                { key: '1-0-1-1', title: 'node 1-0-1-1' },
-                            ],
-                        },
-                        { key: '1-0-2', title: 'node 1-0-2' },
-                    ],
-                },
-            ],
-        },
-    ];
-}
-
 
 //교체할 커스텀 icon
 const FolderCloseIcon =
@@ -122,7 +48,6 @@ const Fileicon =
 const Fileiconview = '0 0 384 512'
 const FolderCloseView = '0 0 512 512';
 const FolderOpenView = '0 0 576 512';
-
 const getSvgIcon = (path: any, view: any, iStyle = {}) => (
     <i style={iStyle}>
         <svg
@@ -139,16 +64,86 @@ const getSvgIcon = (path: any, view: any, iStyle = {}) => (
 );
 
 
+class File_tree extends React.Component {
+    state = {
+        gData,
+        autoExpandParent: true,
+        expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
+    };
 
+    onDragStart = (info: any) => {
+        console.log('start', info);
+    };
 
+    onDragEnter = () => {
+        console.log('enter');
+    };
 
+    onDrop = (info: any) => {
+        console.log('drop', info);
+        const dropKey = info.node.key;
+        const dragKey = info.dragNode.key;
+        const dropPos = info.node.pos.split('-');
+        const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
 
-const File_tree = () => {
-    const treeRef: any = React.useRef();
-    const onSelect = (obj: any) => {
+        const loop = (data: any, key: any, callback: any) => {
+            data.forEach((item: any, index: any, arr: any) => {
+                if (item.key === key) {
+                    callback(item, index, arr);
+                    return;
+                }
+                if (item.children) {
+                    loop(item.children, key, callback);
+                }
+            });
+        };
+        const data = [...this.state.gData];
+
+        // Find dragObject
+        let dragObj: any;
+        loop(data, dragKey, (item: any, index: any, arr: any) => {
+            arr.splice(index, 1);
+            dragObj = item;
+        });
+
+        if (dropPosition === 0) {
+            // Drop on the content
+            loop(data, dropKey, (item: any) => {
+                item.children = item.children || [];
+                item.children.unshift(dragObj);
+            });
+        } else {
+            // Drop on the gap (insert before or insert after)
+            let ar: any;
+            let i: any;
+            loop(data, dropKey, (item: any, index: any, arr: any) => {
+                ar = arr;
+                i = index;
+            });
+            if (dropPosition === -1) {
+                ar.splice(i, 0, dragObj);
+            } else {
+                ar.splice(i + 1, 0, dragObj);
+            }
+        }
+
+        this.setState({
+            gData: data,
+        });
+    };
+
+    onExpand = (expandedKeys: any) => {
+        console.log('onExpand', expandedKeys);
+        this.setState({
+            expandedKeys,
+            autoExpandParent: false,
+        });
+    };
+    onSelect = (obj: any) => {
         console.log(obj);
     }
-    const switcherIcon = (obj: any) => {
+
+    switcherIcon = (obj: any) => {
         if (obj.data.key?.startsWith('0-0-3')) {
             return false;
         }
@@ -160,32 +155,33 @@ const File_tree = () => {
             { cursor: 'pointer', backgroundColor: 'white' }
         );
     };
-    if (treeRef === undefined)
-        return (<div></div>);
-    return (
-        <div className="overflow-hidden">
-            <style dangerouslySetInnerHTML={{ __html: STYLE }} />
-            <div style={{ overflow: 'hidden', display: 'flex' }}>
-                <div style={{ display: 'flex-start' }}>
-                    <Tree
-                        ref={treeRef}
-                        // defaultExpandAll={false}
-                        defaultExpandAll
-                        defaultExpandedKeys={defaultExpandedKeys}
-                        motion={motion}
-                        style={{ height: '100%' }}
-                        treeData={getTreeData()}
-                        //icon={ }
-                        onSelect={onSelect}
-                        showIcon={false}
-                        switcherIcon={switcherIcon}
-                        virtual={true}
-                    />
+    render() {
+        return (
+            <div className="overflow-hidden">
+                <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+                <div style={{ overflow: 'hidden', display: 'flex' }}>
+                    <div style={{ display: 'flex-start' }}>
+                        <Tree
+                            allowDrop={allowDrop}
+                            expandedKeys={this.state.expandedKeys}
+                            onExpand={this.onExpand}
+                            autoExpandParent={this.state.autoExpandParent}
+                            draggable
+                            onDragStart={this.onDragStart}
+                            onDrop={this.onDrop}
+                            showIcon={false}
+                            treeData={this.state.gData}
+                            motion={motion}
+                            style={{ height: '100%' }}
+                            onSelect={this.onSelect}
+                            switcherIcon={this.switcherIcon}
+                            virtual={true}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-};
-
+        );
+    }
+}
 
 export default File_tree;
