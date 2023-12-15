@@ -68,11 +68,13 @@ const MessagePanel = () => {
   }
 
   return (
-    <div className="px-8 pt-8">
+    <div className="px-5 pt-5 h-[700px]">
+      
       {/* dummy user change button */}
       <button onClick={() => setUser(!user)}>User</button>
+
       <MessageHeader handleSearchChange={handleSearchChange} handleSearchMessages={handleSearchMessages} visible={visible} setVisible={setVisible} searchTerm={searchTerm} />
-      <div className="w-full h-96 border-solid border-[.2rem] border-[#ececec] rounded-xl p-4 mb-4 overflow-y-auto">
+      <div className="w-full h-full border-solid border-[.2rem] border-[#ececec] rounded-xl p-2 mb-2 overflow-y-auto">
         {visible ?
           renderMessages(searchResults)
           :

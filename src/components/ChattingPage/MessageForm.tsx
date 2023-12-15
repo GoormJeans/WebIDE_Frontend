@@ -38,7 +38,7 @@ const MessageForm: React.FC<{ user: UserInfo; messages: Message[]; setMessages: 
     <div>
       <form onSubmit={handleSubmit} className="w-full flex flex-row">
         <input className="w-full rounded-xl px-5" onChange={(e)=>setContent(e.target.value)} value={content} placeholder="Message Input"/>
-        <button className="ml-5 bg-slate-400 px-5 py-2 text-white rounded-xl" onClick={handleSubmit}>Send</button>
+        <button className="ml-2 bg-slate-400 px-3 py-2 text-white rounded-xl" onClick={handleSubmit}>Send</button>
       </form>
     </div>
   )

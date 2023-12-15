@@ -97,11 +97,9 @@ const EditCode = () => {
 
                 </div>
                 <MainCM />
-                <div className='w-4/12 bg-editor-color'>
+                <div className={`w-fit h-screen bg-editor-color fixed transition-all duration-500 top-[29px] ${visible?'right-[-700px]':'right-0'}`}>
                     {/* 채팅 페이지 보이게하기 */}
-                    <div className="max-w-[500px]">
-                        {visible && <MessagePanel />}
-                    </div>
+                        <MessagePanel />
                 </div>
 
             </div>
