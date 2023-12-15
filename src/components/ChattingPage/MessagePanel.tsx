@@ -51,6 +51,11 @@ const MessagePanel = () => {
 
   const handleSearchMessages = (e: any) => {
     e.preventDefault();
+
+    if(searchTerm.length===0){
+      return;
+    }
+
     setVisible(true) //뒤로가기 버튼 숨김
 
     // Local Search Logic
