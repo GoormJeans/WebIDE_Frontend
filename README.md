@@ -1,3 +1,4 @@
+[![Deploy to S3](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/main-deploy-work.yml/badge.svg)](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/main-deploy-work.yml)
 # WebIDE_Frontend
 
 ### 🪄 프로젝트 개요
@@ -8,7 +9,10 @@
 
 ### ⚙️ 개발 환경
 - **`React + TypeScript`**
-- **`Monaco editor`**
+- **`Codemirror`**
+- **`MUI`**
+- **`Tailwind CSS`**
+- **`react-redux + redux-toolkit`**
 
 ### 담당 기능
 - **김동진** : 마이 페이지 및 관리자 페이지 관련 UI/UX
