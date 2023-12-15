@@ -52,7 +52,7 @@ function App() {
           </Route>
           <Route path="Search" element={<MainPage />} />
         </Route>
-        <Route path=":id" element={<Main_c />} />
+        <Route path=":id" element={<MainC />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/message" element={<MessageTmpPage />} />
