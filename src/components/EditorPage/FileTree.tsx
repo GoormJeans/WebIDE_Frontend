@@ -1,7 +1,7 @@
 import React from 'react';
 import Tree from 'rc-tree';
-import '../../assets/File_tree/index.css';
-import '../../assets/File_tree/animation.less';
+import '../../assets/file_tree/index.css';
+import '../../assets/file_tree/animation.less';
 const STYLE = `
 .rc-tree-child-tree {
   display: block;
