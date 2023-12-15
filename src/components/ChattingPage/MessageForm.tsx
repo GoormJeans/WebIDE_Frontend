@@ -10,7 +10,7 @@ const MessageForm: React.FC<{ user: UserInfo; messages: Message[]; setMessages: 
   const createMessage = () => {
     const message: Message = {
       created_at: new Date(),
-      nickname: user.name,
+      nickname: user.nickname,
       content: content,
       aid: 1,
       id: messageId,

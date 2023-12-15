@@ -16,7 +16,7 @@ const MessageComponent: React.FC<MessageType> = ({ message, user }) => {
 
   // 이 메시지가 내 메시지인지 식별
   const isMessageMine = (message: Message, user: UserInfo) => {
-    if (user) { return message.nickname === user.name }
+    if (user) { return message.nickname === user.nickname }
   }
 
   return (
