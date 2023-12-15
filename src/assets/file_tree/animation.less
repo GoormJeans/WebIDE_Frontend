@@ -1,0 +1,30 @@
+.animation {
+    .rc-tree-treenode {
+        display: flex;
+
+        .rc-tree-indent {
+            align-self: stretch;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: stretch;
+
+            .rc-tree-indent-unit {
+                height: 100%;
+
+                &::before {
+                    top: 0;
+                    bottom: 0;
+                    border-right: 1px solid blue;
+                    left: 50%;
+                    content: '';
+                }
+
+                &-end {
+                    &::before {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
