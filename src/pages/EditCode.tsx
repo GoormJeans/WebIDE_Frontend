@@ -4,15 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../api/store';
 import { setlang_c, setSubmit } from '../api/scripts_c';
 import { lang } from '../api/scripts';
-import MainCM from '../components/EditorPage/Main_c';
+import MainCM from '../components/EditorPage/MainCM';
 import { useNavigate } from 'react-router-dom';
-import File_tree from '../components/EditorPage/File_tree';
-
-const Edit_code = () => {
+import Filetree from '../components/EditorPage/FileTree';
+const EditCode = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.scripts_c);
-    const filenameRef: any = useRef(null);
+    //const filenameRef: any = useRef(null);
     const handlelangs = (e: any) => {
         dispatch(setlang_c(e.target.value));
     }
@@ -41,25 +40,25 @@ const Edit_code = () => {
         if (setting.now_lang === "py")
             alert(setting.py_val);
     }
-
-    function saveAsFile(str: string, filename: string) {
-        const blob = new Blob([str], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    const handleExtract = () => {
-        const selectedLanguage = setting.defaultLanguage;
-        const customFilename = filenameRef.current.value || 'solution'; // Use input or default filename
-        //const fullFilename = `${customFilename}.${langs[selectedLanguage].path.substring(1)}`;
-        //alert(fullFilename);
-        //saveAsFile(editorRef.current.getValue(), fullFilename);
-    };
-
+    /*
+        function saveAsFile(str: string, filename: string) {
+            const blob = new Blob([str], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    
+        const handleExtract = () => {
+            const selectedLanguage = setting.defaultLanguage;
+            const customFilename = filenameRef.current.value || 'solution'; // Use input or default filename
+            //const fullFilename = `${customFilename}.${langs[selectedLanguage].path.substring(1)}`;
+            //alert(fullFilename);
+            //saveAsFile(editorRef.current.getValue(), fullFilename);
+        };
+    */
     return (
         <>
             <div className='flex flex-row bg-black'>
@@ -78,7 +77,7 @@ const Edit_code = () => {
             </div>
             <div className='flex w-full h-100vh bg-white'>
                 <div className="w-2/12 font-mono bg-editor-color p-4">
-                    <File_tree />
+                    <Filetree />
 
                 </div>
                 <MainCM />
@@ -96,4 +95,4 @@ const Edit_code = () => {
             <button onClick={() => handleExtract()}>file save</button>
             */
 
-export default Edit_code;
+export default EditCode;

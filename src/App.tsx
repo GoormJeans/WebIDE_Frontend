@@ -11,7 +11,7 @@ import AdminUsersPage from "./pages/AdminUsersPage";
 import AddAlgoPage from './pages/AddAlgoPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Edit_code from './pages/Edit_code';
+import EditCode from './pages/EditCode';
 
 function App() {
   const Layout = () => {
@@ -50,7 +50,7 @@ function App() {
           <Route path="Search" element={<MainPage />} />
 
         </Route>
-        <Route path="/editor" element={<Edit_code />} />
+        <Route path="/editor" element={<EditCode />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
       </Routes>
