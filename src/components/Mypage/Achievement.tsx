@@ -31,7 +31,7 @@ const Achievement = () => {
   }, []);
 
   return (
-    <div className='circle-chart bg-white p-3 mr-7 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>
+    <div className='circle-chart bg-white p-3 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>
       <div className='chart-background bg-transparent'>
         <p className='font-k2d text-sm font-medium bg-transparent'>Your achievement</p>
         <div className='bg-transparent flex flex-row'>
@@ -58,7 +58,7 @@ const Achievement = () => {
                   fontFamily: 'K2D',
                 },
               }}
-              width={370}
+              width={360}
               height={200}
             />
           </div>
