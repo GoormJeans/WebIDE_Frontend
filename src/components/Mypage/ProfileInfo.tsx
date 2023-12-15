@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { dummyUserInfo } from './DummyData';
+import { dummyUserInfo } from '../../types/DummyData';
 
 const IMG_URL = 'https://url.kr/csn968'
 
@@ -24,8 +24,8 @@ const ProfileInfo = () => {
       <div className='flex flex-row'>
         <img className='bg-white w-36 h-36 rounded-full ml-10 mr-10 mt-5' src={IMG_URL} alt='fake-avartar' />
         <div className='mr-28'>
-          <InfoCard head="Nickname." body={dummyUserInfo.name} />
-          <InfoCard head="Add." body={dummyUserInfo.address} />
+          <InfoCard head="Nickname." body={dummyUserInfo.nickname} />
+          <InfoCard head="Add." body={dummyUserInfo.city} />
           <InfoCard head="Email." body={dummyUserInfo.email} />
           <InfoCard head="Bio." body={dummyUserInfo.bio} />
         </div>

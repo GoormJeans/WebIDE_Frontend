@@ -2,28 +2,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import MessageForm from "./MessageForm";
 import MessageHeader from "./MessageHeader";
 import MessageComponent from "./MessageComponent";
-import { UserInfo } from "../../types/UserInfo.type";
 import { Message } from "../../types/Message.type";
+import { user1, user2 } from "../../types/DummyData";
 // import axios from "../../api/axios";
 
 const MessagePanel = () => {
 
   //dummy user2, 로그인해서 user에 대한 state가 생기기 전까지 일단 임시로 넣은 user
-  const user2: UserInfo = {
-    name: 'Kim Goorm',
-    address: 'Seoul, Korea',
-    email: 'kimgoorm@gmail.com',
-    bio: 'https://github.com/kimgoorm',
-  }
-  const user1: UserInfo = {
-    name: 'Lee Goorm',
-    address: 'Jeju, Korea',
-    email: 'leegoorm@naver.com',
-    bio: 'https://github.com/leegoorm',
-  }
+
 
   const [user, setUser] = useState(false);
-
   //dummy 코드 끝
 
   const [searchTerm, setSearchTerm] = useState("");
