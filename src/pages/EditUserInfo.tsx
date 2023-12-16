@@ -1,5 +1,5 @@
 import React from 'react'
-import InfoEditCard from '../components/Mypage/InfoEditCard'
+import InfoEditCard from '../components/EditInfoPage/InfoEditCard'
 
 const EditUserInfo = () => {
   return (
