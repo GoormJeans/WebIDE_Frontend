@@ -1,9 +1,11 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { gData } from '../../assets/file_tree/dataUtil';
 import '../../assets/file_tree/index.css';
 import '../../assets/file_tree/animation.less';
 import '../../assets/file_tree/draggable.less';
+import './contextmenu.css';
 import Tree from 'rc-tree';
 
 
@@ -20,6 +22,16 @@ const STYLE = `
 
 }
 `;
+function contains(root: any, n: any) {
+    let node = n;
+    while (node) {
+        if (node === root) {
+            return true;
+        }
+        node = node.parentNode;
+    }
+    return false;
+}
 
 const allowDrop: any = (paramobj: { dropNode: any, dropPosition: any }) => {
     if (!paramobj.dropNode.children) {
@@ -69,8 +81,24 @@ class File_tree extends React.Component {
         gData,
         autoExpandParent: true,
         expandedKeys: [],
-        selectedKeys: [],
+        selectedKeys: [0 - 1],
     };
+    cmContainer: any = null;
+    toolTip: any = null;
+
+    componentDidMount() {
+        this.getContainer();
+        console.log(contains(ReactDOM.findDOMNode(this), this.cmContainer));
+    }
+
+    componentWillUnmount() {
+        if (this.cmContainer != null) {
+            ReactDOM.unmountComponentAtNode(this.cmContainer);
+            document.body.removeChild(this.cmContainer);
+            this.cmContainer = null;
+        }
+    }
+
 
     onDragStart = (info: any) => {
         console.log('start', info);
@@ -147,11 +175,43 @@ class File_tree extends React.Component {
     onRightClick = (info: any) => {
         console.log('right click', info);
         this.setState({ selectedKeys: [info.node.props.eventKey] });
+        this.renderCm(info);
     };
 
     onMouseLeave = (info: any) => {
         console.log('leave', info);
     };
+
+    getContainer = () => {
+        if (this.cmContainer == null) {
+            this.cmContainer = document.createElement('div');
+            document.body.appendChild(this.cmContainer);
+        }
+        return this.cmContainer;
+    }
+
+    renderCm(info: any) {
+        if (this.toolTip != null) {
+            ReactDOM.unmountComponentAtNode(this.cmContainer);
+            this.toolTip = null;
+        }
+        this.toolTip = (
+            <div className=''>
+                <h4>{info.node.props.title}</h4>
+            </div>
+        );
+        const container = this.getContainer();
+
+        Object.assign(this.cmContainer.style, {
+            position: 'absolute',
+            left: `${info.event.pageX}px`,
+            top: `${info.event.pageY}px`,
+        });
+        console.log(container);
+        ReactDOM.render(this.toolTip, this.cmContainer);
+    }
+
+
 
     switcherIcon = (obj: any) => {
         if (obj.data.key?.startsWith('0-0-3')) {
@@ -172,6 +232,7 @@ class File_tree extends React.Component {
                 <div style={{ overflow: 'hidden', display: 'flex' }}>
                     <div style={{ display: 'flex-start' }}>
                         <Tree
+                            showLine
                             allowDrop={allowDrop}
                             onRightClick={this.onRightClick}
                             selectedKeys={this.state.selectedKeys}
@@ -188,7 +249,8 @@ class File_tree extends React.Component {
                             onSelect={this.onSelect}
                             switcherIcon={this.switcherIcon}
                             virtual={true}
-                        />
+                        >
+                        </Tree>
                     </div>
                 </div>
             </div>
