@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import FadeIn from '../FadeIn'
-import InputTag from '../InputTag';
+import SignUpInputTag from './SignUpInputTag';
 
 
 const SignupForm = () => {
@@ -40,7 +40,7 @@ const SignupForm = () => {
     <div className='flex flex-col'>
       <FadeIn index={0}>
         <div className='flex flex-col'>
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'email',
               placeholder: 'kimgoorm@example.com',
@@ -49,7 +49,7 @@ const SignupForm = () => {
             value={emailValue}
             onChange={handleEmailChange}
           />
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'kim goorm',
@@ -58,7 +58,7 @@ const SignupForm = () => {
             value={nicknameValue}
             onChange={handleNicknameChange}
           />
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'Enter password',
@@ -68,7 +68,7 @@ const SignupForm = () => {
             onChange={handlePasswordChange}  
           />
 
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'Confirm password',
@@ -78,7 +78,7 @@ const SignupForm = () => {
             onChange={handleConfirmPasswordChange}  
           />
 
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'Enter address',
@@ -88,7 +88,7 @@ const SignupForm = () => {
             onChange={handleAddressChange} 
           />
 
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'Enter bio',
