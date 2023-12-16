@@ -68,7 +68,8 @@ class File_tree extends React.Component {
     state = {
         gData,
         autoExpandParent: true,
-        expandedKeys: ['0-0-key', '0-0-0-key', '0-0-0-0-key'],
+        expandedKeys: [],
+        selectedKeys: [],
     };
 
     onDragStart = (info: any) => {
@@ -139,9 +140,18 @@ class File_tree extends React.Component {
             autoExpandParent: false,
         });
     };
-    onSelect = (obj: any) => {
-        console.log(obj);
-    }
+    onSelect = (selectedKeys: any) => {
+        this.setState({ selectedKeys });
+    };
+
+    onRightClick = (info: any) => {
+        console.log('right click', info);
+        this.setState({ selectedKeys: [info.node.props.eventKey] });
+    };
+
+    onMouseLeave = (info: any) => {
+        console.log('leave', info);
+    };
 
     switcherIcon = (obj: any) => {
         if (obj.data.key?.startsWith('0-0-3')) {
@@ -163,6 +173,8 @@ class File_tree extends React.Component {
                     <div style={{ display: 'flex-start' }}>
                         <Tree
                             allowDrop={allowDrop}
+                            onRightClick={this.onRightClick}
+                            selectedKeys={this.state.selectedKeys}
                             expandedKeys={this.state.expandedKeys}
                             onExpand={this.onExpand}
                             autoExpandParent={this.state.autoExpandParent}
