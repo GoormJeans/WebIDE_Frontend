@@ -196,7 +196,7 @@ class File_tree extends React.Component {
             this.toolTip = null;
         }
         this.toolTip = (
-            <div className=''>
+            <div className='fileTreeRight'>
                 <h4>{info.node.props.title}</h4>
             </div>
         );
@@ -207,7 +207,7 @@ class File_tree extends React.Component {
             left: `${info.event.pageX}px`,
             top: `${info.event.pageY}px`,
         });
-        console.log(container);
+
         ReactDOM.render(this.toolTip, this.cmContainer);
     }
 
