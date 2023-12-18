@@ -18,7 +18,9 @@ const MessagePanel = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [searchResults, setSearchResults] = useState<Message[]>([]);
   const [visible, setVisible] = useState(false);
+  const [content, setContent] = useState("");
 
+  const [messageId, setMessageId] = useState(0); // message ID 부여방식 확인 전까지 임시 ID
 
   const renderMessages = (messages: Message[]) =>
     messages.length > 0 &&
@@ -34,13 +36,13 @@ const MessagePanel = () => {
   const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({behavior:'smooth'})
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, visible]);
 
   const handleSearchMessages = (e: any) => {
     e.preventDefault();
 
-    if(searchTerm.length===0){
+    if (searchTerm.length === 0) {
       return;
     }
 
@@ -67,9 +69,41 @@ const MessagePanel = () => {
     setSearchTerm(event.target.value);
   }
 
+
+  // 메시지 생성 로직
+  const createMessage = () => {
+    const user_tmp = user ? user2 : user1
+    const message: Message = {
+      created_at: new Date(),
+      nickname: user_tmp.nickname,
+      content: content,
+      aid: 1,
+      id: messageId,
+    }
+    setMessageId(messageId + 1);
+    return message;
+  }
+
+  //제출 시 할 일
+  const handleSubmit = (e: any) => {
+    // if (!content) {
+    //   setErrors(prev => prev.concat('Type contents first'));
+    //   return;
+    // }
+    e.preventDefault()
+
+    if (content.length === 0) {
+      return;
+    }
+    //메시지를 저장하는 부분
+    setMessages([...messages, createMessage()])
+    setContent("");
+  }
+
+
   return (
     <div className="px-5 pt-5 h-[700px]">
-      
+
       {/* dummy user change button */}
       <button onClick={() => setUser(!user)}>User</button>
 
@@ -85,7 +119,7 @@ const MessagePanel = () => {
       </div>
 
       {/* dummy user version */}
-      <MessageForm user={user ? user2 : user1} messages={messages} setMessages={setMessages} />
+      <MessageForm handleSubmit={handleSubmit} content={content} setContent={setContent} />
     </div>
   )
 }
