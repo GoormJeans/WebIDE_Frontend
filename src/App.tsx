@@ -17,8 +17,7 @@ import EditUserInfo from './pages/EditUserInfo';
 
 function App() {
   const ClickEvent = () => {
-    const target: any = document.querySelector('.fileTreeRight');
-    console.log(target);
+    const target: any = document.querySelector('#fileTreeRight');
     if (target !== null) {
       while (target.firstChild)
         target.removeChild(target.firstChild);
