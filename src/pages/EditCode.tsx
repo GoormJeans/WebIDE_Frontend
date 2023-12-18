@@ -79,27 +79,22 @@ const EditCode = () => {
                         })}
                     </select>
                     {/* 채팅 페이지 버튼 */}
-                    <div className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out">
-                        <button onClick={() => {
-                            setVisible(!visible)
-                        }}>
-                            Chat
-                        </button>
-
-                    </div>
+                    <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={() => { setVisible(!visible) }}>
+                        Chat
+                    </button>
                     <div className='bg-black ml-1 mr-1'></div>
                     <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold mt-1 mb-1 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={() => handleSumit()}>submit</button>
                 </div>
-            </div>
+            </div >
             <div className='flex w-full h-100vh bg-white'>
                 <div className="w-2/12 font-mono bg-editor-color p-4">
                     <Filetree />
 
                 </div>
                 <MainCM />
-                <div className={`w-fit h-screen bg-editor-color fixed transition-all duration-500 top-[29px] ${visible?'right-[-700px]':'right-0'}`}>
+                <div className={`w-fit h-screen bg-editor-color fixed transition-all duration-500 top-[29px] ${visible ? 'right-[-700px]' : 'right-0'}`}>
                     {/* 채팅 페이지 보이게하기 */}
-                        <MessagePanel />
+                    <MessagePanel />
                 </div>
 
             </div>
