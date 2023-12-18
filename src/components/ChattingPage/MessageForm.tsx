@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import { UserInfo } from "../../types/UserInfo.type";
-import { Message } from "../../types/Message.type";
+import React from 'react'
+
 
 const MessageForm: React.FC<{ handleSubmit: any; content: string; setContent: any }> = ({ handleSubmit, content, setContent }) => {
 
