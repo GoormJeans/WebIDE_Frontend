@@ -12,7 +12,6 @@ import AddAlgoPage from './pages/AddAlgoPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import EditCode from './pages/EditCode';
-import MessageTmpPage from "./pages/MessageTmpPage";
 import EditUserInfo from './pages/EditUserInfo';
 
 function App() {
@@ -53,9 +52,9 @@ function App() {
           <Route path="Search" element={<MainPage />} />
         </Route>
         <Route path="/editor" element={<EditCode />} />
+        <Route path=":id" element={<EditCode />} />        
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
-        <Route path="/message" element={<MessageTmpPage />} />
       </Routes>
 
     </div>

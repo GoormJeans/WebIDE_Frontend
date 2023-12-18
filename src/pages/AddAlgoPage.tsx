@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
 import { RootState } from "../api/store";
+import { levels } from './../api/filter';
 
 const AddAlgoPage = () => {
 
@@ -22,8 +23,8 @@ const AddAlgoPage = () => {
   useEffect(() => {
     const prob = probs.filter((x) => x.id === parseInt(param.id!))[0];
     if (prob) {
-      setName(prob.title);
-      setLevel(prob.level);
+      setName(prob.name);
+      setLevel(levels[prob.level]);
       // 나중에 contents나 테스트 케이스도 여기서 초기화해줄 예정
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
