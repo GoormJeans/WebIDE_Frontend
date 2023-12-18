@@ -20,7 +20,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ head, body }) => (
 
 const ProfileInfo = () => {
   return (
-    <div className='profile-info flex flex-row mt-7'>
+    <div className='profile-info flex flex-row'>
       <div className='flex flex-row'>
         <img className='bg-white w-36 h-36 rounded-full ml-10 mr-10 mt-5' src={IMG_URL} alt='fake-avartar' />
         <div className='mr-28'>
