@@ -43,8 +43,8 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<MainPage />} />
           <Route path="algorithms" element={<DetailPage />} />
           <Route path="mypage" element={<MyPage />} />
           <Route path="mypage/edit" element={<EditUserInfo />} />
