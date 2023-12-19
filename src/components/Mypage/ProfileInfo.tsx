@@ -47,9 +47,9 @@ const ProfileInfo = () => {
       <div className='flex flex-row'>
         <img className='bg-white w-36 h-36 rounded-full ml-10 mr-10 mt-5' src={IMG_URL} alt='fake-avartar' />
         <div className='mr-28'>
+          <InfoCard head="Email." body={userInfo.emailValue} />
           <InfoCard head="Nickname." body={userInfo.nicknameValue} />
           <InfoCard head="Add." body={userInfo.cityValue} />
-          <InfoCard head="Email." body={userInfo.emailValue} />
           <InfoCard head="Bio." body={userInfo.bioValue} />
         </div>
       </div>
