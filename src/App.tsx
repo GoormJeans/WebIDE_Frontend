@@ -60,7 +60,7 @@ function App() {
           <Route path="Search" element={<MainPage />} />
         </Route>
         <Route path="/editor" element={<EditCode />} />
-        <Route path=":id" element={<EditCode />} />        
+        <Route path=":id" element={<EditCode />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
       </Routes>
