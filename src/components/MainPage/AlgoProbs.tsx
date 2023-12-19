@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Algorithm } from "../../types/Algorithm.type";
+import React from "react";
 
 //알고리즘 리스트 항목
 const AlgoProbs: React.FC<{prob: Algorithm; solved:number[]}> = ({ prob, solved }) => {
