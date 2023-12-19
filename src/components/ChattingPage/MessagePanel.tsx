@@ -14,6 +14,7 @@ const MessagePanel = () => {
   const [user, setUser] = useState(false);
   //dummy 코드 끝
 
+  const [join, setJoin] = useState(false)
   const [searchTerm, setSearchTerm] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [searchResults, setSearchResults] = useState<Message[]>([]);
@@ -22,6 +23,20 @@ const MessagePanel = () => {
 
   const [messageId, setMessageId] = useState(0); // message ID 부여방식 확인 전까지 임시 ID
 
+  // 채팅방 참가하기 나가기
+  const handleInvitation = () => {
+
+    if (join) {
+      // 채팅방 나간다는 request 전송
+    } else {
+      // 채팅방 들어간다는 request 전송
+    }
+
+    setJoin(!join)
+  }
+
+
+  // 채팅 메시지 렌더링
   const renderMessages = (messages: Message[]) =>
     messages.length > 0 &&
     messages.map(message =>
@@ -101,7 +116,7 @@ const MessagePanel = () => {
   }
 
 
-  return (
+  return join ? (
     <div className="px-5 pt-5 h-[700px]">
 
       {/* dummy user change button */}
@@ -120,6 +135,13 @@ const MessagePanel = () => {
 
       {/* dummy user version */}
       <MessageForm handleSubmit={handleSubmit} content={content} setContent={setContent} />
+      <button className="mt-3 pl-3 pr-3 w-full bg-red-400  hover:bg-red-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleInvitation}>채팅방 나가기</button>
+    </div>
+  ) : (
+    <div className="px-5 pt-5 h-[700px] flex items-center">
+      <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleInvitation}>
+        채팅 참가하기
+      </button>
     </div>
   )
 }
