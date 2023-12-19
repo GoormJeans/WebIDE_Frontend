@@ -195,14 +195,14 @@
 }
 
 .rc-tree-node-selected {
-  width: 100%;
+  width: fit-content;
   background-color: #9e9e9e;
   box-shadow: 0 0 0 1px #9e9e9e;
   opacity: 0.8;
 }
 
 .rc-tree-icon__open {
-  margin-right: 1px;
+  margin-right: 0px;
   vertical-align: top;
   background-position: -110px -16px;
 }
@@ -236,11 +236,11 @@
 
 .rc-tree-indent-unit {
   display: inline-block;
-  width: 8px;
+  width: 6px;
 }
 
 .rc-tree-draggable-icon {
   display: flex;
   justify-content: center;
-  width: 8px;
+  width: 4px;
 }
