@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import InfoEditInputTag from './InfoEditInputTag'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
@@ -8,6 +8,7 @@ import axios from 'axios';
 export const EditMyInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const userInfo = useSelector((state: RootState) => state.user);
+  const [isModified, setIsModified] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -28,10 +29,34 @@ export const EditMyInfo = () => {
 
   const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setAddressValue(e.target.value));
+    setIsModified(true);
   };
 
   const handleBioChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setBioValue(e.target.value));
+    setIsModified(true);
+  };
+
+  const handleSave = async () => {
+    try {
+      if (isModified) {
+        const response = await axios.post('http://localhost:3003/api/update-user-info', {
+          city: userInfo.cityValue,
+          bio: userInfo.bioValue,
+        });
+        // Assuming the server sends back the updated user information
+        const updatedUserInfo = response.data;
+
+        // You can dispatch actions to update the Redux store if needed
+        dispatch(setAddressValue(updatedUserInfo.city));
+        dispatch(setBioValue(updatedUserInfo.bio));
+
+        // Reset the isModified state after successful save
+        setIsModified(false);
+      }
+    } catch (error) {
+      console.error('Error updating user information:', error);
+    }
   };
 
   return (
@@ -60,7 +85,8 @@ export const EditMyInfo = () => {
         label: 'bio'
       }} defaultValue={userInfo.bioValue} onChange={handleBioChange} isErrored={false} />
       <div className='flex items-center justify-center'>
-        <button className="font-k2d bg-second-color px-5 py-3 mt-5 w-96 rounded-lg shadow-xl hover:opacity-75"
+        <button className={`font-k2d bg-second-color px-5 py-3 mt-5 w-96 rounded-lg shadow-xl hover:opacity-75 ${isModified ? '' : 'opacity-50'}`} onClick={handleSave}
+          disabled={!isModified}
         >Save
         </button>
       </div>
