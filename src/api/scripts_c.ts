@@ -33,31 +33,32 @@ export interface scriptsC {
 
 const initialState: scriptsC = {
     now_lang: "java",
-    value:
-        `class Solution {
+    value: ""
+        /*`class Solution {
     public int solution(int[] num_list) {
         int answer = 0;
         return answer;
     }
-}`,
-    java_val:
-        `class Solution {
+}`*/,
+    java_val: ""
+        /*`class Solution {
     public int solution(int[] num_list) {
         int answer = 0;
         return answer;
     }
-}`,
-    py_val:
-        `def solution(num_list):
+}`*/,
+    py_val: ""
+        /*`def solution(num_list):
     answer = 0
-    return answer`,
-    cpp_val:
-        `#include <bits/stdc++.h>
+    return answer`*/
+    ,
+    cpp_val: ''
+        /*`#include <bits/stdc++.h>
 using namespace std;
 int solution(vector<int> num_list) {
     int answer = 0;
     return answer;
-}`,
+}`*/,
     java_submit: "",
     py_submit: "",
     cpp_submit: "",
