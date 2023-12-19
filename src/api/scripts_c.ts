@@ -131,7 +131,7 @@ export interface scriptsC {
     theme: any,
 }
 
-let initialState: scriptsC = {
+const initialState: scriptsC = {
     now_lang: "java",
     ex_lang: java(),
     ex_autocompletion: autocompletion({ override: [(context) => languageSpecificCompletions("java", context)] }),
