@@ -24,7 +24,7 @@ const STYLE = `
 
 
 const handleDelete = (e : any) => {
-
+  console.log(e);
 }
 
 const handleCreate = (e : any) => {
@@ -149,26 +149,9 @@ class File_tree extends React.Component {
       dragObj = item;
     });
 
-    if (dropPosition === 0) {
-      // Drop on the content
-      loop(data, dropKey, (item: any) => {
-        item.children = item.children || [];
-        item.children.unshift(dragObj);
-      });
-    } else {
-      // Drop on the gap (insert before or insert after)
-      let ar: any;
-      let i: any;
-      loop(data, dropKey, (item: any, index: any, arr: any) => {
-        ar = arr;
-        i = index;
-      });
-      if (dropPosition === -1) {
-        ar.splice(i, 0, dragObj);
-      } else {
-        ar.splice(i + 1, 0, dragObj);
-      }
-    }
+    console.log(dragObj.key);
+    console.log(dropPosition);  //dropPosition : -1 : 외부 dropPosition 1 : 외부 //dropPosition 0 : 내부
+    console.log(dropKey);
 
     this.setState({
       gData: data,
@@ -213,13 +196,12 @@ class File_tree extends React.Component {
       <div id="fileTreeRight">
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
           <div onClick={()=>{console.log(info.node)}}>{info.node.pos}</div>
-          <div onClick={handleDelete} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>삭제하기</div>
+          <div onClick={(e:any)=>handleDelete(info.node.key)} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>삭제하기</div>
           <div onClick={handleCreate} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>파일 생성하기</div>
           <div onClick={handleCreateFolder} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.props.title}>폴더 생성하기</div>
         </div>
       </div>
     );
-    // const container = this.getContainer();
 
     Object.assign(this.cmContainer.style, {
       position: "absolute",
@@ -246,6 +228,11 @@ class File_tree extends React.Component {
       { cursor: "pointer", backgroundColor: "white" }
     );
   };
+  useEffect(()=>){
+
+  }
+
+
   render() {
     return (
       <div className="overflow-hidden">
