@@ -102,7 +102,7 @@ class File_tree extends React.Component {
 
   componentDidMount() {
     this.getContainer();
-    console.log(contains(ReactDOM.findDOMNode(this), this.cmContainer));
+    contains(ReactDOM.findDOMNode(this), this.cmContainer);
   }
 
   componentWillUnmount() {
@@ -195,7 +195,7 @@ class File_tree extends React.Component {
     this.toolTip = (
       <div id="fileTreeRight">
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
-          <div onClick={()=>{console.log(info.node)}}>{info.node.pos}</div>
+          <div onClick={()=>{console.log(info.node)}}>{info.node.key}</div>
           <div onClick={(e:any)=>handleDelete(info.node.key)} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>삭제하기</div>
           <div onClick={handleCreate} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>파일 생성하기</div>
           <div onClick={handleCreateFolder} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.props.title}>폴더 생성하기</div>
@@ -228,10 +228,6 @@ class File_tree extends React.Component {
       { cursor: "pointer", backgroundColor: "white" }
     );
   };
-  useEffect(()=>){
-
-  }
-
 
   render() {
     return (
