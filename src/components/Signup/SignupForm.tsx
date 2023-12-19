@@ -1,111 +1,140 @@
 import React, { ChangeEvent, useState } from 'react'
 import FadeIn from '../FadeIn'
-import InputTag from '../InputTag';
+import SignUpInputTag from './SignUpInputTag';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from "../../api/store";
+import { setEmailValue, setPasswordValue, setConfirmPasswordValue, setNicknameValue, setAddressValue, setBioValue } from '../../api/user';
+
 
 
 const SignupForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.user);
   const [agreementChecked, setAgreementChecked] = useState(false);
-  const [emailValue, setEmailValue] = useState('');
-  const [nicknameValue, setNicknameValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
-  const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
-  const [addressValue, setAddressValue] = useState('');
-  const [bioValue, setBioValue] = useState('');
+  const [detailsVisible, setDetailsVisible] = useState(false);
+  const isEmailValid: boolean = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.emailValue);
+  const isNicknameValid: boolean = user.nicknameValue.length <= 12;
+  const isPasswordValid: boolean = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/.test(user.passwordValue);
+  const isConfirmPasswordValid: boolean = user.passwordValue === user.confirmPasswordValue;
+
+  const isButtonDisabled: boolean = !agreementChecked || !isEmailValid || !isNicknameValid || !isPasswordValid || !isConfirmPasswordValid;
+
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmailValue(e.target.value);
+    dispatch(setEmailValue(e.target.value));
   };
 
   const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNicknameValue(e.target.value);
+    dispatch(setNicknameValue(e.target.value));
   };
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
+    dispatch(setPasswordValue(e.target.value));
   };
 
   const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setConfirmPasswordValue(e.target.value);
+    dispatch(setConfirmPasswordValue(e.target.value));
   };
 
   const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAddressValue(e.target.value);
+    dispatch(setAddressValue(e.target.value));
   };
 
   const handleBioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setBioValue(e.target.value);
+    dispatch(setBioValue(e.target.value));
+  };
+
+  const toggleDetails = () => {
+    setDetailsVisible(!detailsVisible);
   };
 
   return (
     <div className='flex flex-col'>
       <FadeIn index={0}>
         <div className='flex flex-col'>
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'email',
               placeholder: 'kimgoorm@example.com',
-              label: 'email',
+              label: 'Email*',
             }}
-            value={emailValue}
+            value={user.emailValue}
             onChange={handleEmailChange}
+            isErrored={!isEmailValid && !!user.emailValue}
           />
-          <InputTag
+          {!isEmailValid && user.emailValue && <p className="font-k2d text-rose-500">Invalid email format</p>}
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'kim goorm',
-              label: 'nickname',
+              label: 'Nickname* ',
             }}
-            value={nicknameValue}
+            value={user.nicknameValue}
             onChange={handleNicknameChange}
+            isErrored={!isNicknameValid && !!user.nicknameValue}
           />
-          <InputTag
+          {!isNicknameValid && user.nicknameValue && <p className="font-k2d text-rose-500">Nickname must be 12 characters or less</p>}
+          <SignUpInputTag
             inputType={{
-              type: 'text',
-              placeholder: 'Enter password',
-              label: 'Password',
+              type: 'password',
+              placeholder: 'Enter passwords',
+              label: 'Password* ',
             }}
-            value={passwordValue}
-            onChange={handlePasswordChange}  
+            value={user.passwordValue}
+            onChange={handlePasswordChange}
+            isErrored={!isPasswordValid && !!user.passwordValue}
           />
-
-          <InputTag
+          {!isPasswordValid && user.passwordValue && <p className="font-k2d text-rose-500">Invalid password format</p>}
+          <SignUpInputTag
             inputType={{
-              type: 'text',
-              placeholder: 'Confirm password',
-              label: 'Confirm Password',
+              type: 'password',
+              placeholder: 'Confirm passwords',
+              label: 'Confirm Password*',
             }}
-            value={confirmPasswordValue}
-            onChange={handleConfirmPasswordChange}  
+            value={user.confirmPasswordValue}
+            onChange={handleConfirmPasswordChange}
+            isErrored={!isConfirmPasswordValid && !!user.confirmPasswordValue}
           />
-
-          <InputTag
+          {!isConfirmPasswordValid && user.confirmPasswordValue && <p className="font-k2d text-rose-500">Passwords do not match</p>}
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'Enter address',
               label: 'Address',
             }}
-            value={addressValue}
-            onChange={handleAddressChange} 
+            value={user.cityValue}
+            onChange={handleAddressChange}
+            isErrored={false}
           />
 
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'Enter bio',
               label: 'Bio',
             }}
-            value={bioValue}
-            onChange={handleBioChange}  
+            value={user.bioValue}
+            onChange={handleBioChange}
+            isErrored={false}
           />
         </div>
       </FadeIn>
       <FadeIn index={2}>
-        <div className='flex flex-col justify-center items-center'>
+        <div className='flex flex-col items-center'>
           <div className='flex flex-row mt-10'>
             <input type="checkbox" id="agreement" name="agreement" value="agreement" onChange={() => setAgreementChecked(!agreementChecked)} />
             <label className='font-k2d text-lg ml-3' htmlFor="agreement">[필수] 개인정보 사용에 동의합니다</label>
+            <button
+              className='font-k2d text-lg ml-3'
+              onClick={toggleDetails}
+            >
+              {detailsVisible ? 'Hide Details' : 'Show Details'}
+            </button>
           </div>
-          <button disabled={!agreementChecked} className='font-k2d disabled:bg-slate-400  active:bg-slate-500 bg-nav-color px-5 py-3 ml-3 mt-3 w-80 rounded-xl shadow-xl' >Go to register!</button>
+          {detailsVisible && (
+              <p>Details about personal information agreement...</p>
+          )}
+          <button disabled={isButtonDisabled} className={`font-k2d ${isButtonDisabled ? 'disabled:bg-slate-400' : 'bg-nav-color'} px-5 py-3 ml-3 mt-3 w-80 rounded-xl shadow-xl`} >Go to register!</button>
         </div>
       </FadeIn>
     </div>

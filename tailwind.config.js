@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'nav-color': '#8A9BED',
+        'second-color': '#646FA9',
         'editor-color' : '#7C7B7B73',
       },
       fontFamily: {

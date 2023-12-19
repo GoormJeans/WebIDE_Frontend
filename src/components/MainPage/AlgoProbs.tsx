@@ -1,13 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Problem } from './../../api/algoprob';
-
-//알고리즘 리스트 항목 타입
-interface AlgoProbsProps {
-  prob: Problem;
-}
+import { Algorithm } from "../../types/Algorithm.type";
 
 //알고리즘 리스트 항목
-const AlgoProbs: React.FC<AlgoProbsProps> = ({ prob }) => {
+const AlgoProbs: React.FC<{prob: Algorithm; solved:number[]}> = ({ prob, solved }) => {
   const navigate = useNavigate();
 
   return (
@@ -15,8 +10,8 @@ const AlgoProbs: React.FC<AlgoProbsProps> = ({ prob }) => {
       onClick={() => navigate(`${prob.id}`)}//클릭 시 editor 페이지로 이동, 나중에 id를 이용해서 문제 페이지로 이동시키는 방식으로 하면 될 듯
     >
       <div className="bg-transparent flex flex-row">
-        <p className="bg-transparent w-4">{prob.solved && "O"}</p>{/* 문제 풀었으면 O로 표시 */}
-        <p className="bg-transparent ml-3">{prob.title}</p>
+        <p className="bg-transparent w-4">{solved.includes(prob.id) && "O"}</p>{/* 문제 풀었으면 O로 표시 */}
+        <p className="bg-transparent ml-3">{prob.name}</p>
       </div>
       <p className="bg-transparent">{prob.level}</p>
     </div>
