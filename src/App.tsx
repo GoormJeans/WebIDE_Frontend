@@ -15,6 +15,13 @@ import EditCode from './pages/EditCode';
 import EditUserInfo from './pages/EditUserInfo';
 
 function App() {
+  const ClickEvent = () => {
+    const target: any = document.querySelector('#fileTreeRight');
+    if (target !== null) {
+      while (target.firstChild)
+        target.removeChild(target.firstChild);
+    }
+  }
   const Layout = () => {
     return (
       <div>
@@ -32,6 +39,7 @@ function App() {
       </div>
     )
   }
+  window.addEventListener("click", ClickEvent);
   return (
     <div className='App'>
       <Routes>
