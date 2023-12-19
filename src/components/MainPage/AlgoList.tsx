@@ -8,12 +8,14 @@ const AlgoList: React.FC<{probs: Algorithm[]; solved: number[]}> = ({ probs, sol
   const [page, setPage] = useState(1);
   const limit = 10; // 한 번에 보여줄 문제 수
   const offset = (page - 1) * limit; // 문제 번호 단위
+
+
   const numPages = Math.ceil(probs.length / limit); // pagination 개수
   if (numPages > 1) { probs = probs.slice(offset, offset + limit) } //1페이지 이상일 경우에만 작동
 
   const pageButtons = new Array(numPages).fill(0);
 
-  if (probs.length > 0) { //검색결과가 있는 경우
+  if (probs?.length > 0) { //검색결과가 있는 경우
     return (
       <div className="w-full h-full ">
         <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent m-5 rounded-xl px-5 pt-5 border-2 whitespace-nowrap">
