@@ -1,4 +1,4 @@
-[![Deploy to S3](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/main-deploy-work.yml/badge.svg)](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/main-deploy-work.yml)
+[![Deploy to Firebase Hosting on merge](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/firebase-hosting-merge.yml)
 # WebIDE_Frontend
 
 ### 🪄 프로젝트 개요
