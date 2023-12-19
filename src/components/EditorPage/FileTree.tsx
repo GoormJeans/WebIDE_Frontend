@@ -219,7 +219,7 @@ class File_tree extends React.Component {
         </div>
       </div>
     );
-    const container = this.getContainer();
+    // const container = this.getContainer();
 
     Object.assign(this.cmContainer.style, {
       position: "absolute",
