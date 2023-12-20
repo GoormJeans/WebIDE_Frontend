@@ -45,6 +45,7 @@ const AddAlgoPage = () => {
       setLevel(levels[prob.level]);
       // 나중에 contents나 테스트 케이스도 여기서 초기화해줄 예정
     }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [probs])
 
   return (
