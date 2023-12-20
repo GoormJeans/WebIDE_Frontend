@@ -7,6 +7,7 @@ import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
+//import { CreateFolder } from "../../api/EditfetchUrl";
 
 const STYLE = `
 .rc-tree-child-tree {
@@ -23,16 +24,6 @@ const STYLE = `
 `;
 
 
-const handleDelete = (e : any) => {
-  console.log(e);
-}
-
-const handleCreate = (e : any) => {
-
-}
-const handleCreateFolder = (e : any) => {
-
-}
 
 
 function contains(root: any, n: any) {
@@ -89,6 +80,18 @@ const getSvgIcon = (path: any, view: any, iStyle = {}) => (
     </svg>
   </i>
 );
+
+const handleCreateFolder  = (e:any) =>{
+
+}
+const handleCreateFile  = (e:any) =>{
+  
+}
+
+const handleDelete = (e : any) => {
+  console.log(e);
+}
+
 
 class File_tree extends React.Component {
   state = {
@@ -197,8 +200,8 @@ class File_tree extends React.Component {
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
           <div onClick={()=>{console.log(info.node)}}>{info.node.key}</div>
           <div onClick={(e:any)=>handleDelete(info.node.key)} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>삭제하기</div>
-          <div onClick={handleCreate} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>파일 생성하기</div>
-          <div onClick={handleCreateFolder} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.props.title}>폴더 생성하기</div>
+          <div onClick={this.Createfile} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>파일 생성하기</div>
+          <div onClick={this.Createfolder} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.props.title}>폴더 생성하기</div>
         </div>
       </div>
     );
@@ -228,10 +231,63 @@ class File_tree extends React.Component {
       { cursor: "pointer", backgroundColor: "white" }
     );
   };
+  unmount = (e : any) =>{
+    if (this.toolTip != null) {
+      ReactDOM.unmountComponentAtNode(this.cmContainer);
+      this.toolTip = null;
+    }
+  }
+
+  
+  Createfile = (e : any) => {
+    if (this.toolTip != null) {
+      ReactDOM.unmountComponentAtNode(this.cmContainer);
+      this.toolTip = null;
+    }
+    this.toolTip = (
+      <div id="Tooltip">
+        <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
+          <div onClick = {handleCreateFile} className="hover:bg-stone-400 pl-4 pr-4">파일 생성하기</div>
+          <div onClick={this.unmount} className="hover:bg-stone-400 pl-4 pr-4">취소하기</div>
+        </div>
+      </div>
+    );
+
+    Object.assign(this.cmContainer.style, {
+      position: "absolute",
+      left: `50%`,
+      top: `50%`,
+    });
+
+    ReactDOM.render(this.toolTip, this.cmContainer);
+  }
+  Createfolder = (e : any) => {
+    if (this.toolTip != null) {
+      ReactDOM.unmountComponentAtNode(this.cmContainer);
+      this.toolTip = null;
+    }
+    this.toolTip = (
+      <div id="Tooltip">
+        <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
+          <div onClick={handleCreateFolder} className="hover:bg-stone-400 pl-4 pr-4">폴더 생성하기</div>
+          <div onClick={this.unmount} className="hover:bg-stone-400 pl-4 pr-4">취소하기</div>
+        </div>
+      </div>
+    );
+    Object.assign(this.cmContainer.style, {
+      position: "absolute",
+      left: `50%`,
+      top: `50%`,
+    });
+
+    ReactDOM.render(this.toolTip, this.cmContainer);
+  }
+  
 
   render() {
     return (
-      <div className="overflow-hidden">
+      <div className="flex flex-col overflow-hidden w-100%">
+        <div className="flex justify-end hover:text-white" onClick={this.Createfolder}>+</div>
         <style dangerouslySetInnerHTML={{ __html: STYLE }} />
         <div style={{ overflow: "hidden", display: "flex" }}>
           <div style={{ display: "flex-start" }}>
