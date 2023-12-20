@@ -8,6 +8,7 @@ import MainCM from '../components/EditorPage/MainCM';
 import { useNavigate } from 'react-router-dom';
 import Filetree from '../components/EditorPage/FileTree';
 import MessagePanel from "../components/ChattingPage/MessagePanel";
+import Description from "../components/EditorPage/Description";
 const EditCode = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -92,6 +93,7 @@ const EditCode = () => {
 
                 </div>
                 <MainCM />
+                <Description />
                 <div className={`w-fit h-screen bg-editor-color fixed transition-all duration-500 top-[29px] ${visible ? 'right-[-700px]' : 'right-0'}`}>
                     {/* 채팅 페이지 보이게하기 */}
                     <MessagePanel />
