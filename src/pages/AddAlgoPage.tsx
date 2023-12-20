@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
-import { RootState } from "../api/store";
-import { levels } from './../api/filter';
 import AlgorithmContent from "../components/AdminPage/AlgorithmContent";
+import axios from "../api/axios"
+import { Algorithm } from "../types/Algorithm.type";
+
 
 const AddAlgoPage = () => {
 
+  const levels: string[] = ['레벨', 'Lv.1', "Lv.2", 'Lv.3', 'Lv.4'];
+  const [probs, setProbs] = useState<Algorithm[]>([]);
+
   const param = useParams();
 
-  // DB에서 param의 id를 가진 문제 검색으로 변경 예정
-  const probs = useSelector((state: RootState) => state.problems);
 
   const [name, setName] = useState("");
   const [level, setLevel] = useState('Lv.1');
@@ -21,6 +22,22 @@ const AddAlgoPage = () => {
   const [test2, setTest2] = useState(["", ""]);
   const [test3, setTest3] = useState(["", ""]);
 
+  // DB에서 probs 가져오기
+  useEffect(() => {
+    const fetchProbs = async () => {
+      try {
+        const request = await axios.get('/algorithms');
+        setProbs(request.data.algorithms)
+        console.log(request.data.algorithm);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchProbs();
+  }, [])
+
   useEffect(() => {
     const prob = probs.filter((x) => x.id === parseInt(param.id!))[0];
     if (prob) {
@@ -28,8 +45,7 @@ const AddAlgoPage = () => {
       setLevel(levels[prob.level]);
       // 나중에 contents나 테스트 케이스도 여기서 초기화해줄 예정
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [probs])
 
   return (
     <div className="w-full h-full">
