@@ -1,6 +1,7 @@
 import KakaoIcon from '../../assets/images/kakao_icon.png'
 import GoogleIcon from '../../assets/images/google_icon.png'
 import NaverIcon from '../../assets/images/naver_icon.png'
+import React from 'react'
 
 const LoginForm = () => {
   return (

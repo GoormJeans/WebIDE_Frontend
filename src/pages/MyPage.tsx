@@ -2,6 +2,7 @@ import ProfileInfo from '../components/Mypage/ProfileInfo';
 import { CategoryBtn } from '../components/Mypage/ProbsSelect';
 import Achievement from '../components/Mypage/Achievement';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
 const MyPage = () => {
   const navi = useNavigate();
   return (
@@ -15,7 +16,7 @@ const MyPage = () => {
               <Achievement />
             </div>
         </div>
-      <div className='problems-card w-full h-96 z-1' >
+      <div className='problems-card w-full h-auto' >
         <div className="px-5 w-auto h-full mx-5 mt-5 rounded-3xl bg-nav-color shadow-xl">
           <CategoryBtn />
         </div>
