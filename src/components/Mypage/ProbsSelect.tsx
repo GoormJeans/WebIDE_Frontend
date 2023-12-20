@@ -5,7 +5,7 @@ import axios from 'axios';
 import { addProblems } from '../../api/algoprobmypage';
 import AlgoList from './AlgoList';
 
-const btnCSS = 'font-k2d text-sm font-semibold rounded-full px-6 py-2 mr-3 mt-5  bg-gray-300 hover:opacity-75 active:opacity-50	transition'
+const btnCSS = ' text-sm font-semibold rounded-full px-6 py-2 mr-3 mt-5  bg-gray-300 hover:opacity-75 active:opacity-50	transition'
 
 export const CategoryBtn = () => {
   const [selectedButton, setSelectedButton] = useState('');
