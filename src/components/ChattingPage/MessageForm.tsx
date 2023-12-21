@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const MessageForm: React.FC<{ handleSubmit: any; content: string; setContent: any }> = ({ handleSubmit, content, setContent }) => {
 
   return (
