@@ -21,7 +21,7 @@ const MessageComponent: React.FC<MessageType> = ({ message, user }) => {
       <div className="w-fit bg-white px-3 py-2 rounded-xl">
         <h6 className="mt-0">{message.nickname}{' '}
           <span className="text-[10px] text-gray-600">
-            {message.created_at.toLocaleString()}
+            {message.createAt.toLocaleString()}
           </span>
         </h6>
         <p>

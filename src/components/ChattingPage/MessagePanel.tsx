@@ -6,6 +6,7 @@ import { Message } from "../../types/Message.type";
 import { user1, user2 } from "../../types/DummyData";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import { useParams } from "react-router-dom";
 
 const MessagePanel = () => {
 
@@ -22,7 +23,7 @@ const MessagePanel = () => {
   const [visible, setVisible] = useState(false);
   const [content, setContent] = useState("");
 
-  const [messageId, setMessageId] = useState(0); // message ID 부여방식 확인 전까지 임시 ID
+  const chatroom = useParams();
 
   const handleConnect = () => {
     setJoin(!join);
@@ -34,7 +35,7 @@ const MessagePanel = () => {
     client.current.connect(
       { 'nickname': user1.nickname },
       () => {
-        client.current!.subscribe('/topic/chat/3', function (e) {
+        client.current!.subscribe(`/topic/chat/${chatroom.id}`, function (e) {
 
           //e.body에 전송된 data가 들어있다
           let chatMessage = JSON.parse(e.body);
@@ -47,37 +48,27 @@ const MessagePanel = () => {
     )
   }
 
-  // 채팅방 참가하기 나가기
-  const handleInvitation = () => {
-
-    if (join) {
-      // 채팅방 나간다는 request 전송
-    } else {
-      // 채팅방 들어간다는 request 전송
-    }
-
+  // 채팅방 나가기
+  const handleDisconnect = () => {
     setJoin(!join)
   }
 
-  //제출 시 할 일
+  //메시지를 저장하는 부분
   const showMessage = (data: any) => {
-    //메시지를 저장하는 부분
     const newMessage = createMessage(data);
-    // setMessages([...messages, newMessage]);
     setChatMessage(newMessage);
   }
 
   // 메시지 생성 로직
   const createMessage = (data: any) => {
-    const user_tmp = user ? user2 : user1
     const message: Message = {
-      created_at: new Date(),
-      nickname: user_tmp.nickname,
+      createAt: new Date(data.createAt),
+      nickname: data.nickname,
       content: data.content,
-      aid: 1,
-      id: messageId,
+      id: data.chatId,
     }
-    setMessageId(messageId + 1);
+    console.log('data', data);
+    console.log('message', message);
     return message;
   }
 
@@ -85,6 +76,7 @@ const MessagePanel = () => {
     if (chatMessage) {
       setMessages([...messages, chatMessage]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatMessage])
 
   // 입장 메시지 전송
@@ -100,7 +92,6 @@ const MessagePanel = () => {
 
   // 채팅 메시지 렌더링
   const renderMessages = (messages: Message[]) => {
-    console.log(messages);
     return messages.length > 0 &&
       messages.map(message =>
         <MessageComponent
@@ -121,7 +112,6 @@ const MessagePanel = () => {
   // 검색
   const handleSearchMessages = (e: any) => {
     e.preventDefault();
-    // 검색어 아무것도 없으면 아무일도 안 일어남
     if (searchTerm.length === 0) {
       return;
     }
@@ -138,9 +128,6 @@ const MessagePanel = () => {
       return acc;
     }, []);
 
-    // DB Search Logic
-    // const request = axios.get()
-
     setSearchResults(searchResults)
     setSearchTerm("");
   }
@@ -152,25 +139,17 @@ const MessagePanel = () => {
 
   //제출 시 할 일
   const handleSubmit = (e: any) => {
-    // if (!content) {
-    //   setErrors(prev => prev.concat('Type contents first'));
-    //   return;
-    // }
     e.preventDefault()
-
     if (content.length === 0) {
       return;
     }
-
     const data = {
       'content': content
     };
-
     //메시지를 저장하는 부분
-    client.current!.send("/app/chat/3", {}, JSON.stringify(data));
+    client.current!.send(`/app/chat/${chatroom.id}`, {}, JSON.stringify(data));
     setContent("");
   }
-
 
   return join ? (
     <div className="px-5 pt-5 h-[700px]">
@@ -191,7 +170,7 @@ const MessagePanel = () => {
 
       {/* dummy user version */}
       <MessageForm handleSubmit={handleSubmit} content={content} setContent={setContent} />
-      <button className="mt-3 pl-3 pr-3 w-full bg-red-400  hover:bg-red-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleInvitation}>채팅방 나가기</button>
+      <button className="mt-3 pl-3 pr-3 w-full bg-red-400  hover:bg-red-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleDisconnect}>채팅방 나가기</button>
     </div>
   ) : (
     <div className="px-5 pt-5 h-[700px] flex items-center">
