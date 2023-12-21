@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AlgorithmSolved } from "../types/Algorithm.type";
+import { Algorithm } from "../types/Algorithm.type";
 
-const initialState: AlgorithmSolved[] = [
+const initialState: Algorithm[] = [
   
 ]
 
@@ -9,7 +9,7 @@ export const algoprobsmypage = createSlice({
   name: 'algoprobsmypage',
   initialState,
   reducers: {
-    addProblems: (state, action: PayloadAction<AlgorithmSolved[]>) => {
+    addProblems: (state, action: PayloadAction<Algorithm[]>) => {
       return action.payload;
     },
   }

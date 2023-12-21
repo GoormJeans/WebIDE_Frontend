@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import AlgoProbs from './AlgoProbs';
-import { AlgorithmSolved } from "../../types/Algorithm.type";
-const AlgoList: React.FC<{probs: AlgorithmSolved[]; }> = ({ probs }) => {
+import { Algorithm } from "../../types/Algorithm.type";
+const AlgoList: React.FC<{probs: Algorithm[]; }> = ({ probs }) => {
 
   // Pagination용 데이터
   const [page, setPage] = useState(1);

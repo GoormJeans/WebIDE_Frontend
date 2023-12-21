@@ -5,7 +5,7 @@ import axios from "axios";
 import { AppDispatch, RootState } from "../../api/store";
 import { setEmailValue, setNicknameValue, setAddressValue, setBioValue } from "../../api/user";
 
-const IMG_URL = 'https://url.kr/csn968'
+const IMG_URL = 'https://github.com/leafac/fake-avatars/blob/main/avatars/png/0.png?raw=true'
 const HEAD_CSS = 'pr-3 text-2xl font-medium'
 const BUNDLE_CSS = 'bg-transparent  mt-3'
 
