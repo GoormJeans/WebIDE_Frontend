@@ -7,19 +7,31 @@ import { setEmailValue, setNicknameValue, setAddressValue, setBioValue } from ".
 
 const IMG_URL = 'https://github.com/leafac/fake-avatars/blob/main/avatars/png/0.png?raw=true'
 const HEAD_CSS = 'pr-3 text-2xl font-medium'
-const BUNDLE_CSS = 'bg-transparent  mt-3'
-
+const BUNDLE_CSS = 'mt-3'
 interface InfoCardProps {
   head: string;
   body: string;
 }
 
-const InfoCard: React.FC<InfoCardProps> = ({ head, body }) => (
-  <div className={BUNDLE_CSS}>
-    <span className={HEAD_CSS}>{head}</span>
-    {head === 'Bio.' ? <Link className="underline" to={body}><span>{body}</span></Link> : <span>{body}</span>}
-  </div>
-);
+const InfoCard: React.FC<InfoCardProps> = ({ head, body }) => {
+  const isUrl = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(body);
+  return (
+    <div className={BUNDLE_CSS}>
+      <span className={HEAD_CSS}>{head}</span>
+      {head === 'Bio.' ? (
+        isUrl ? (
+          <Link to={body} target='_blank' className="underline" rel="noreferrer">
+            <span>{body}</span>
+          </Link>
+        ) : (
+          <span>{body}</span>
+        )
+      ) : (
+        <span>{body}</span>
+      )}
+    </div>
+  );
+}
 
 const ProfileInfo = () => {
 
