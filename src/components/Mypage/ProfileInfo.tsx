@@ -7,7 +7,7 @@ import { setEmailValue, setNicknameValue, setAddressValue, setBioValue } from ".
 
 const IMG_URL = 'https://github.com/leafac/fake-avatars/blob/main/avatars/png/0.png?raw=true'
 const HEAD_CSS = 'pr-3 text-2xl font-medium'
-const BUNDLE_CSS = 'bg-transparent font-k2d mt-3'
+const BUNDLE_CSS = 'bg-transparent  mt-3'
 
 interface InfoCardProps {
   head: string;

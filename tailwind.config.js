@@ -10,9 +10,6 @@ module.exports = {
         'second-color': '#646FA9',
         'editor-color' : '#7C7B7B73',
       },
-      fontFamily: {
-        'k2d': ['K2D', "sans-serif"],
-      },
       screens: {
         'sm': '640px',  // customize the screen size as needed
         'md': '980px',

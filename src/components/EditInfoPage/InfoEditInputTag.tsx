@@ -7,9 +7,9 @@ const InfoEditInputTag: React.FC<InputTagProps> = ({ inputType, value, defaultVa
 
   return (
     <div className='flex my-5 items-center justify-center'>
-      <span className="font-k2d text-lg w-2/5">{inputType.label}</span>
+      <span className=" text-lg w-2/5">{inputType.label}</span>
       <input
-        className={`font-k2d ${isDisabled ? 'bg-slate-300 opacity-70' : 'bg-slate-100'} px-5 py-3 w-72 rounded-md shadow-xl 
+        className={` ${isDisabled ? 'bg-slate-300 opacity-70' : 'bg-slate-100'} px-5 py-3 w-72 rounded-md shadow-xl 
         ${isErrored ? 'border-rose-500' : 'border-slate-500'} border `}
         type={inputType.type}
         placeholder={inputType.placeholder}

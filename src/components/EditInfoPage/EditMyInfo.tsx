@@ -61,7 +61,7 @@ export const EditMyInfo = () => {
 
   return (
     <div className='mx-5 my-5 px-5 py-5 rounded-3xl bg-nav-color shadow-xl'>
-      <span className="font-k2d text-3xl">Edit My info</span>
+      <span className=" text-3xl">Edit My info</span>
       <InfoEditInputTag inputType={{
         type: 'email',
         placeholder: '',
@@ -85,7 +85,7 @@ export const EditMyInfo = () => {
         label: 'bio'
       }} defaultValue={userInfo.bioValue} onChange={handleBioChange} isErrored={false} />
       <div className='flex items-center justify-center'>
-        <button className={`font-k2d bg-second-color px-5 py-3 mt-5 w-96 rounded-lg shadow-xl hover:opacity-75 ${isModified ? '' : 'opacity-50'}`} onClick={handleSave}
+        <button className={` bg-second-color px-5 py-3 mt-5 w-96 rounded-lg shadow-xl hover:opacity-75 ${isModified ? '' : 'opacity-50'}`} onClick={handleSave}
           disabled={!isModified}
         >Save
         </button>
