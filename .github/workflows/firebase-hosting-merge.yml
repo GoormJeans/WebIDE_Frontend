@@ -6,11 +6,6 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed
 
 jobs:
   build_and_deploy:
