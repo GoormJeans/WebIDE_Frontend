@@ -43,10 +43,10 @@ const MainPage = () => {
     }
 
     //검색어가 있는 경우 probs 필터
-    if (searchTerm !== null && searchTerm.length !== 0) {
-      setProbs(initPrbos.filter((element) => element.name.includes(searchTerm ? searchTerm : "")))
+    if (searchTerm !== null && searchTerm.trim().length !== 0) {
+      setProbs(initPrbos.filter((element) => element.name.includes(searchTerm.trim())));
     }
-
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, searchTerm])
 
