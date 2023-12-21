@@ -3,16 +3,12 @@ import MessageForm from "./MessageForm";
 import MessageHeader from "./MessageHeader";
 import MessageComponent from "./MessageComponent";
 import { Message } from "../../types/Message.type";
-import { user1, user2 } from "../../types/DummyData";
+import { user1 } from "../../types/DummyData";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
 
 const MessagePanel = () => {
-
-  //dummy user2, 로그인해서 user에 대한 state가 생기기 전까지 일단 임시로 넣은 user
-  const [user, setUser] = useState(false);
-  //dummy 코드 끝
 
   const client = useRef<CompatClient>();
   const [join, setJoin] = useState(false)
@@ -28,6 +24,7 @@ const MessagePanel = () => {
   const handleConnect = () => {
     setJoin(!join);
     client.current = Stomp.over(() => {
+      // 로컬주소
       const sock = new SockJS("http://localhost:8080/ws/chat");
       return sock;
     })
@@ -51,6 +48,7 @@ const MessagePanel = () => {
   // 채팅방 나가기
   const handleDisconnect = () => {
     setJoin(!join)
+    client.current?.deactivate();
   }
 
   //메시지를 저장하는 부분
@@ -66,6 +64,7 @@ const MessagePanel = () => {
       nickname: data.nickname,
       content: data.content,
       id: data.chatId,
+      type: data.type,
     }
     console.log('data', data);
     console.log('message', message);
@@ -81,9 +80,8 @@ const MessagePanel = () => {
 
   // 입장 메시지 전송
   function sendEnterMessage() {
-    const user_tmp = user ? user2 : user1
     const data = {
-      'content': user_tmp.social_id
+      'content': user1.nickname
     };
     // send(destination,헤더,페이로드)
     client.current!.send("/app/chat/enter/3", {}, JSON.stringify(data));
@@ -97,7 +95,7 @@ const MessagePanel = () => {
         <MessageComponent
           key={message.id}
           message={message}
-          user={user2}
+          user={user1}
         />
       )
   }
@@ -154,9 +152,6 @@ const MessagePanel = () => {
   return join ? (
     <div className="px-5 pt-5 h-[700px]">
 
-      {/* dummy user change button */}
-      <button onClick={() => setUser(!user)}>User</button>
-
       <MessageHeader handleSearchChange={handleSearchChange} handleSearchMessages={handleSearchMessages} visible={visible} setVisible={setVisible} searchTerm={searchTerm} />
       <div className="w-full h-full border-solid border-[.2rem] border-[#ececec] rounded-xl p-2 mb-2 overflow-y-auto">
         {visible ?
@@ -167,8 +162,6 @@ const MessagePanel = () => {
         {/* 스크롤 하단 고정용 */}
         <div ref={messageEndRef}></div>
       </div>
-
-      {/* dummy user version */}
       <MessageForm handleSubmit={handleSubmit} content={content} setContent={setContent} />
       <button className="mt-3 pl-3 pr-3 w-full bg-red-400  hover:bg-red-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleDisconnect}>채팅방 나가기</button>
     </div>

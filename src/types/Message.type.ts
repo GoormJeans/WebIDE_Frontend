@@ -3,4 +3,5 @@ export interface Message{
   nickname: string;
   content: string;
   createAt: Date;
+  type: string;
 }
