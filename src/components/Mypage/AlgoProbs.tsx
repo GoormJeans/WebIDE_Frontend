@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { AlgorithmSolved } from "../../types/Algorithm.type";
+import { Algorithm } from "../../types/Algorithm.type";
 import React from "react";
 
 //알고리즘 리스트 항목
-const AlgoProbs: React.FC<{prob: AlgorithmSolved; }> = ({ prob }) => {
+const AlgoProbs: React.FC<{prob: Algorithm; }> = ({ prob }) => {
   const navigate = useNavigate();
 
   return (
