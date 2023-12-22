@@ -16,7 +16,7 @@ const AlgoList: React.FC<{probs: Algorithm[]; }> = ({ probs }) => {
     return (
       <div className="w-full h-full pb-5">
         <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent rounded-xl px-5 pt-5 whitespace-nowrap">
-          {probs.map((element) => <AlgoProbs prob={element} />)}
+          {probs.map((element, index) => <AlgoProbs key={index} prob={element} />)}
           {numPages > 1 && (<div className="justify-between text-white w-1/4 flex flex-row whitespace-nowrap">
             <button onClick={() => setPage(page - 1)} disabled={page === 1} className="text-3xl">&lt;</button>
             {
