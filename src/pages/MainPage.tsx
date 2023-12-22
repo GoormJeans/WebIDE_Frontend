@@ -19,7 +19,6 @@ const MainPage = () => {
     const fetchProbs = async () => {
       try {
         const request = await axios.get('/api/problems');
-        console.log(request);
         setInitProbs(request.data)
         setProbs(request.data)
       } catch (error) {
@@ -44,7 +43,6 @@ const MainPage = () => {
       setProbs(initProbs.filter((element) => levels[element.level] === filter))
       return;
     }
-    console.log("searchTerm", searchTerm, searchTerm.trim().length);
 
     //검색어가 있는 경우 probs 필터
     if (searchTerm !== null && searchTerm.trim().length !== 0) {
