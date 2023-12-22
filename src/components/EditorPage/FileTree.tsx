@@ -1,7 +1,7 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import React from "react";
 import ReactDOM from "react-dom";
-import { gData } from "../../assets/file_tree/dataUtil";
+import { gData,solution} from "../../assets/file_tree/dataUtil";
 import "../../assets/file_tree/index.css";
 import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
@@ -96,21 +96,21 @@ const handleDelete = (e : any) => {
 
 class File_tree extends React.Component {
   state = {
-    gData,
+    gData : gData,
     autoExpandParent: true,
     expandedKeys: [],
     selectedKeys: [0 - 1],
   };
   cmContainer: any = null;
   toolTip: any = null;
-
-  componentDidMount() {
-    const filetree  = getFiletree('1');
-    console.log(filetree);
+  async componentDidMount() {
+    const filetree = await getFiletree('1');
+    const Data = solution(filetree);
+    this.setState({gData : Data})
     this.getContainer();
+    console.log(1);
     contains(ReactDOM.findDOMNode(this), this.cmContainer);
   }
-
   componentWillUnmount() {
     if (this.cmContainer != null) {
       ReactDOM.unmountComponentAtNode(this.cmContainer);
@@ -155,26 +155,6 @@ class File_tree extends React.Component {
       dragObj = item;
     });
 
-        if (dropPosition === 0) {
-            // Drop on the content
-            loop(data, dropKey, (item: any) => {
-                item.children = item.children || [];
-                item.children.unshift(dragObj);
-            });
-        } else {
-            // Drop on the gap (insert before or insert after)
-            let ar: any;
-            let i: any;
-            loop(data, dropKey, (item: any, index: any, arr: any) => {
-                ar = arr;
-                i = index;
-            });
-            if (dropPosition === -1) {
-                ar.splice(i, 0, dragObj);
-            } else {
-                ar.splice(i + 1, 0, dragObj);
-            }
-          }
     console.log(dragObj.key);
     console.log(dropPosition);  //dropPosition : -1 : 외부 dropPosition 1 : 외부 //dropPosition 0 : 내부
     console.log(dropKey);
@@ -305,8 +285,6 @@ class File_tree extends React.Component {
 
     ReactDOM.render(this.toolTip, this.cmContainer);
   }
-  
-
   render() {
     return (
       <div className="flex flex-col overflow-hidden w-100%">
