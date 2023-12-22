@@ -12,12 +12,12 @@ const AlgoList: React.FC<{ probs: Algorithm[]; }> = ({ probs }) => {
   if (numPages > 1) { probs = probs.slice(offset, offset + limit) } //1페이지 이상일 경우에만 작동
 
   const pageButtons = new Array(numPages).fill(0);
-
+  
   if ((probs?.length || 0) > 0) { //검색결과가 있는 경우
     return (
       <div className="w-full h-full ">
         <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent m-5 rounded-xl px-5 pt-5 border-2 whitespace-nowrap">
-          {probs &&
+          {probs && Array.isArray(probs) &&
             probs.map((element) => <AlgoProbs prob={element} key={element.id} />)
           }
 
