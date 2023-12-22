@@ -3,6 +3,7 @@ import scripts from './scripts';
 import scriptsC from './scripts_c';
 import userSlice from './user';
 import algoprobsmypage from './algoprobmypage';
+import authSlice from './auth';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     scriptsC: scriptsC,
     user: userSlice,
     problemsMypage: algoprobsmypage,
+    auth: authSlice,
   },
 });
 
