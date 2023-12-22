@@ -1,11 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
 import instance from "./axios";
 
 
 const requests : {
     fetchFiletree : string
 } = {
-    fetchFiletree : '/algorithm/'
+    fetchFiletree : '/editor/filetrees/'
 };
 
 
@@ -56,7 +56,8 @@ export const SaveFile = async () =>{
 }
 export const getFiletree = async ( number : string) =>{
     try{
-        const resp = await instance.get(requests.fetchFiletree+"/**");
+        const resp = await instance.get(requests.fetchFiletree+number);
+        console.log(resp);
         return resp;
     }catch(e)
     {

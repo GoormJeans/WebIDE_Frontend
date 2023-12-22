@@ -44,14 +44,9 @@ export const EditMyInfo = () => {
           city: userInfo.cityValue,
           bio: userInfo.bioValue,
         });
-        // Assuming the server sends back the updated user information
         const updatedUserInfo = response.data;
-
-        // You can dispatch actions to update the Redux store if needed
         dispatch(setAddressValue(updatedUserInfo.city));
         dispatch(setBioValue(updatedUserInfo.bio));
-
-        // Reset the isModified state after successful save
         setIsModified(false);
       }
     } catch (error) {
@@ -66,24 +61,24 @@ export const EditMyInfo = () => {
         type: 'email',
         placeholder: '',
         label: 'email'
-      }} defaultValue={userInfo.emailValue} onChange={() => { }} isErrored={false} />
+      }} defaultValue={userInfo.emailValue} value={userInfo.emailValue} onChange={() => { }} isErrored={false} />
       <InfoEditInputTag inputType={{
         type: 'text',
         placeholder: '',
         label: 'nickname',
-      }} defaultValue={userInfo.nicknameValue} onChange={() => { }} isErrored={false} />
+      }} defaultValue={userInfo.nicknameValue} value={userInfo.nicknameValue} onChange={() => { }} isErrored={false} />
 
       <InfoEditInputTag inputType={{
         type: 'text',
         placeholder: 'Enter your address',
         label: 'address'
-      }} defaultValue={userInfo.cityValue} onChange={handleAddressChange} isErrored={false} />
+      }} defaultValue={userInfo.cityValue} value={userInfo.cityValue} onChange={handleAddressChange} isErrored={false} />
 
       <InfoEditInputTag inputType={{
         type: 'text',
         placeholder: 'I am a developer',
         label: 'bio'
-      }} defaultValue={userInfo.bioValue} onChange={handleBioChange} isErrored={false} />
+      }} defaultValue={userInfo.bioValue} value={userInfo.bioValue} onChange={handleBioChange} isErrored={false} />
       <div className='flex items-center justify-center'>
         <button className={` bg-second-color px-5 py-3 mt-5 w-96 rounded-lg shadow-xl hover:opacity-75 ${isModified ? '' : 'opacity-50'}`} onClick={handleSave}
           disabled={!isModified}

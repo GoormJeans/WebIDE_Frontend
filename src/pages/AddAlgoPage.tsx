@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import AlgorithmContent from "../components/AdminPage/AlgorithmContent";
 import axios from "../api/axios"
 import { Algorithm } from "../types/Algorithm.type";
@@ -7,14 +7,14 @@ import { Algorithm } from "../types/Algorithm.type";
 
 const AddAlgoPage = () => {
 
+  const navigate = useNavigate();
+
   const levels: string[] = ['레벨', 'Lv.1', "Lv.2", 'Lv.3', 'Lv.4'];
-  const [probs, setProbs] = useState<Algorithm[]>([]);
-
+  const tags: string[] = ['태그', 'Array', 'Math', 'String', 'Two Pointers', 'Linked List', 'Hash Table', 'Backtracking']
   const param = useParams();
-
-
   const [name, setName] = useState("");
-  const [level, setLevel] = useState('Lv.1');
+  const [level, setLevel] = useState('레벨');
+  const [tag, setTag] = useState('태그');
   const [contents, setContents] = useState("");
 
   // 아직 DB에 없어서 그냥 빈칸 ㄱ
@@ -24,47 +24,97 @@ const AddAlgoPage = () => {
 
   // DB에서 probs 가져오기
   useEffect(() => {
-    const fetchProbs = async () => {
+    if (!isNaN(parseInt(param.id!))) {
+      const fetchProb = async () => {
+        try {
+          const request = await axios.get(`/api/admin/problems/${param.id}`); //id에 해당하는 문제의 정보 불러오는 코드
+          const prob: Algorithm = request.data;
+          setLevel(levels[prob.level]);
+          setName(prob.name);
+          setTag(prob.tag);
+
+        } catch (error) {
+          console.log("error", error);
+        }
+      };
+      fetchProb();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleSubmit = () => {
+
+    // 태그 제대로 선택안하면 경고
+    if (tag === '태그') {
+      alert('태그를 선택하세요');
+      return;
+    }
+
+    // 레벨 제대로 선택안하면 경고
+    if (level === '레벨') {
+      alert('레벨을 선택하세요');
+      return;
+    }
+
+    const updateProb = async () => {
       try {
-        const request = await axios.get('/algorithms');
-        setProbs(request.data.algorithms)
-        console.log(request.data.algorithm);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        if (!isNaN(parseInt(param.id!))) { //문제 수정
+          const response = await axios.post(`/api/admin/problems/${param.id}`, {
+            algorithmName: name,
+            tag: tag,
+            testCase: [test1, test2, test3],
+            content: contents
+          });
+          console.log(response.data);
+        } else { //문제 추가
+          const response = await axios.post('/api/admin/problems', {
+            algorithmName: name,
+            tag: tag,
+            testCase: [test1, test2, test3],
+            content: contents
+          });
+          console.log(response.data);
+        }
+
       } catch (error) {
         console.log("error", error);
       }
-    };
-
-    fetchProbs();
-  }, [])
-
-  useEffect(() => {
-    const prob = probs.filter((x) => x.id === parseInt(param.id!))[0];
-    if (prob) {
-      setName(prob.name);
-      setLevel(levels[prob.level]);
-      // 나중에 contents나 테스트 케이스도 여기서 초기화해줄 예정
     }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [probs])
+    updateProb();
+
+    // 이전페이지로 이동 redirect 써야하나?
+    navigate('/admin/algorithm', { replace: true });
+  }
 
   return (
     <div className="w-full h-full">
-      <form className="w-auto h-fit flex flex-col mx-5 p-5 whitespace-nowrap bg-nav-color shadow-xl rounded-xl mt-5">
-        <label htmlFor="algo_name" className=" text-xl">Algorithm Name</label>
+      <form className="w-auto h-fit flex flex-col mx-5 p-5 whitespace-nowrap bg-nav-color shadow-xl rounded-xl mt-5" onSubmit={handleSubmit}>
+        <label htmlFor="algo_name" className="text-xl">Algorithm Name</label>
         <input type="text" id="algo_name" className="bg-white text-xl mb-5" value={name} onChange={(e) => { setName(e.target.value) }} />
 
-        <label htmlFor="algo_name" className=" text-xl">Algorithm Level</label>
-        <select className="bg-white text-xl mb-5" value={level} onChange={(e) => { setLevel(e.target.value) }}>
-          <option>level1</option>
-          <option>level2</option>
-          <option>level3</option>
-          <option>level4</option>
-        </select>
-        <div className=" flex flex-row w-full text-xl">Test Case 1</div>
-        <div className=" flex flex-row w-full">
-          <div className="w-full mr-5  ">
-            <p className=" ">Input</p>
+        <div className="w-full flex flex-row">
+          <div className="w-full flex flex-col">
+            <label htmlFor="algo_name" className="text-xl">Algorithm Level</label>
+            <select className="bg-white text-xl mb-5" value={level} onChange={(e) => { setLevel(e.target.value) }} >
+              {levels.map((level, idx) =>
+                <option key={idx + 'level'}>{level}</option>
+              )}
+            </select>
+          </div>
+          <div className="w-full flex flex-col ml-5">
+            <label htmlFor="algo_name" className="text-xl">Algorithm Tag</label>
+            <select className="bg-white text-xl mb-5" value={tag} onChange={(e) => { setTag(e.target.value) }} >
+              {tags.map((tag, idx) =>
+                <option key={idx + 'tag'}>{tag}</option>
+              )}
+            </select>
+          </div>
+        </div>
+        <div className="flex flex-row w-full text-xl">Test Case 1</div>
+        <div className="flex flex-row w-full">
+          <div className="w-full mr-5">
+            <p>Input</p>
             <input type="text" className="bg-white text-xl mb-5 w-full" value={test1[0]} onChange={(e) => setTest1([e.target.value, test1[1]])} />
           </div>
           <div className="w-full ">
@@ -98,7 +148,7 @@ const AddAlgoPage = () => {
         </div>
         <AlgorithmContent contents={contents} setContents={setContents} />
 
-        <input type="submit" className="w-fit shadow-xl px-5 py-2 rounded-xl bg-[#a1aada]" />
+        <button type="submit" className="w-fit shadow-xl px-5 py-2 rounded-xl bg-[#a1aada]" >Submit</button>
       </form>
     </div>
   )

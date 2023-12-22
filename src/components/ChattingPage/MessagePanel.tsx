@@ -3,60 +3,113 @@ import MessageForm from "./MessageForm";
 import MessageHeader from "./MessageHeader";
 import MessageComponent from "./MessageComponent";
 import { Message } from "../../types/Message.type";
-import { user1, user2 } from "../../types/DummyData";
-// import axios from "../../api/axios";
+import { user1 } from "../../types/DummyData";
+import { CompatClient, Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+import { useParams } from "react-router-dom";
 
 const MessagePanel = () => {
 
-  //dummy user2, 로그인해서 user에 대한 state가 생기기 전까지 일단 임시로 넣은 user
-
-
-  const [user, setUser] = useState(false);
-  //dummy 코드 끝
-
+  const client = useRef<CompatClient>();
   const [join, setJoin] = useState(false)
   const [searchTerm, setSearchTerm] = useState("");
+  const [chatMessage, setChatMessage] = useState<Message>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [searchResults, setSearchResults] = useState<Message[]>([]);
   const [visible, setVisible] = useState(false);
   const [content, setContent] = useState("");
 
-  const [messageId, setMessageId] = useState(0); // message ID 부여방식 확인 전까지 임시 ID
+  const chatroom = useParams();
 
-  // 채팅방 참가하기 나가기
-  const handleInvitation = () => {
+  const handleConnect = () => {
+    setJoin(!join);
+    client.current = Stomp.over(() => {
+      // 로컬주소
+      const sock = new SockJS("http://localhost:8080/ws/chat");
+      return sock;
+    })
+    setMessages([]);
+    client.current.connect(
+      { 'nickname': user1.nickname },
+      () => {
+        client.current!.subscribe(`/topic/chat/${chatroom.id}`, function (e) {
 
-    if (join) {
-      // 채팅방 나간다는 request 전송
-    } else {
-      // 채팅방 들어간다는 request 전송
-    }
-
-    setJoin(!join)
+          //e.body에 전송된 data가 들어있다
+          let chatMessage = JSON.parse(e.body);
+          showMessage(chatMessage);
+        });
+        sendEnterMessage();
+      }, function (e: any) {
+        alert('에러발생!!!!');
+      }
+    )
   }
 
+  // 채팅방 나가기
+  const handleDisconnect = () => {
+    setJoin(!join)
+    client.current?.deactivate();
+  }
+
+  //메시지를 저장하는 부분
+  const showMessage = (data: any) => {
+    const newMessage = createMessage(data);
+    setChatMessage(newMessage);
+  }
+
+  // 메시지 생성 로직
+  const createMessage = (data: any) => {
+    const message: Message = {
+      createAt: new Date(data.createAt),
+      nickname: data.nickname,
+      content: data.content,
+      id: data.chatId,
+      type: data.type,
+    }
+    console.log('data', data);
+    console.log('message', message);
+    return message;
+  }
+
+  useEffect(() => {
+    if (chatMessage) {
+      setMessages([...messages, chatMessage]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatMessage])
+
+  // 입장 메시지 전송
+  function sendEnterMessage() {
+    const data = {
+      'content': user1.nickname
+    };
+    // send(destination,헤더,페이로드)
+    client.current!.send("/app/chat/enter/3", {}, JSON.stringify(data));
+    setContent("");
+  }
 
   // 채팅 메시지 렌더링
-  const renderMessages = (messages: Message[]) =>
-    messages.length > 0 &&
-    messages.map(message =>
-      <MessageComponent
-        key={message.id}
-        message={message}
-        user={user2}
-      />
-    )
+  const renderMessages = (messages: Message[]) => {
+    return messages.length > 0 &&
+      messages.map(message =>
+        <MessageComponent
+          key={message.id}
+          message={message}
+          user={user1}
+        />
+      )
+  }
 
   // 새로운 채팅 시 스크롤 아래로 고정
   const messageEndRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, visible]);
 
+
+  // 검색
   const handleSearchMessages = (e: any) => {
     e.preventDefault();
-
     if (searchTerm.length === 0) {
       return;
     }
@@ -73,9 +126,6 @@ const MessagePanel = () => {
       return acc;
     }, []);
 
-    // DB Search Logic
-    // const request = axios.get()
-
     setSearchResults(searchResults)
     setSearchTerm("");
   }
@@ -85,42 +135,22 @@ const MessagePanel = () => {
   }
 
 
-  // 메시지 생성 로직
-  const createMessage = () => {
-    const user_tmp = user ? user2 : user1
-    const message: Message = {
-      created_at: new Date(),
-      nickname: user_tmp.nickname,
-      content: content,
-      aid: 1,
-      id: messageId,
-    }
-    setMessageId(messageId + 1);
-    return message;
-  }
-
   //제출 시 할 일
   const handleSubmit = (e: any) => {
-    // if (!content) {
-    //   setErrors(prev => prev.concat('Type contents first'));
-    //   return;
-    // }
     e.preventDefault()
-
     if (content.length === 0) {
       return;
     }
+    const data = {
+      'content': content
+    };
     //메시지를 저장하는 부분
-    setMessages([...messages, createMessage()])
+    client.current!.send(`/app/chat/${chatroom.id}`, {}, JSON.stringify(data));
     setContent("");
   }
 
-
   return join ? (
     <div className="px-5 pt-5 h-[700px]">
-
-      {/* dummy user change button */}
-      <button onClick={() => setUser(!user)}>User</button>
 
       <MessageHeader handleSearchChange={handleSearchChange} handleSearchMessages={handleSearchMessages} visible={visible} setVisible={setVisible} searchTerm={searchTerm} />
       <div className="w-full h-full border-solid border-[.2rem] border-[#ececec] rounded-xl p-2 mb-2 overflow-y-auto">
@@ -132,14 +162,12 @@ const MessagePanel = () => {
         {/* 스크롤 하단 고정용 */}
         <div ref={messageEndRef}></div>
       </div>
-
-      {/* dummy user version */}
       <MessageForm handleSubmit={handleSubmit} content={content} setContent={setContent} />
-      <button className="mt-3 pl-3 pr-3 w-full bg-red-400  hover:bg-red-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleInvitation}>채팅방 나가기</button>
+      <button className="mt-3 pl-3 pr-3 w-full bg-red-400  hover:bg-red-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleDisconnect}>채팅방 나가기</button>
     </div>
   ) : (
     <div className="px-5 pt-5 h-[700px] flex items-center">
-      <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleInvitation}>
+      <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleConnect}>
         채팅 참가하기
       </button>
     </div>
