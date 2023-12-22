@@ -7,6 +7,7 @@ import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
+import { getFiletree } from "../../api/EditfetchUrl";
 //import { CreateFolder } from "../../api/EditfetchUrl";
 
 const STYLE = `
@@ -104,6 +105,8 @@ class File_tree extends React.Component {
   toolTip: any = null;
 
   componentDidMount() {
+    const filetree  = getFiletree('1');
+    console.log(filetree);
     this.getContainer();
     contains(ReactDOM.findDOMNode(this), this.cmContainer);
   }
@@ -152,6 +155,26 @@ class File_tree extends React.Component {
       dragObj = item;
     });
 
+        if (dropPosition === 0) {
+            // Drop on the content
+            loop(data, dropKey, (item: any) => {
+                item.children = item.children || [];
+                item.children.unshift(dragObj);
+            });
+        } else {
+            // Drop on the gap (insert before or insert after)
+            let ar: any;
+            let i: any;
+            loop(data, dropKey, (item: any, index: any, arr: any) => {
+                ar = arr;
+                i = index;
+            });
+            if (dropPosition === -1) {
+                ar.splice(i, 0, dragObj);
+            } else {
+                ar.splice(i + 1, 0, dragObj);
+            }
+          }
     console.log(dragObj.key);
     console.log(dropPosition);  //dropPosition : -1 : 외부 dropPosition 1 : 외부 //dropPosition 0 : 내부
     console.log(dropKey);
@@ -255,8 +278,8 @@ class File_tree extends React.Component {
 
     Object.assign(this.cmContainer.style, {
       position: "absolute",
-      left: `50%`,
-      top: `50%`,
+      left: `40%`,
+      top: `40%`,
     });
 
     ReactDOM.render(this.toolTip, this.cmContainer);
@@ -276,8 +299,8 @@ class File_tree extends React.Component {
     );
     Object.assign(this.cmContainer.style, {
       position: "absolute",
-      left: `50%`,
-      top: `50%`,
+      left: `40%`,
+      top: `40%`,
     });
 
     ReactDOM.render(this.toolTip, this.cmContainer);
