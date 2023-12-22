@@ -65,6 +65,9 @@ const userSlice = createSlice({
     setBioValue: (state, action) => {
       state.bioValue = action.payload;
     },
+    setImageURLValue: (state, action) => {
+      state.imageURLValue = action.payload;
+    },
   },
 });
 
@@ -77,6 +80,7 @@ export const {
   setNicknameValue,
   setAddressValue,
   setBioValue,
+  setImageURLValue,
 } = userSlice.actions;
 
 export default userSlice.reducer;
