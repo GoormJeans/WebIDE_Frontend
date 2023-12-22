@@ -7,6 +7,7 @@ import { setEmailValue, setNicknameValue, setAddressValue, setBioValue, setImage
 
 const HEAD_CSS = 'pr-3 text-2xl font-medium'
 const BUNDLE_CSS = 'mt-3'
+        
 interface InfoCardProps {
   head: string;
   body: string;
