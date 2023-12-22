@@ -24,7 +24,7 @@ const AlgoList: React.FC<{ probs: Algorithm[]; }> = ({ probs }) => {
           {/* Pagination 1페이지 하나 이상 나올 경우에 보여주기*/}
           {numPages > 1 && (<div className="justify-between text-white w-1/4 flex flex-row whitespace-nowrap">
             <button onClick={() => setPage(page - 1)} disabled={page === 1} className="text-3xl">&lt;</button>
-            {
+            {pageButtons &&
               pageButtons.map((item, idx) =>
                 <button key={idx + 1} onClick={() => setPage(idx + 1)} className={idx + 1 === page ? "rounded-full text-2xl border-1" : "text-2xl"}>
                   {idx + 1}
