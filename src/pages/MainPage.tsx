@@ -7,8 +7,7 @@ import axios from "../api/axios"
 
 const MainPage = () => {
 
-  const [solved, setSolved] = useState<number[]>([]);
-  const [initPrbos, setInitPrbos] = useState<Algorithm[]>([]);
+  const [initProbs, setInitProbs] = useState<Algorithm[]>([]);
   const [probs, setProbs] = useState<Algorithm[]>([]);
   const [filter, setFilter] = useState('레벨');
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,10 +18,10 @@ const MainPage = () => {
   useEffect(() => {
     const fetchProbs = async () => {
       try {
-        const request = await axios.get('/algorithms');
-        setInitPrbos(request.data.algorithms)
-        setSolved(request.data.solved);
-        setProbs(request.data.algorithms)
+        const request = await axios.get('/api/problems');
+        console.log(request);
+        setInitProbs(request.data)
+        setProbs(request.data)
       } catch (error) {
         console.log("error", error);
       }
@@ -33,18 +32,24 @@ const MainPage = () => {
 
   // 여기서 검색결과 필터링 해서 AlgoList에 prop으로 넘겨줌
   useEffect(() => {
-    setProbs(initPrbos)
-    console.log('initprobs', initPrbos);
-    console.log('probs', probs);
+    setProbs(initProbs)
+    //필터에 따라 prob 정리
+    if (filter !== '레벨' && searchTerm !== null && searchTerm.trim().length !== 0) {
+      setProbs(initProbs.filter((element) => levels[element.level] === filter && element.name.includes(searchTerm.trim())))
+      return;
+    }
 
     //필터에 따라 prob 정리
     if (filter !== '레벨') {
-      setProbs(initPrbos.filter((element) => levels[element.level] === filter))
+      setProbs(initProbs.filter((element) => levels[element.level] === filter))
+      return;
     }
+    console.log("searchTerm", searchTerm, searchTerm.trim().length);
 
     //검색어가 있는 경우 probs 필터
     if (searchTerm !== null && searchTerm.trim().length !== 0) {
-      setProbs(initPrbos.filter((element) => element.name.includes(searchTerm.trim())));
+      setProbs(initProbs.filter((element) => element.name.includes(searchTerm.trim())));
+      return;
     }
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,7 +59,7 @@ const MainPage = () => {
     <div>
       <LastAlgo />
       <Search setFilter={setFilter} levels={levels} setSearchTerm={setSearchTerm} />
-      <AlgoList probs={probs} solved={solved} />
+      <AlgoList probs={probs} />
     </div >
   )
 }
