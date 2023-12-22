@@ -83,8 +83,17 @@ const AddAlgoPage = () => {
     }
     updateProb();
 
-    // 이전페이지로 이동 redirect 써야하나?
-    navigate('/admin/algorithm', { replace: true });
+    navigate('/admin/algorithm');
+  }
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`/api/admin/problems/${param.id}`);
+      console.log(response);
+    } catch (error) {
+      console.log("error", error);
+    }
+    navigate('/admin/algorithm');
   }
 
   return (
@@ -148,7 +157,11 @@ const AddAlgoPage = () => {
         </div>
         <AlgorithmContent contents={contents} setContents={setContents} />
 
-        <button type="submit" className="w-fit shadow-xl px-5 py-2 rounded-xl bg-[#a1aada]" >Submit</button>
+        <div className="w-full flex flex-row justify-end mt-5">
+          <button type="submit" className="w-fit shadow-xl px-5 py-2 rounded-xl bg-blue-300 mr-3 hover:bg-blue-200" >Submit</button>
+          <button type="button" className="w-fit shadow-xl px-5 py-2 rounded-xl bg-red-500 mr-3 hover:bg-red-400" onClick={handleDelete}>Delete</button>
+          <button type="button" className="w-fit shadow-xl px-5 py-2 rounded-xl bg-gray-400 hover:bg-gray-300" onClick={() => navigate('/admin/algorithm')}>Cancel</button>
+        </div>
       </form>
     </div>
   )
