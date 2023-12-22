@@ -1,15 +1,7 @@
-export const data2 = {
+export let data2 = {
   statusCode: 200,
   data: [
-    {
-      path: "1/1/2/",
-    },
-    {
-      path: "1/1/2/hi.py",
-    },
-    {
-      path: "1/1/empty.py",
-    },
+    
   ],
 };
 

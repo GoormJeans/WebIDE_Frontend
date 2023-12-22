@@ -1,13 +1,13 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import React from "react";
 import ReactDOM from "react-dom";
-import { gData,solution} from "../../assets/file_tree/dataUtil";
+import { gData, solution } from "../../assets/file_tree/dataUtil";
 import "../../assets/file_tree/index.css";
 import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
-import { getFiletree } from "../../api/EditfetchUrl";
+import { getFiletree, Delete, Create,dragNdrop } from "../../api/EditfetchUrl";
 //import { CreateFolder } from "../../api/EditfetchUrl";
 
 const STYLE = `
@@ -23,9 +23,6 @@ const STYLE = `
 
 }
 `;
-
-
-
 
 function contains(root: any, n: any) {
   let node = n;
@@ -45,8 +42,10 @@ const allowDrop: any = (paramobj: { dropNode: any; dropPosition: any }) => {
   return true;
 };
 
-
-
+const allow: any = (dropKey: string) => {
+  if (dropKey[dropKey.length - 1] === "/") return true;
+  return false;
+};
 
 const motion = {
   motionName: "node-motion",
@@ -82,33 +81,24 @@ const getSvgIcon = (path: any, view: any, iStyle = {}) => (
   </i>
 );
 
-const handleCreateFolder  = (e:any) =>{
-
-}
-const handleCreateFile  = (e:any) =>{
-  
-}
-
-const handleDelete = (e : any) => {
-  console.log(e);
-}
-
-
 class File_tree extends React.Component {
   state = {
-    gData : gData,
+    gData: gData,
     autoExpandParent: true,
     expandedKeys: [],
-    selectedKeys: [0 - 1],
+    selectedKeys: [],
+    filename: "",
   };
   cmContainer: any = null;
   toolTip: any = null;
-  async componentDidMount() {
-    const filetree = await getFiletree('1');
-    const Data = solution(filetree);
-    this.setState({gData : Data})
+  async getFiletree() {
+    const filetree = await getFiletree("1");
+    const Data = await solution(filetree.data);
+    this.setState({ gData: Data });
+  }
+  componentDidMount() {
+    this.getFiletree();
     this.getContainer();
-    console.log(1);
     contains(ReactDOM.findDOMNode(this), this.cmContainer);
   }
   componentWillUnmount() {
@@ -118,7 +108,50 @@ class File_tree extends React.Component {
       this.cmContainer = null;
     }
   }
-
+  handleDelete = async (e: any) => {
+    const number: number = 1;
+    const data = await Delete(e, number);
+    const Data = solution(data.data);
+    this.setState({ gData: Data });
+  };
+  handleCreateFolder = async (e: any) => {
+    const number: number = 1;
+    const path: string = e + this.state.filename + "/";
+    const data = await Create(path, number);
+    //temp
+    //this.getFiletree();
+    const Data = solution(data.data);
+    this.setState({ gData: Data });
+    this.unmount(e);
+  };
+  handleCreaterootFolder = async (e: any) => {
+    const number: number = 1;
+    const data = await Create(this.state.filename + "/", number);
+    //temp
+    //this.getFiletree();
+    const Data = solution(data.data);
+    this.setState({ gData: Data });
+    this.unmount(e);
+  };
+  handleCreateFile = async (e: any) => {
+    const number: number = 1;
+    const path: string = e + this.state.filename;
+    const data = await Create(path, number);
+    //temp
+    //this.getFiletree();
+    const Data =  solution(data.data);
+    this.setState({ gData: Data });
+    this.unmount(e);
+  };
+  handleDragNdrop = async (dragkey : any,dragtitle : any, drop : any) =>{
+    const number : number = 1;
+    const path : string = drop + dragtitle;
+    console.log(dragkey);
+    console.log(path);
+    const data = await dragNdrop(dragkey, path, number);
+    const Data =  solution(data.data);
+    this.setState({ gData: Data });
+  }
   onDragStart = (info: any) => {
     console.log("start", info);
   };
@@ -130,7 +163,9 @@ class File_tree extends React.Component {
   onDrop = (info: any) => {
     console.log("drop", info);
     const dropKey = info.node.key;
+    const droptitle = info.node.title;
     const dragKey = info.dragNode.key;
+    let dragtitle = info.dragNode.title;
     const dropPos = info.node.pos.split("-");
     const dropPosition =
       info.dropPosition - Number(dropPos[dropPos.length - 1]);
@@ -155,13 +190,19 @@ class File_tree extends React.Component {
       dragObj = item;
     });
 
-    console.log(dragObj.key);
-    console.log(dropPosition);  //dropPosition : -1 : 외부 dropPosition 1 : 외부 //dropPosition 0 : 내부
-    console.log(dropKey);
+    if (!allow(dropKey) && dropPosition == 0) return;
 
-    this.setState({
-      gData: data,
-    });
+    if(dropPosition == 0)
+    {
+      dragtitle = dragKey[dragKey.length-1] == '/' ? dragtitle + '/' : dragtitle;
+      this.handleDragNdrop(dragKey,dragtitle, dropKey);
+    }
+    else
+    {
+      dragtitle = dragKey[dragKey.length-1] == '/' ? dragtitle + '/' : dragtitle;
+      const drops = dropKey.substr(0, dropKey[dropKey.length-1] == '/' ?  dropKey.length-droptitle.length-1 : dropKey.length-droptitle.length);
+      this.handleDragNdrop(dragKey,dragtitle,drops);
+    }
   };
 
   onExpand = (expandedKeys: any) => {
@@ -201,10 +242,34 @@ class File_tree extends React.Component {
     this.toolTip = (
       <div id="fileTreeRight">
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
-          <div onClick={()=>{console.log(info.node)}}>{info.node.key}</div>
-          <div onClick={(e:any)=>handleDelete(info.node.key)} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>삭제하기</div>
-          <div onClick={this.Createfile} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.key}>파일 생성하기</div>
-          <div onClick={this.Createfolder} className="hover:bg-stone-400 pl-4 pr-4" id={info.node.props.title}>폴더 생성하기</div>
+          <div
+            onClick={() => {
+              console.log(info.node);
+            }}
+          >
+            {info.node.key}
+          </div>
+          <div
+            onClick={(e: any) => this.handleDelete(info.node.key)}
+            className="hover:bg-stone-400 pl-4 pr-4"
+            id={info.node.key}
+          >
+            삭제하기
+          </div>
+          <div
+            onClick={(e: any) => this.Createfile(info.node.key)}
+            className="hover:bg-stone-400 pl-4 pr-4"
+            id={info.node.key}
+          >
+            파일 생성하기
+          </div>
+          <div
+            onClick={(e: any) => this.Createfolder(info.node.key)}
+            className="hover:bg-stone-400 pl-4 pr-4"
+            id={info.node.props.title}
+          >
+            폴더 생성하기
+          </div>
         </div>
       </div>
     );
@@ -234,24 +299,37 @@ class File_tree extends React.Component {
       { cursor: "pointer", backgroundColor: "white" }
     );
   };
-  unmount = (e : any) =>{
+  unmount = (e: any) => {
     if (this.toolTip != null) {
       ReactDOM.unmountComponentAtNode(this.cmContainer);
       this.toolTip = null;
     }
-  }
+  };
 
-  
-  Createfile = (e : any) => {
+  Createfile = (e: any) => {
     if (this.toolTip != null) {
       ReactDOM.unmountComponentAtNode(this.cmContainer);
       this.toolTip = null;
     }
+    const handleChange = (e: any) => {
+      this.setState({
+        filename: e.target.value,
+      });
+    };
+
     this.toolTip = (
       <div id="Tooltip">
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
-          <div onClick = {handleCreateFile} className="hover:bg-stone-400 pl-4 pr-4">파일 생성하기</div>
-          <div onClick={this.unmount} className="hover:bg-stone-400 pl-4 pr-4">취소하기</div>
+          <input onChange={(e: any) => handleChange(e)}></input>
+          <div
+            onClick={(d:any) =>this.handleCreateFile(e)}
+            className="hover:bg-stone-400 pl-4 pr-4"
+          >
+            파일 생성하기
+          </div>
+          <div onClick={this.unmount} className="hover:bg-stone-400 pl-4 pr-4">
+            취소하기
+          </div>
         </div>
       </div>
     );
@@ -263,17 +341,33 @@ class File_tree extends React.Component {
     });
 
     ReactDOM.render(this.toolTip, this.cmContainer);
-  }
-  Createfolder = (e : any) => {
+  };
+  Createfolder = (e: any) => {
     if (this.toolTip != null) {
       ReactDOM.unmountComponentAtNode(this.cmContainer);
       this.toolTip = null;
     }
+    const handleChange = (e: any) => {
+      this.setState({
+        filename: e.target.value,
+      });
+    };
+
     this.toolTip = (
       <div id="Tooltip">
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
-          <div onClick={handleCreateFolder} className="hover:bg-stone-400 pl-4 pr-4">폴더 생성하기</div>
-          <div onClick={this.unmount} className="hover:bg-stone-400 pl-4 pr-4">취소하기</div>
+          <input onChange={(e: any) => handleChange(e)}></input>
+          <div
+            onClick={(d: any) => {
+              this.handleCreateFolder(e);
+            }}
+            className="hover:bg-stone-400 pl-4 pr-4"
+          >
+            폴더 생성하기
+          </div>
+          <div onClick={this.unmount} className="hover:bg-stone-400 pl-4 pr-4">
+            취소하기
+          </div>
         </div>
       </div>
     );
@@ -284,11 +378,51 @@ class File_tree extends React.Component {
     });
 
     ReactDOM.render(this.toolTip, this.cmContainer);
-  }
+  };
+  Createrootfolder = () => {
+    if (this.toolTip != null) {
+      ReactDOM.unmountComponentAtNode(this.cmContainer);
+      this.toolTip = null;
+    }
+    const handleChange = (e: any) => {
+      this.setState({
+        filename: e.target.value,
+      });
+    };
+
+    this.toolTip = (
+      <div id="Tooltip">
+        <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
+          <input onChange={(e: any) => handleChange(e)}></input>
+          <div
+            onClick={this.handleCreaterootFolder}
+            className="hover:bg-stone-400 pl-4 pr-4"
+          >
+            폴더 생성하기
+          </div>
+          <div onClick={this.unmount} className="hover:bg-stone-400 pl-4 pr-4">
+            취소하기
+          </div>
+        </div>
+      </div>
+    );
+    Object.assign(this.cmContainer.style, {
+      position: "absolute",
+      left: `40%`,
+      top: `40%`,
+    });
+
+    ReactDOM.render(this.toolTip, this.cmContainer);
+  };
   render() {
     return (
       <div className="flex flex-col overflow-hidden w-100%">
-        <div className="flex justify-end hover:text-white" onClick={this.Createfolder}>+</div>
+        <div
+          className="flex justify-end hover:text-white"
+          onClick={this.Createrootfolder}
+        >
+          +
+        </div>
         <style dangerouslySetInnerHTML={{ __html: STYLE }} />
         <div style={{ overflow: "hidden", display: "flex" }}>
           <div style={{ display: "flex-start" }}>
