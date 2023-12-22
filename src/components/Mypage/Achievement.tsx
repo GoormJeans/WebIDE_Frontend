@@ -33,7 +33,7 @@ const Achievement = () => {
   return (
     <div className='circle-chart bg-white p-3 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>
       <div className='chart-background bg-transparent'>
-        <p className='font-k2d text-sm font-medium bg-transparent'>Your achievement</p>
+        <p className=' text-sm font-medium bg-transparent'>Your achievement</p>
         <div className='bg-transparent flex flex-row'>
           <div className='bg-white'>
             <PieChart
