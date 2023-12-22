@@ -4,9 +4,6 @@ export interface Algorithm {
   url: string;
   tag: string;
   level: number;
-}
-
-export interface AlgorithmSolved extends Algorithm {
   solved: boolean;
   language: string;
   stored: boolean;

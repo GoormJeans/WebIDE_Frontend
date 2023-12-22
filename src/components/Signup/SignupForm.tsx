@@ -62,7 +62,7 @@ const SignupForm = () => {
             onChange={handleEmailChange}
             isErrored={!isEmailValid && !!user.emailValue}
           />
-          {!isEmailValid && user.emailValue && <p className="font-k2d text-rose-500">Invalid email format</p>}
+          {!isEmailValid && user.emailValue && <p className=" text-rose-500">Invalid email format</p>}
           <SignUpInputTag
             inputType={{
               type: 'text',
@@ -73,7 +73,7 @@ const SignupForm = () => {
             onChange={handleNicknameChange}
             isErrored={!isNicknameValid && !!user.nicknameValue}
           />
-          {!isNicknameValid && user.nicknameValue && <p className="font-k2d text-rose-500">Nickname must be 12 characters or less</p>}
+          {!isNicknameValid && user.nicknameValue && <p className=" text-rose-500">Nickname must be 12 characters or less</p>}
           <SignUpInputTag
             inputType={{
               type: 'password',
@@ -84,7 +84,7 @@ const SignupForm = () => {
             onChange={handlePasswordChange}
             isErrored={!isPasswordValid && !!user.passwordValue}
           />
-          {!isPasswordValid && user.passwordValue && <p className="font-k2d text-rose-500">Invalid password format</p>}
+          {!isPasswordValid && user.passwordValue && <p className=" text-rose-500">Invalid password format</p>}
           <SignUpInputTag
             inputType={{
               type: 'password',
@@ -95,7 +95,7 @@ const SignupForm = () => {
             onChange={handleConfirmPasswordChange}
             isErrored={!isConfirmPasswordValid && !!user.confirmPasswordValue}
           />
-          {!isConfirmPasswordValid && user.confirmPasswordValue && <p className="font-k2d text-rose-500">Passwords do not match</p>}
+          {!isConfirmPasswordValid && user.confirmPasswordValue && <p className=" text-rose-500">Passwords do not match</p>}
           <SignUpInputTag
             inputType={{
               type: 'text',
@@ -123,9 +123,9 @@ const SignupForm = () => {
         <div className='flex flex-col items-center'>
           <div className='flex flex-row mt-10'>
             <input type="checkbox" id="agreement" name="agreement" value="agreement" onChange={() => setAgreementChecked(!agreementChecked)} />
-            <label className='font-k2d text-lg ml-3' htmlFor="agreement">[필수] 개인정보 사용에 동의합니다</label>
+            <label className=' text-lg ml-3' htmlFor="agreement">[필수] 개인정보 사용에 동의합니다</label>
             <button
-              className='font-k2d text-lg ml-3'
+              className=' text-lg ml-3'
               onClick={toggleDetails}
             >
               {detailsVisible ? 'Hide Details' : 'Show Details'}
@@ -134,7 +134,7 @@ const SignupForm = () => {
           {detailsVisible && (
               <p>Details about personal information agreement...</p>
           )}
-          <button disabled={isButtonDisabled} className={`font-k2d ${isButtonDisabled ? 'disabled:bg-slate-400' : 'bg-nav-color'} px-5 py-3 ml-3 mt-3 w-80 rounded-xl shadow-xl`} >Go to register!</button>
+          <button disabled={isButtonDisabled} className={` ${isButtonDisabled ? 'disabled:bg-slate-400' : 'bg-nav-color'} px-5 py-3 ml-3 mt-3 w-80 rounded-xl shadow-xl`} >Go to register!</button>
         </div>
       </FadeIn>
     </div>
