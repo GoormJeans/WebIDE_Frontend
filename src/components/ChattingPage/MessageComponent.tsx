@@ -14,8 +14,6 @@ const MessageComponent: React.FC<MessageType> = ({ message, user }) => {
     if (user) { return message.nickname === user.nickname }
   }
 
-  console.log(message);
-
   return (
     message.type === "MESSAGE" || message.type === undefined ? //message 타입인지 아닌지에 따라 디자인 변경
       <div className={`flex mb-3 ${isMessageMine(message, user) ? 'justify-end' : 'justify-start' /* 내 메시지면 다르게 표시 */} `}>

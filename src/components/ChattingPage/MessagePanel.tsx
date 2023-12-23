@@ -84,8 +84,6 @@ const MessagePanel = () => {
       id: data.chatId,
       type: data.type,
     }
-    console.log('data', data);
-    console.log('message', message);
     return message;
   }
 
@@ -137,10 +135,8 @@ const MessagePanel = () => {
     // Request Search Logic
     const request = await axios.get(`http://localhost:8080/chat/search/${chatroom.id}?keyword=${searchTerm}`);
     const searchResults = request.data.data;
-    console.log(searchResults);
 
     setSearchResults(searchResults);
-    setSearchTerm("");
   }
 
   const handleSearchChange = (event: any) => {
@@ -164,7 +160,7 @@ const MessagePanel = () => {
   return join ? (
     <div className="px-5 pt-5 h-[700px]">
 
-      <MessageHeader handleSearchChange={handleSearchChange} handleSearchMessages={handleSearchMessages} visible={visible} setVisible={setVisible} searchTerm={searchTerm} />
+      <MessageHeader handleSearchChange={handleSearchChange} handleSearchMessages={handleSearchMessages} visible={visible} setVisible={setVisible} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResults={setSearchResults} />
       <div className="w-full h-full border-solid border-[.2rem] border-[#ececec] rounded-xl p-2 mb-2 overflow-y-auto">
         {visible ?
           renderMessages(searchResults)
