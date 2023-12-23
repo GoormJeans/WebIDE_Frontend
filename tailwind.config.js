@@ -15,6 +15,9 @@ module.exports = {
         'md': '980px',
         'lg': '1145px',
         'xl': '1536px',
+        'mobile': {'max': '639px'},
+        'tablet': {'min': '640px', 'max': '1023px'},
+        'desktop': {'min': '1024px'},
       }
     },
   },
