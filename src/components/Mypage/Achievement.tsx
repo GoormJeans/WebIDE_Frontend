@@ -32,9 +32,9 @@ const Achievement = () => {
 
   return (
     <div className='circle-chart bg-white p-3 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>
-      <div className='chart-background bg-transparent'>
-        <p className=' text-sm font-medium bg-transparent'>Your achievement</p>
-        <div className='bg-transparent flex flex-row'>
+      <div className='chart-background '>
+        <p className=' text-sm font-medium '>Your achievement</p>
+        <div className=' flex flex-row'>
           <div className='bg-white'>
             <PieChart
               colors={['#14B8A6', '#3B82F6', '#EC4899', '#6366F1', '#F59E0B',]}
