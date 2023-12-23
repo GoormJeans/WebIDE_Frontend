@@ -25,7 +25,7 @@ const MessageComponent: React.FC<MessageType> = ({ message, user }) => {
               {message.createAt.toLocaleString()}
             </span>
           </h6>
-          <p>
+          <p className="text-sm">
             {message.content}
           </p>
         </div>
