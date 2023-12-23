@@ -7,6 +7,7 @@ import { user1 } from "../../types/DummyData";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const MessagePanel = () => {
 
@@ -45,10 +46,27 @@ const MessagePanel = () => {
     )
   }
 
+  // 입장 메시지 전송
+  function sendEnterMessage() {
+    const data = {
+      'content': user1.nickname
+    };
+    // send(destination,헤더,페이로드)
+    client.current!.send(`/app/chat/enter/${chatroom.id}`, {}, JSON.stringify(data));
+    setContent("");
+  }
+
   // 채팅방 나가기
   const handleDisconnect = () => {
     setJoin(!join)
-    client.current?.deactivate();
+    const data = {
+      'content': user1.nickname
+    };
+    client.current!.send(`app/chat/exit/${chatroom.id}`, {}, JSON.stringify(data));
+
+    // client.current?.disconnect(
+    //   () => {}, { 'nickname': user1.nickname },
+    // )
   }
 
   //메시지를 저장하는 부분
@@ -60,7 +78,7 @@ const MessagePanel = () => {
   // 메시지 생성 로직
   const createMessage = (data: any) => {
     const message: Message = {
-      createAt: new Date(data.createAt),
+      createdAt: new Date(data.createdAt),
       nickname: data.nickname,
       content: data.content,
       id: data.chatId,
@@ -77,16 +95,6 @@ const MessagePanel = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatMessage])
-
-  // 입장 메시지 전송
-  function sendEnterMessage() {
-    const data = {
-      'content': user1.nickname
-    };
-    // send(destination,헤더,페이로드)
-    client.current!.send("/app/chat/enter/3", {}, JSON.stringify(data));
-    setContent("");
-  }
 
   // 채팅 메시지 렌더링
   const renderMessages = (messages: Message[]) => {
@@ -108,7 +116,7 @@ const MessagePanel = () => {
 
 
   // 검색
-  const handleSearchMessages = (e: any) => {
+  const handleSearchMessages = async (e: any) => {
     e.preventDefault();
     if (searchTerm.length === 0) {
       return;
@@ -117,23 +125,27 @@ const MessagePanel = () => {
     setVisible(true) //뒤로가기 버튼 숨김
 
     // Local Search Logic
-    const chatRoomMessages = [...messages];
-    const regex = new RegExp(searchTerm, "gi");
-    const searchResults = chatRoomMessages.reduce((acc: Message[], message: Message) => {
-      if ((message.content && message.content.match(regex)) || message.nickname.match(regex)) {
-        acc.push(message)
-      }
-      return acc;
-    }, []);
+    // const chatRoomMessages = [...messages];
+    // const regex = new RegExp(searchTerm, "gi");
+    // const searchResults = chatRoomMessages.reduce((acc: Message[], message: Message) => {
+    //   if ((message.content && message.content.match(regex)) || message.nickname.match(regex)) {
+    //     acc.push(message)
+    //   }
+    //   return acc;
+    // }, []);
 
-    setSearchResults(searchResults)
+    // Request Search Logic
+    const request = await axios.get(`http://localhost:8080/chat/search/${chatroom.id}?keyword=${searchTerm}`);
+    const searchResults = request.data.data;
+    console.log(searchResults);
+
+    setSearchResults(searchResults);
     setSearchTerm("");
   }
 
   const handleSearchChange = (event: any) => {
     setSearchTerm(event.target.value);
   }
-
 
   //제출 시 할 일
   const handleSubmit = (e: any) => {
