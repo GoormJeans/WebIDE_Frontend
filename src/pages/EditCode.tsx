@@ -70,7 +70,7 @@ const EditCode = () => {
     return (
         <>
             <div className='flex flex-row bg-black'>
-                <div className="text-white w-1/12 text-1xl mt-1 mb-1  pl-1 hover:cursor-pointer bg-transparent" onClick={() => navigate('/')}>
+                <div className="text-white w-1/12 text-1xl mt-1 mb-1  pl-1 hover:cursor-pointer " onClick={() => navigate('/')}>
                     JeansCode
                 </div>
                 <div className='flex justify-end w-full'>

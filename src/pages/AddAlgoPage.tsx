@@ -99,12 +99,12 @@ const AddAlgoPage = () => {
   return (
     <div className="w-full h-full">
       <form className="w-auto h-fit flex flex-col mx-5 p-5 whitespace-nowrap bg-nav-color shadow-xl rounded-xl mt-5" onSubmit={handleSubmit}>
-        <label htmlFor="algo_name" className="bg-transparent text-xl">Algorithm Name</label>
+        <label htmlFor="algo_name" className="text-xl">Algorithm Name</label>
         <input type="text" id="algo_name" className="bg-white text-xl mb-5" value={name} onChange={(e) => { setName(e.target.value) }} />
 
         <div className="w-full flex flex-row">
           <div className="w-full flex flex-col">
-            <label htmlFor="algo_name" className="bg-transparent text-xl">Algorithm Level</label>
+            <label htmlFor="algo_name" className="text-xl">Algorithm Level</label>
             <select className="bg-white text-xl mb-5" value={level} onChange={(e) => { setLevel(e.target.value) }} >
               {levels.map((level, idx) =>
                 <option key={idx + 'level'}>{level}</option>
@@ -112,7 +112,7 @@ const AddAlgoPage = () => {
             </select>
           </div>
           <div className="w-full flex flex-col ml-5">
-            <label htmlFor="algo_name" className="bg-transparent text-xl">Algorithm Tag</label>
+            <label htmlFor="algo_name" className="text-xl">Algorithm Tag</label>
             <select className="bg-white text-xl mb-5" value={tag} onChange={(e) => { setTag(e.target.value) }} >
               {tags.map((tag, idx) =>
                 <option key={idx + 'tag'}>{tag}</option>
@@ -120,38 +120,38 @@ const AddAlgoPage = () => {
             </select>
           </div>
         </div>
-        <div className="bg-transparent flex flex-row w-full text-xl">Test Case 1</div>
-        <div className="bg-transparent flex flex-row w-full">
-          <div className="w-full mr-5  bg-transparent">
-            <p className=" bg-transparent">Input</p>
+        <div className="flex flex-row w-full text-xl">Test Case 1</div>
+        <div className="flex flex-row w-full">
+          <div className="w-full mr-5">
+            <p>Input</p>
             <input type="text" className="bg-white text-xl mb-5 w-full" value={test1[0]} onChange={(e) => setTest1([e.target.value, test1[1]])} />
           </div>
-          <div className="w-full bg-transparent">
-            <p className=" bg-transparent">Output</p>
+          <div className="w-full ">
+            <p className=" ">Output</p>
             <input type="text" className="bg-white text-xl mb-5 w-full" value={test1[1]} onChange={(e) => setTest1([test1[0], e.target.value])} />
           </div>
         </div>
 
-        <div className="bg-transparent flex flex-row w-full text-xl">Test Case 2</div>
-        <div className="bg-transparent flex flex-row w-full">
-          <div className="w-full mr-5  bg-transparent">
-            <p className=" bg-transparent">Input</p>
+        <div className=" flex flex-row w-full text-xl">Test Case 2</div>
+        <div className=" flex flex-row w-full">
+          <div className="w-full mr-5  ">
+            <p className=" ">Input</p>
             <input type="text" className="bg-white text-xl mb-5 w-full" value={test2[0]} onChange={(e) => setTest2([e.target.value, test2[1]])} />
           </div>
-          <div className="w-full bg-transparent">
-            <p className=" bg-transparent">Output</p>
+          <div className="w-full ">
+            <p className=" ">Output</p>
             <input type="text" className="bg-white text-xl mb-5 w-full" value={test2[1]} onChange={(e) => setTest2([test2[0], e.target.value])} />
           </div>
         </div>
 
-        <div className="bg-transparent flex flex-row w-full text-xl">Test Case 3</div>
-        <div className="bg-transparent flex flex-row w-full">
-          <div className="w-full mr-5  bg-transparent">
-            <p className=" bg-transparent">Input</p>
+        <div className=" flex flex-row w-full text-xl">Test Case 3</div>
+        <div className=" flex flex-row w-full">
+          <div className="w-full mr-5  ">
+            <p className=" ">Input</p>
             <input type="text" className="bg-white text-xl mb-5 w-full" value={test3[0]} onChange={(e) => setTest3([e.target.value, test3[1]])} />
           </div>
-          <div className="w-full bg-transparent">
-            <p className=" bg-transparent">Output</p>
+          <div className="w-full ">
+            <p className=" ">Output</p>
             <input type="text" className="bg-white text-xl mb-5 w-full" value={test3[1]} onChange={(e) => setTest3([test3[0], e.target.value])} />
           </div>
         </div>
