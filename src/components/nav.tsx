@@ -31,7 +31,7 @@ const NavItem: React.FC<NavItemProps> = ({ path, label, onClick }) => {
 };
 
 const NavItemList = () => {
-  const auth = useSelector((state: RootState) => state.auth);
+  const email = localStorage.getItem('email');
   const navi = useNavigate();
   const Logout = () => {
     localStorage.clear();
@@ -42,7 +42,7 @@ const NavItemList = () => {
     <>
       <NavItem path="/algorithms" label="Algorithms" />
       <NavItem path="/mypage" label="Mypage" />
-      <NavItem path={auth.isLoggedIn ? `` : `/login`} label={auth.isLoggedIn ? `Logout` : `Login`} onClick={auth.isLoggedIn ? Logout : () => navi('/login') } />
+      <NavItem path={email ? `` : `/login`} label={email ? `Logout` : `Login`} onClick={email ? Logout : () => navi('/login') } />
       <NavItem path="/settings" label="Settings" />
     </>
   );

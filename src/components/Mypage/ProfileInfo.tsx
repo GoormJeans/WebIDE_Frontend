@@ -34,28 +34,32 @@ const InfoCard: React.FC<InfoCardProps> = ({ head, body }) => {
 }
 
 const ProfileInfo = () => {
-
   const dispatch = useDispatch<AppDispatch>();
   const userInfo = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await axios.get(`http://localhost:3003/api/user-info`);
-        console.log('User information:', response.data);
-        dispatch(setEmailValue(response.data.email));
-        dispatch(setNicknameValue(response.data.nickname));
-        dispatch(setAddressValue(response.data.city));
-        dispatch(setBioValue(response.data.bio));
-        dispatch(setImageURLValue(response.data.imgURL));
+        const accessToken = localStorage.getItem('access-token'); // 로컬 스토리지에서 토큰을 가져옵니다
+        const email = localStorage.getItem('email');
+        const response = await axios.post(`http://localhost:3003/api/user-info`, {},{
+          headers: {
+            'access-token': accessToken, // 헤더에 토큰을 포함시킵니다.
+            'email': email,
+          },
+        });
+        dispatch(setEmailValue(response.data.data[0].email));
+        dispatch(setNicknameValue(response.data.data[0].nickname));
+        dispatch(setAddressValue(response.data.data[0].city));
+        dispatch(setBioValue(response.data.data[0].bio));
+        dispatch(setImageURLValue(response.data.data[0].imageURL));
       } catch (error) {
         console.error('Error fetching user information:', error);
       }
     };
-
     fetchUserInfo();
   }, [dispatch]);
-  console.log(userInfo);
+
   return (
     <div className='profile-info flex flex-row'>
       <div className='flex flex-row'>

@@ -3,26 +3,38 @@ import GoogleIcon from '../../assets/images/google_icon.png'
 import NaverIcon from '../../assets/images/naver_icon.png'
 import axios from 'axios';
 import{ loginSuccess } from '../../api/auth';
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useState } from 'react'
-import { AppDispatch, RootState } from '../../api/store';
+import { useDispatch } from 'react-redux';
+import React, { useState } from 'react'
+import { AppDispatch } from '../../api/store';
 import { useNavigate } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch<AppDispatch>();
-  const auth = useSelector((state: RootState) => state.auth);
   const navi = useNavigate();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: '/' } }
+
+  const validateForm = () => {
+    return email.length > 0 && password.length > 0;
+  };
+
   const handleLogin = async () => {
+    if (!validateForm()) {
+      console.error('Invalid input: email or password is empty.');
+      return;
+    }
+
     try {
       const response = await axios.post(`http://localhost:3003/login`, { email, password });
-      const jwt = response.data.data[0].message;
       if (response.data.statusCode === 2000) {
-        localStorage.setItem('jwt', jwt);
+        const jwt = response.data.data[0].message;
+        localStorage.setItem('access-token', jwt);
+        localStorage.setItem('email', email);
         dispatch(loginSuccess(response.data));
-        localStorage.setItem('isLoggedIn', 'true');
-        navi('/');
+        navi(from);
       } else {
         console.error('Login failed: unexpected status code', response.data.statusCode);
       }
@@ -30,12 +42,6 @@ const LoginForm = () => {
       console.error('Login failed:', error);
     }
   };
-
-  useEffect(() => {
-    if (auth.isLoggedIn) {
-      console.log('Login success:', auth);
-    }
-  }, [auth]);
 
   return (
     <div className="flex flex-col items-center">
