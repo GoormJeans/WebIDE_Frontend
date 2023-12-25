@@ -7,7 +7,7 @@ import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
-import { getFiletree, Delete, Create,dragNdrop } from "../../api/EditfetchUrl";
+import { getFiletree, Delete, Create, dragNdrop } from "../../api/EditfetchUrl";
 //import { CreateFolder } from "../../api/EditfetchUrl";
 
 const STYLE = `
@@ -139,19 +139,19 @@ class File_tree extends React.Component {
     const data = await Create(path, number);
     //temp
     //this.getFiletree();
-    const Data =  solution(data.data);
+    const Data = solution(data.data);
     this.setState({ gData: Data });
     this.unmount(e);
   };
-  handleDragNdrop = async (dragkey : any,dragtitle : any, drop : any) =>{
-    const number : number = 1;
-    const path : string = drop + dragtitle;
+  handleDragNdrop = async (dragkey: any, dragtitle: any, drop: any) => {
+    const number: number = 1;
+    const path: string = drop + dragtitle;
     console.log(dragkey);
     console.log(path);
     const data = await dragNdrop(dragkey, path, number);
-    const Data =  solution(data.data);
+    const Data = solution(data.data);
     this.setState({ gData: Data });
-  }
+  };
   onDragStart = (info: any) => {
     console.log("start", info);
   };
@@ -192,16 +192,20 @@ class File_tree extends React.Component {
 
     if (!allow(dropKey) && dropPosition == 0) return;
 
-    if(dropPosition == 0)
-    {
-      dragtitle = dragKey[dragKey.length-1] == '/' ? dragtitle + '/' : dragtitle;
-      this.handleDragNdrop(dragKey,dragtitle, dropKey);
-    }
-    else
-    {
-      dragtitle = dragKey[dragKey.length-1] == '/' ? dragtitle + '/' : dragtitle;
-      const drops = dropKey.substr(0, dropKey[dropKey.length-1] == '/' ?  dropKey.length-droptitle.length-1 : dropKey.length-droptitle.length);
-      this.handleDragNdrop(dragKey,dragtitle,drops);
+    if (dropPosition == 0) {
+      dragtitle =
+        dragKey[dragKey.length - 1] == "/" ? dragtitle + "/" : dragtitle;
+      this.handleDragNdrop(dragKey, dragtitle, dropKey);
+    } else {
+      dragtitle =
+        dragKey[dragKey.length - 1] == "/" ? dragtitle + "/" : dragtitle;
+      const drops = dropKey.substr(
+        0,
+        dropKey[dropKey.length - 1] == "/"
+          ? dropKey.length - droptitle.length - 1
+          : dropKey.length - droptitle.length
+      );
+      this.handleDragNdrop(dragKey, dragtitle, drops);
     }
   };
 
@@ -209,7 +213,7 @@ class File_tree extends React.Component {
     console.log("onExpand", expandedKeys);
     this.setState({
       expandedKeys,
-      autoExpandParent: false,
+      autoExpandParent: true,
     });
   };
   onSelect = (selectedKeys: any) => {
@@ -287,7 +291,7 @@ class File_tree extends React.Component {
     if (obj.data.key?.startsWith("0-0-3")) {
       return false;
     }
-    if (obj.isLeaf) {
+    if (obj.isFolder) {
       return getSvgIcon(Fileicon, Fileiconview, {
         cursor: "pointer",
         backgroundColor: "white",
@@ -322,7 +326,10 @@ class File_tree extends React.Component {
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
           <input onChange={(e: any) => handleChange(e)}></input>
           <div
-            onClick={(d:any) =>this.handleCreateFile(e)}
+            onClick={(d: any) => {
+              if (e[e.length - 1] !== "/") return;
+              this.handleCreateFile(e);
+            }}
             className="hover:bg-stone-400 pl-4 pr-4"
           >
             파일 생성하기
@@ -352,13 +359,13 @@ class File_tree extends React.Component {
         filename: e.target.value,
       });
     };
-
     this.toolTip = (
       <div id="Tooltip">
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
           <input onChange={(e: any) => handleChange(e)}></input>
           <div
             onClick={(d: any) => {
+              if (e[e.length - 1] !== "/") return;
               this.handleCreateFolder(e);
             }}
             className="hover:bg-stone-400 pl-4 pr-4"
@@ -433,7 +440,7 @@ class File_tree extends React.Component {
               selectedKeys={this.state.selectedKeys}
               expandedKeys={this.state.expandedKeys}
               onExpand={this.onExpand}
-              autoExpandParent={this.state.autoExpandParent}
+              autoExpandParent={true}
               draggable
               onDragStart={this.onDragStart}
               onDrop={this.onDrop}

@@ -13,7 +13,7 @@ class Node {
         ? word.substring(0, word.length - 1)
         : word;
     this.children = [];
-    this.isLeaf = value.charAt(value.length - 1) === "/" ? false : true;
+    this.isFolder = value.charAt(value.length - 1) === "/" ? false : true;
   }
 }
 
@@ -29,12 +29,15 @@ class Trie {
     words.shift();
     for (let i = 0; i < words.length - 1; i++) words[i] = words[i] + "/";
     if (line[line.length - 1] === "/") words[words.length - 1] = undefined;
-    for (const word of words) {
-      if (word === undefined) continue;
+    for (let i=0;i< words.length;i++) {
+      const word = words[i];
+      if (word == undefined) continue;
       if (!currentNode.children[word]) {
         currentNode.children[word] = new Node(currentNode.key + word, word);
       }
       currentNode = currentNode.children[word];
+      if(currentNode.children.length >= 1)
+        currentNode.isLeaf = true;
     }
   }
   makeOutputForm(length, curNode) {
@@ -49,6 +52,7 @@ class Trie {
         key: curNode.key,
         title: curNode.title,
         isLeaf: curNode.isLeaf,
+        isFolder : curNode.isFolder,
         children: [],
       };
       for (const child of Object.keys(curNode.children).sort()) {
