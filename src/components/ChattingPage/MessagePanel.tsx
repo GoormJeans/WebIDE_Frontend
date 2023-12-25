@@ -22,6 +22,20 @@ const MessagePanel = () => {
 
   const chatroom = useParams();
 
+
+  // 창 닫을 경우 chat 종료 요청 서버로 전송
+  useEffect(() => {
+    const handleUnload = async (e: any) => {
+      e.preventDefault();
+      if (client.current?.connected) {
+        await axios.get(`http://localhost:3003/api/chat/test/${chatroom.id}`);
+      }
+    }
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleConnect = () => {
     setJoin(!join);
     client.current = Stomp.over(() => {
@@ -59,14 +73,13 @@ const MessagePanel = () => {
   // 채팅방 나가기
   const handleDisconnect = () => {
     setJoin(!join)
-    const data = {
-      'content': user1.nickname
-    };
-    client.current!.send(`app/chat/exit/${chatroom.id}`, {}, JSON.stringify(data));
 
-    // client.current?.disconnect(
-    //   () => {}, { 'nickname': user1.nickname },
-    // )
+    client.current?.disconnect(
+      // async () => {
+      // const request = await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user1.nickname}`);
+
+      // }
+    );
   }
 
   //메시지를 저장하는 부분
