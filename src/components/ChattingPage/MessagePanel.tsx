@@ -28,7 +28,7 @@ const MessagePanel = () => {
     const handleUnload = async (e: any) => {
       e.preventDefault();
       if (client.current?.connected) {
-        await axios.get(`http://localhost:3003/api/chat/test/${chatroom.id}`);
+        await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user1.nickname}`);
       }
     }
     window.addEventListener("beforeunload", handleUnload);
@@ -75,10 +75,14 @@ const MessagePanel = () => {
     setJoin(!join)
 
     client.current?.disconnect(
-      // async () => {
-      // const request = await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user1.nickname}`);
-
-      // }
+      async () => {
+        try {
+          await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user1.nickname}`);
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
     );
   }
 
