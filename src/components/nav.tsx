@@ -31,18 +31,18 @@ const NavItem: React.FC<NavItemProps> = ({ path, label, onClick }) => {
 };
 
 const NavItemList = () => {
-  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('AccessToken');
   const navi = useNavigate();
   const Logout = () => {
     localStorage.clear();
-    console.log('Logout function executed');
+    console.log('Successfully logged out');
     navi('/login');
   };
   return (
     <>
       <NavItem path="/algorithms" label="Algorithms" />
       <NavItem path="/mypage" label="Mypage" />
-      <NavItem path={email ? `` : `/login`} label={email ? `Logout` : `Login`} onClick={email ? Logout : () => navi('/login') } />
+      <NavItem path={token ? `` : `/login`} label={token ? `Logout` : `Login`} onClick={token ? Logout : () => navi('/login') } />
       <NavItem path="/settings" label="Settings" />
     </>
   );
