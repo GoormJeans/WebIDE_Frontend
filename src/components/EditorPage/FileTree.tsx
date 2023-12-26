@@ -102,6 +102,8 @@ const File_tree = () => {
     dispatch(Delete(data));
   };
   const handleCreateFolder = (e: any) => {
+    if(FileName2 === "")
+      return ;
     const path: string = e + FileName2 + "/";
     const data = {
       createPath: path,
@@ -112,6 +114,8 @@ const File_tree = () => {
     unmount(e);
   };
   const handleCreaterootFolder = (e: any) => {
+    if(FileName2 === "")
+      return ;
     const data = {
       createPath: FileName2 + "/",
       algorithmId: setting.probno,
@@ -120,6 +124,8 @@ const File_tree = () => {
     unmount(e);
   };
   const handleCreateFile = (e: any) => {
+    if(FileName2 === "")
+      return ;
     const path: string = e + FileName2;
     const data = {
       createPath: path,

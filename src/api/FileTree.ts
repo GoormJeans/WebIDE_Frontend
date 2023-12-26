@@ -148,7 +148,7 @@ export const Create = createAsyncThunk("post/Create", async (data: any) => {
     init();
     console.log(data);
     const resp = await instanceJSON.post(requests.create, JSON.stringify(data));
-
+    
     return resp;
   } catch (e) {
     console.log(e);
