@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { Link, useLocation } from 'react-router-dom';
 import { userLogin } from '../../api/api';
 import axios from 'axios';
+import Modal from '../Modal';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -14,6 +15,7 @@ const LoginForm = () => {
   const location = useLocation();
   const isLoginDisabled: boolean = !email || !password;
   const { from } = location.state || { from: { pathname: '/' } }
+  const [isLoginModal, setIsLoginModal] = useState(false);
 
   const validateForm = () => {
     return email.length > 0 && password.length > 0;
@@ -25,9 +27,6 @@ const LoginForm = () => {
       return;
     }
 
-
-
-
     try {
       const response = await userLogin(email, password);
       console.log(response.data)
@@ -38,6 +37,7 @@ const LoginForm = () => {
         navi(from);
       } else {
         console.error('Login failed: unexpected status code', response.data.error);
+        setIsLoginModal(true);
       }
     } catch (error) {
       console.error('Login failed:', error);
@@ -78,6 +78,11 @@ const LoginForm = () => {
         <Link to={'https://eb.goojeans-server.com/oauth2/authorization/naver'}><img src={NaverIcon} alt="naver icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
         <Link to={'https://eb.goojeans-server.com/oauth2/authorization/kakao'}><img src={KakaoIcon} alt="kakao icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
       </div>
+      <Modal isOpen={isLoginModal} handleClose={() => setIsLoginModal(false)}>
+        <span className='flex text-xl'>로그인 실패⚠️</span>
+        <p className='pb-10'>이메일 또는 비밀번호가 틀렸습니다.</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => setIsLoginModal(false)}>닫기</p>
+      </Modal>
     </div>
   )
 }
