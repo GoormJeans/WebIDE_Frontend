@@ -24,7 +24,7 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post(`https://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/login`, { email, password });
+      const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/login`, { email, password });
       if (response.data.statusCode === 200) {
         const AccessToken = response.data.data[0].message;
         localStorage.setItem('AccessToken', AccessToken);

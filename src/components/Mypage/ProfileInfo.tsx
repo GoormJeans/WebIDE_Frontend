@@ -41,7 +41,7 @@ const ProfileInfo = () => {
     const fetchUserInfo = async () => {
       try {
         const accessToken = localStorage.getItem('AccessToken');
-        const response = await axios.post(`https://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/api/userInfo`, {}, {
+        const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/api/userInfo`, {}, {
           headers: {
             'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
           },
