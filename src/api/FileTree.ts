@@ -12,6 +12,8 @@ export interface Filetree {
   probno: number;
   fetchUrl: string;
   isLoading: boolean;
+  fileExtension : string;
+  filePath : string;
   error: "";
 }
 
@@ -24,6 +26,8 @@ const initialState: Filetree = {
   probno: 1,
   fetchUrl: requests.fetchFiletree,
   error: "",
+  fileExtension : "",
+  filePath : "",
   isLoading: false,
 };
 
@@ -39,6 +43,8 @@ export const FileTree = createSlice({
     },
     setSelectedKeys: (state, action: PayloadAction<any>) => {
       state.selectedKeys = action.payload;
+      state.fileExtension = action.payload[0].split('.')[1];
+      state.selectedKeys = action.payload[0];
     },
     setProbno: (state, action: PayloadAction<any>) => {
       state.probno = action.payload;
@@ -67,6 +73,8 @@ export const FileTree = createSlice({
       .addCase(dragNdrop.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload.data);
+        if(action.payload === undefined)
+          return ;
         state.Data = action.payload.data;
         state.gData = solution(state.Data);
       })
@@ -80,6 +88,8 @@ export const FileTree = createSlice({
       .addCase(Create.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload);
+        if(action.payload === undefined)
+          return ;
         state.Data = action.payload.data;
         state.gData = solution(state.Data);
       })
@@ -92,6 +102,8 @@ export const FileTree = createSlice({
       })
       .addCase(Delete.fulfilled, (state, action) => {
         state.isLoading = false;
+        if(action.payload === undefined)
+          return ;
         state.Data = action.payload.data;
         state.gData = solution(state.Data);
       })
@@ -104,6 +116,8 @@ export const FileTree = createSlice({
       })
       .addCase(getSelect.fulfilled, (state, action) => {
         state.isLoading = false;
+        if(action.payload === undefined)
+          return ;
         state.Data = action.payload.data;
         state.gData = solution(state.Data);
       })
@@ -113,13 +127,23 @@ export const FileTree = createSlice({
       })
   },
 });
+export const execute = createAsyncThunk("post/execute", async (data: any) => {
+  try {
+    init();
+    console.log(data);
+    const resp = await instanceJSON.post(
+      requests.sourcecode,
+      JSON.stringify(data)
+    );
+    return resp;
+  } catch (e) {
+    return undefined;
+  }
+});
+
 
 export const getSelect = createAsyncThunk("post/select", async (data: any) => {
   try {
-    /* const data = {
-            deletePathSuffix: key,
-            algorithmId: number,
-          };*/
     init();
     console.log(data);
     const resp = await instanceJSON.post(

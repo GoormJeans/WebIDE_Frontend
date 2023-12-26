@@ -1,46 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { RootState } from '../../api/store';
-import { useSelector } from 'react-redux';
+import { fetchProblemsApi } from '../../api/api';
 
 
 const Achievement = () => {
-
-  const allProblems = useSelector((state: RootState) => state.problems);
   const [chartData, setChartData] = useState<{
-    percentage: number;
-    label: string;
-    value: number;
+    percentage: number; label: string; value: number;
   }[]>([]);
   const [totalValue, setTotalValue] = useState<number>(0);
 
   useEffect(() => {
-    const generateChartData = () => {
-      const languages = Array.from(new Set(allProblems.map(problem => problem.language)));
-
-      const values = languages.map(language => {
-        const languageProblems = Object.values(allProblems).filter(problem => problem.language === language);
-        const solvedCount = Object.values(languageProblems).filter(problem => problem.solved).length;
-        return solvedCount;
-      });
-
+    const generateChartData = async () => {
+      const response = await fetchProblemsApi();
+  
+      // 문제 데이터에서 태그를 기준으로 그룹핑합니다.
+      const tagGroup = response.reduce((acc: { [x: string]: any[]; }, problem: { tag: string | number; }) => {
+        if (!acc[problem.tag]) {
+          acc[problem.tag] = [];
+        }
+        acc[problem.tag].push(problem);
+        return acc;
+      }, {});
+  
+      // 태그별로 문제 통계를 생성합니다.
+      const tags = Object.keys(tagGroup);
+      const values = tags.map(tag => tagGroup[tag].length);
+      const sum = values.reduce((acc, val) => acc + val, 0);
       const total = values.reduce((acc, val) => acc + val, 0);
       setTotalValue(total);
-
-      const normalizedValues = values.map(val => Math.round((val / total) * 100));
-
-      const data = languages.map((language, index) => ({
-        label: language,
+  
+      // 통계 데이터를 생성합니다.
+      const data = tags.map((tag, index) => ({
+        label: tag,
         value: values[index],
-        percentage: normalizedValues[index],
+        percentage: Math.round((values[index] / sum) * 100),
       }));
-
+  
       setChartData(data);
     };
-
+  
     generateChartData();
-  }, [allProblems]);
+  }, []);
+  
+  
 
   return (
     <div className='circle-chart bg-white p-3 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>
@@ -78,7 +81,7 @@ const Achievement = () => {
             <Table sx={{ backgroundColor: "white" }}>
               <TableHead sx={{ backgroundColor: "white" }}>
                 <TableRow sx={{ borderBottom: 1, borderColor: 'grey.500' }}>
-                  <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>Language</TableCell>
+                  <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>Category</TableCell>
                   <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>Value</TableCell>
                   <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>%</TableCell>
                 </TableRow>

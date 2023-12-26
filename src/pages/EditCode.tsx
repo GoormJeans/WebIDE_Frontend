@@ -1,24 +1,31 @@
 // import { useRef } from 'react';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../api/store';
 import { setlang_c, setSubmit } from '../api/scripts_c';
-import { lang } from '../api/scripts';
 import MainCM from '../components/EditorPage/MainCM';
 import { useNavigate } from 'react-router-dom';
 import Filetree from '../components/EditorPage/FileTree';
 import MessagePanel from "../components/ChattingPage/MessagePanel";
 import Description from "../components/EditorPage/Description";
+import { execute } from '../api/FileTree';
 const EditCode = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.scriptsC);
-    //const filenameRef: any = useRef(null);
-    const handlelangs = (e: any) => {
-        dispatch(setlang_c(e.target.value));
-    }
+    const FileTree: any = useSelector((state: RootState) => state.FileTree);
     const AlertSameCode = () => {
         alert("이미 동일한 코드로 제출한 적이 있습니다");
+    }
+    const Submit = (sourceCode : string) =>{
+        const Data = {
+            algorithmId : FileTree.probno,
+            sourceCode : sourceCode,
+            filePath : FileTree.filePath,
+            fileExtension : FileTree.fileExtension,
+            testCase : "",
+        };
+        console.log(execute(Data));
     }
     const handleSumit = () => {
 
@@ -36,32 +43,16 @@ const EditCode = () => {
         }
         dispatch(setSubmit());
         if (setting.now_lang === "cpp")
-            alert(setting.cpp_val);
+            Submit(setting.cpp_val);
         if (setting.now_lang === "java")
-            alert(setting.java_val);
+            Submit(setting.java_val);
         if (setting.now_lang === "py")
-            alert(setting.py_val);
+            Submit(setting.py_val);
     }
-    /*
-        function saveAsFile(str: string, filename: string) {
-            const blob = new Blob([str], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-    
-        const handleExtract = () => {
-            const selectedLanguage = setting.defaultLanguage;
-            const customFilename = filenameRef.current.value || 'solution'; // Use input or default filename
-            //const fullFilename = `${customFilename}.${langs[selectedLanguage].path.substring(1)}`;
-            //alert(fullFilename);
-            //saveAsFile(editorRef.current.getValue(), fullFilename);
-        };
-    */
-
+    useEffect(()=>{
+        setlang_c(FileTree.fileExtension);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[FileTree.filePath]);
 
     //채팅 페이지 보이게하기용
     const [visible, setVisible] = useState(true);
@@ -74,11 +65,6 @@ const EditCode = () => {
                     JeansCode
                 </div>
                 <div className='flex justify-end w-full'>
-                    <select className="form-select w-1/12 mt-1 mb-1  bg-white-400 text-black rounded border border-purple-900" onChange={(e) => { handlelangs(e) }}>
-                        {lang.map((element: any) => {
-                            return <option value={element}>{element}</option>
-                        })}
-                    </select>
                     {/* 채팅 페이지 버튼 */}
                     <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={() => { setVisible(!visible) }}>
                         Chat
