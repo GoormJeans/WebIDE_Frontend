@@ -14,8 +14,11 @@ import Signup from './pages/Signup';
 import EditCode from './pages/EditCode';
 import EditUserInfo from './pages/EditUserInfo';
 import NotFoundPage from "./pages/NotFoundPage";
+import { useSelector } from "react-redux";
+import { RootState } from "./api/store";
 
 function App() {
+  const user = useSelector((state: RootState) => state.user);
   const ClickEvent = () => {
     const target: any = document.querySelector('#fileTreeRight');
     if (target !== null) {
@@ -54,12 +57,13 @@ function App() {
           <Route path="settings" element={<DetailPage />} />
           <Route path="/*" element={<NotFoundPage />} />
 
-          <Route path="admin" element={<AdminLayout />} >
+
+          {user.isAdminValue && <Route path="admin" element={<AdminLayout />} >
             <Route index element={<AdminPage />} />
             <Route path="algorithm" element={<AdminAlgoPage />} />
             <Route path="user" element={<AdminUsersPage />} />
             <Route path="algorithm/:id" element={<AddAlgoPage />} />
-          </Route>
+          </Route>}
         </Route>
         <Route path="editor/:id" element={<EditCode />} />
         <Route path="/login" element={<Login />} />
