@@ -3,9 +3,9 @@ import InfoEditInputTag from './InfoEditInputTag'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
 import { setEmailValue, setNicknameValue, setAddressValue, setBioValue } from '../../api/user';
-import axios from 'axios';
 import Modal from '../Modal';
 import { useNavigate } from 'react-router-dom';
+import { fetchUserInfo, updateUserInfo } from '../../api/api';
 
 export const EditMyInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,23 +15,7 @@ export const EditMyInfo = () => {
   const navi = useNavigate();
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const accessToken = localStorage.getItem('AccessToken');
-        const response = await axios.post(`https://eb.goojeans-server.com/api/userInfo`, {}, {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
-          },
-        });
-        dispatch(setEmailValue(response.data.data[0].email));
-        dispatch(setNicknameValue(response.data.data[0].nickname));
-        dispatch(setAddressValue(response.data.data[0].city));
-        dispatch(setBioValue(response.data.data[0].bio));
-      } catch (error) {
-        console.error('Error fetching user information:', error);
-      }
-    };
-    fetchUserInfo();
+    fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue);
   }, [dispatch]);
 
   const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,34 +29,7 @@ export const EditMyInfo = () => {
   };
 
   const handleSave = async () => {
-    try {
-      const accessToken = localStorage.getItem('AccessToken');
-      if (isModified) {
-        const response = await axios.post(`https://eb.goojeans-server.com/mypage/edit/blogAndcity?blog=${user.bioValue}&city=${user.cityValue}`, {
-          blog: user.bioValue,
-          city: user.cityValue,
-        },
-          {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
-            },
-          });
-          console.log(response);
-        if (response.data.statusCode !== 200) {
-          console.error('Error updating user information:', response.data.error);
-          return;
-        }
-        else {
-          const updatedUserInfo = response.data.data[0];
-          dispatch(setAddressValue(updatedUserInfo.address));
-          dispatch(setBioValue(updatedUserInfo.blog));
-          setIsSaveModalOpen(true);
-          setIsModified(false);
-        }
-      }
-    } catch (error) {
-      console.error('Error updating user information:', error);
-    }
+    updateUserInfo(isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified);
   };
 
   return (

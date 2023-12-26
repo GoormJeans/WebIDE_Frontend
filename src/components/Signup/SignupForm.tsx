@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import FadeIn from '../FadeIn'
 import SignUpInputTag from './SignUpInputTag';
-import axios from 'axios';
 import Modal from '../Modal';
 import { Link, useNavigate } from 'react-router-dom';
+import { userRegister } from '../../api/api';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');
@@ -25,32 +25,9 @@ const SignupForm = () => {
 
   const navi = useNavigate();
 
+  const handleRegister =  () => {
+    userRegister(email, password, nickname, blog, city, terms, setIsSuccessModalOpen, setIsFailModalOpen, setErrorMsg);
 
-  const handleRegister = async () => {
-    try {
-      const response = await axios.post(`https://eb.goojeans-server.com/sign-up`, { email, password, nickname, blog, city, terms });
-      if (response.data.statusCode === 200) {
-        console.log(response.data.data[0].message);
-        setIsSuccessModalOpen(true);
-      }
-      else if (response.data.statusCode === 4001) {
-        setErrorMsg('이미 존재하는 이메일입니다.');
-        setIsFailModalOpen(true);
-      }
-      else if (response.data.statusCode === 4011) {
-        setErrorMsg('이미 존재하는 닉네임입니다.');
-        setIsFailModalOpen(true);
-      }
-      else if (response.data.statusCode === 4012) {
-        setErrorMsg('필요한 정보를 모두 입력해주세요.');
-        setIsFailModalOpen(true);
-      }
-      else {
-        console.error(`Sign up failed[${response.data.statusCode}]: ${response.data.error}`);
-      }
-    } catch (error) {
-      console.error('Sign up failed:', error);
-    }
   };
 
   return (
