@@ -23,7 +23,7 @@ const AdminUsersPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const request = await axios.get('/api/admin/user');
+        const request = await axios.get('/admin/user');
         setUsers(request.data);
         setInitUsers(request.data);
       } catch (error) {
@@ -38,7 +38,7 @@ const AdminUsersPage = () => {
   useEffect(() => {
     setUsers(initUsers)
     if (searchTerm !== null && searchTerm.trim().length !== 0) {
-      setUsers(initUsers.filter((element) => element.nickname.includes(searchTerm.trim())
+      setUsers(Object.values(initUsers).filter((element) => element.nickname.includes(searchTerm.trim())
       || element.city.includes(searchTerm.trim())
       || element.email.includes(searchTerm.trim())
       || element.id === parseInt(searchTerm.trim())));

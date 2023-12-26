@@ -1,35 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { RootState } from '../../api/store';
-import { useSelector } from 'react-redux';
 
 
 const Achievement = () => {
-
-  const allProblems = useSelector((state: RootState) => state.problems);
   const [chartData, setChartData] = useState<{
-    percentage: number;
-    label: string;
-    value: number;
+    percentage: number; label: string; value: number;
   }[]>([]);
   const [totalValue, setTotalValue] = useState<number>(0);
 
   useEffect(() => {
+    // Generate random data for the chart
     const generateChartData = () => {
-      const languages = Array.from(new Set(allProblems.map(problem => problem.language)));
-
-      const values = languages.map(language => {
-        const languageProblems = Object.values(allProblems).filter(problem => problem.language === language);
-        const solvedCount = Object.values(languageProblems).filter(problem => problem.solved).length;
-        return solvedCount;
-      });
-
+      const languages = ['Java', 'Python3', 'C++'];
+      const values = languages.map(() => Math.floor(Math.random() * 100));
+      const sum = values.reduce((acc, val) => acc + val, 0);
+      const normalizedValues = values.map((val) => Math.round((val / sum) * 100));
       const total = values.reduce((acc, val) => acc + val, 0);
       setTotalValue(total);
-
-      const normalizedValues = values.map(val => Math.round((val / total) * 100));
-
       const data = languages.map((language, index) => ({
         label: language,
         value: values[index],
@@ -40,7 +28,7 @@ const Achievement = () => {
     };
 
     generateChartData();
-  }, [allProblems]);
+  }, []);
 
   return (
     <div className='circle-chart bg-white p-3 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>

@@ -10,7 +10,7 @@ const Description = () => {
 
   useEffect(() => {
     const getDescription = async () => {
-      const request = await axios.get(`/api/editor/algorithm/${param.id}`)
+      const request = await axios.get(`/editor/algorithm/${param.id}`)
       setDescription(request.data[0].algorithmText);
     }
     getDescription();
