@@ -31,7 +31,6 @@ const STYLE = `
 
 }
 `;
-
 const allowDrop: any = (paramobj: { dropNode: any; dropPosition: any }) => {
   if (!paramobj.dropNode.children) {
     if (paramobj.dropPosition === 0) return false;
@@ -153,6 +152,7 @@ const File_tree = () => {
     };
     dispatch(getSelect(data));
   };
+
   const onDragStart = (info: any) => {
     console.log("start", info);
   };
@@ -199,6 +199,7 @@ const File_tree = () => {
     dispatch(setSelectedKeys([info.node.props.eventKey]));
     renderCm(info);
   };
+
   const handleChange = async (e: any) => {
       FileName2 = e.target.value;
       console.log(FileName2);
