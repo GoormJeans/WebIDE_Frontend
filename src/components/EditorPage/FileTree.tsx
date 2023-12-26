@@ -1,12 +1,20 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "../../assets/file_tree/index.css";
 import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
-import { getSelect,Delete, Create,dragNdrop,getFiletree, setExpandedKeys, setSelectedKeys, setFilename} from "../../api/FileTree";
+import {
+  getSelect,
+  Delete,
+  Create,
+  dragNdrop,
+  getFiletree,
+  setExpandedKeys,
+  setSelectedKeys,
+} from "../../api/FileTree";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../api/store";
 
@@ -23,17 +31,6 @@ const STYLE = `
 
 }
 `;
-
-// function contains(root: any, n: any) {
-//   let node = n;
-//   while (node) {
-//     if (node === root) {
-//       return true;
-//     }
-//     node = node.parentNode;
-//   }
-//   return false;
-// }
 
 const allowDrop: any = (paramobj: { dropNode: any; dropPosition: any }) => {
   if (!paramobj.dropNode.children) {
@@ -82,90 +79,83 @@ const getSvgIcon = (path: any, view: any, iStyle = {}) => (
 );
 let cmContainer: any = null;
 let toolTip: any = null;
-const File_tree = ()=> {
+const File_tree = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const setting: any = useSelector((state: RootState) => state.FileTree);    
-
-
- 
-  const getfiletree : any = () => {
+  const setting: any = useSelector((state: RootState) => state.FileTree);
+  const [FileName, setFilename] = useState('');
+  let FileName2 = '';
+  const getfiletree: any = () => {
     dispatch(getFiletree(setting.probno));
     //const Data = await solution(setting.Data);
-   // dispatch(setData(Data));
-  }
+    // dispatch(setData(Data));
+  };
 
   useEffect(() => {
     getContainer();
     getfiletree();
-  },[setting.fetchURL]);
+    
+  }, [setting.fetchURL]);
+  useEffect(()=>{
+    if(FileName2.length > 0)
+      setFilename(FileName2);
+    console.log(FileName);
+  },[FileName2])
 
-
-   const handleDelete =  (e: any) => {
+  const handleDelete = (e: any) => {
     const number: number = 1;
     const data = {
-      deletePathSuffix : e,
-      algorithmId : number,
-  }
+      deletePathSuffix: e,
+      algorithmId: number,
+    };
     dispatch(Delete(data));
   };
-   const handleCreateFolder =  (e: any) => {
+  const handleCreateFolder = (e: any) => {
     const number: number = 1;
-    const path: string = e + setting.filename + "/";
+    const path: string = e + FileName2 + "/";
     const data = {
-      createPath : path,
-      algorithmId : number
-    }
+      createPath: path,
+      algorithmId: number,
+    };
+    
     dispatch(Create(data));
     unmount(e);
   };
-   const handleCreaterootFolder = async (e: any) => {
+  const handleCreaterootFolder = (e: any) => {
     const number: number = 1;
     const data = {
-      createPath : setting.filename + "/",
-      algorithmId : number
-    }
-    console.log(data);
+      createPath: FileName2 + "/",
+      algorithmId: number,
+    };
     dispatch(Create(data));
     unmount(e);
   };
-   const handleCreateFile =  (e: any) => {
+  const handleCreateFile = (e: any) => {
     const number: number = 1;
-    const path: string = e + setting.filename;
+    const path: string = e + FileName2;
     const data = {
-      createPath : path,
-      algorithmId : number
-    }
+      createPath: path,
+      algorithmId: number,
+    };
     dispatch(Create(data));
     unmount(e);
   };
-   const handleDragNdrop =  (dragkey: any, dragtitle: any, drop: any) => {
+  const handleDragNdrop = (dragkey: any, dragtitle: any, drop: any) => {
     const number: number = 1;
     const path: string = drop + dragtitle;
-    dragNdrop({beforePath :  dragkey, afterPath : path, algorithmId : number});
+    dragNdrop({ beforePath: dragkey, afterPath: path, algorithmId: number });
   };
-   const handleSelect = async (key : any) =>{
-    const number : number = 1;
-    if(key[key.length-1] === '/')
-      return ;
+  const handleSelect = async (key: any) => {
+    const number: number = 1;
+    if (key[key.length - 1] === "/") return;
     const data = {
-            deletePathSuffix: key,
-            algorithmId: number,
-          };
+      deletePathSuffix: key,
+      algorithmId: number,
+    };
     dispatch(getSelect(data));
-  }
-
-
-
-
-
+  };
   const onDragStart = (info: any) => {
     console.log("start", info);
   };
-
-  const onDragEnter = () => {
-    console.log("enter");
-  };
-
   const onDrop = (info: any) => {
     console.log("drop", info);
     const dropKey = info.node.key;
@@ -200,8 +190,7 @@ const File_tree = ()=> {
   };
   const onSelect = (selectedKeys: any) => {
     dispatch(setSelectedKeys(selectedKeys));
-    if(selectedKeys.length === 0)
-      return ;
+    if (selectedKeys.length === 0) return;
     handleSelect(selectedKeys[0]);
   };
 
@@ -210,10 +199,9 @@ const File_tree = ()=> {
     dispatch(setSelectedKeys([info.node.props.eventKey]));
     renderCm(info);
   };
-  const handleChange = (e: any) => {
-    console.log(e.target.value);
-    if(e.target.value !== "")
-      dispatch(setFilename(e.target.value));
+  const handleChange = async (e: any) => {
+      FileName2 = e.target.value;
+      console.log(FileName2);
   };
 
   const getContainer = () => {
@@ -272,7 +260,7 @@ const File_tree = ()=> {
     });
 
     ReactDOM.render(toolTip, cmContainer);
-  }
+  };
 
   const switcherIcon = (obj: any) => {
     if (obj.data.key?.startsWith("0-0-3")) {
@@ -376,7 +364,7 @@ const File_tree = ()=> {
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
           <input onChange={(e: any) => handleChange(e)}></input>
           <div
-            onClick={handleCreaterootFolder}
+            onClick={(e) => handleCreaterootFolder(e)}
             className="hover:bg-stone-400 pl-4 pr-4"
           >
             폴더 생성하기
@@ -396,41 +384,40 @@ const File_tree = ()=> {
     ReactDOM.render(toolTip, cmContainer);
   };
 
-    return (
-      <div className="flex flex-col overflow-hidden w-100%">
-        <div
-          className="flex justify-end hover:text-white"
-          onClick={Createrootfolder}
-        >
-          +
-        </div>
-        <style dangerouslySetInnerHTML={{ __html: STYLE }} />
-        <div style={{ overflow: "hidden", display: "flex" }}>
-          <div style={{ display: "flex-start" }}>
-            <Tree
-              showLine
-              allowDrop={allowDrop}
-              onRightClick={onRightClick}
-              selectedKeys={setting.selectedKeys}
-              expandedKeys={setting.expandedKeys}
-              onExpand={onExpand}
-              autoExpandParent={true}
-              draggable
-              onDragStart={onDragStart}
-              onDrop={onDrop}
-              showIcon={false}
-              treeData={setting.gData}
-              motion={motion}
-              style={{ height: "100%" }}
-              onSelect={onSelect}
-              switcherIcon={switcherIcon}
-              virtual={true}
-            ></Tree>
-          </div>
+  return (
+    <div className="flex flex-col overflow-hidden w-100%">
+      <div
+        className="flex justify-end hover:text-white"
+        onClick={Createrootfolder}
+      >
+        +
+      </div>
+      <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+      <div style={{ overflow: "hidden", display: "flex" }}>
+        <div style={{ display: "flex-start" }}>
+          <Tree
+            showLine
+            allowDrop={allowDrop}
+            onRightClick={onRightClick}
+            selectedKeys={setting.selectedKeys}
+            expandedKeys={setting.expandedKeys}
+            onExpand={onExpand}
+            autoExpandParent={true}
+            draggable
+            onDragStart={onDragStart}
+            onDrop={onDrop}
+            showIcon={false}
+            treeData={setting.gData}
+            motion={motion}
+            style={{ height: "100%" }}
+            onSelect={onSelect}
+            switcherIcon={switcherIcon}
+            virtual={true}
+          ></Tree>
         </div>
       </div>
-    );
-  }
-
+    </div>
+  );
+};
 
 export default File_tree;

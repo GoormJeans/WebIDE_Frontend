@@ -9,7 +9,6 @@ export interface Filetree {
   autoExpandParent: boolean;
   expandedKeys: [];
   selectedKeys: [];
-  filename: "";
   probno: number;
   fetchUrl: string;
   isLoading: boolean;
@@ -22,7 +21,6 @@ const initialState: Filetree = {
   autoExpandParent: true,
   expandedKeys: [],
   selectedKeys: [],
-  filename: "",
   probno: 1,
   fetchUrl: requests.fetchFiletree,
   error: "",
@@ -42,9 +40,6 @@ export const FileTree = createSlice({
     setSelectedKeys: (state, action: PayloadAction<any>) => {
       state.selectedKeys = action.payload;
     },
-    setFilename: (state, action: PayloadAction<any>) => {
-      state.filename = action.payload;
-    },
     setProbno: (state, action: PayloadAction<any>) => {
       state.probno = action.payload;
     },
@@ -57,6 +52,8 @@ export const FileTree = createSlice({
       .addCase(getFiletree.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload);
+        if(action.payload === undefined)
+          return ;
         state.Data = action.payload.data;
         state.gData = solution(state.Data);
       })
@@ -192,7 +189,6 @@ export const {
   setData,
   setExpandedKeys,
   setSelectedKeys,
-  setFilename,
   setProbno,
 } = FileTree.actions;
 export default FileTree.reducer;
