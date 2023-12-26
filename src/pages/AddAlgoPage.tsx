@@ -49,7 +49,7 @@ const AddAlgoPage = () => {
       const fetchProb = async () => {
         try {
           const request = await axios.get(`/admin/algorithm/${param.id}`); //id에 해당하는 문제의 정보 불러오는 코드
-          const prob: AdminAlgorithm = request.data[0];
+          const prob: AdminAlgorithm = request.data.data[0];
           setLevel(levels[prob.level]);
           setName(prob.name);
           setTag(prob.tag);
