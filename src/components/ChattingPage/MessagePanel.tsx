@@ -3,11 +3,12 @@ import MessageForm from "./MessageForm";
 import MessageHeader from "./MessageHeader";
 import MessageComponent from "./MessageComponent";
 import { Message } from "../../types/Message.type";
-import { user1 } from "../../types/DummyData";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../api/store";
 
 const MessagePanel = () => {
 
@@ -22,13 +23,15 @@ const MessagePanel = () => {
 
   const chatroom = useParams();
 
+  const user = useSelector((state: RootState) => state.user);
+
 
   // 창 닫을 경우 chat 종료 요청 서버로 전송
   useEffect(() => {
     const handleUnload = async (e: any) => {
       e.preventDefault();
       if (client.current?.connected) {
-        await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user1.nickname}`);
+        await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user.nicknameValue}`);
       }
     }
     window.addEventListener("beforeunload", handleUnload);
@@ -45,7 +48,7 @@ const MessagePanel = () => {
     })
     setMessages([]);
     client.current.connect(
-      { 'nickname': user1.nickname },
+      { 'nickname': user.nicknameValue },
       () => {
         client.current!.subscribe(`/topic/chat/${chatroom.id}`, function (e) {
 
@@ -63,7 +66,7 @@ const MessagePanel = () => {
   // 입장 메시지 전송
   function sendEnterMessage() {
     const data = {
-      'content': user1.nickname
+      'content': user.nicknameValue
     };
     // send(destination,헤더,페이로드)
     client.current!.send(`/app/chat/enter/${chatroom.id}`, {}, JSON.stringify(data));
@@ -77,7 +80,7 @@ const MessagePanel = () => {
     client.current?.disconnect(
       async () => {
         try {
-          await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user1.nickname}`);
+          await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user.nicknameValue}`);
         }
         catch (error) {
           console.log(error);
@@ -118,7 +121,7 @@ const MessagePanel = () => {
         <MessageComponent
           key={message.id}
           message={message}
-          user={user1}
+          user={user}
         />
       )
   }
@@ -136,20 +139,7 @@ const MessagePanel = () => {
     if (searchTerm.length === 0) {
       return;
     }
-
     setVisible(true) //뒤로가기 버튼 숨김
-
-    // Local Search Logic
-    // const chatRoomMessages = [...messages];
-    // const regex = new RegExp(searchTerm, "gi");
-    // const searchResults = chatRoomMessages.reduce((acc: Message[], message: Message) => {
-    //   if ((message.content && message.content.match(regex)) || message.nickname.match(regex)) {
-    //     acc.push(message)
-    //   }
-    //   return acc;
-    // }, []);
-
-    // Request Search Logic
     const request = await axios.get(`http://localhost:8080/chat/search/${chatroom.id}?keyword=${searchTerm}`);
     const searchResults = request.data.data;
 
