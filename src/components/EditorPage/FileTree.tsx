@@ -1,13 +1,12 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ReactDOM from "react-dom";
-import { gData, solution } from "../../assets/file_tree/dataUtil";
 import "../../assets/file_tree/index.css";
 import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
-import { Create,dragNdrop,getFiletree,setData, setExpandedKeys, setSelectedKeys, setFilename, setProbno} from "../../api/FileTree";
+import { getSelect,Delete, Create,dragNdrop,getFiletree, setExpandedKeys, setSelectedKeys, setFilename} from "../../api/FileTree";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../api/store";
 
@@ -25,16 +24,16 @@ const STYLE = `
 }
 `;
 
-function contains(root: any, n: any) {
-  let node = n;
-  while (node) {
-    if (node === root) {
-      return true;
-    }
-    node = node.parentNode;
-  }
-  return false;
-}
+// function contains(root: any, n: any) {
+//   let node = n;
+//   while (node) {
+//     if (node === root) {
+//       return true;
+//     }
+//     node = node.parentNode;
+//   }
+//   return false;
+// }
 
 const allowDrop: any = (paramobj: { dropNode: any; dropPosition: any }) => {
   if (!paramobj.dropNode.children) {
@@ -89,7 +88,7 @@ const File_tree = ()=> {
 
 
  
-  const getfiletree : any = async () => {
+  const getfiletree : any = () => {
     dispatch(getFiletree(setting.probno));
     //const Data = await solution(setting.Data);
    // dispatch(setData(Data));
@@ -101,18 +100,22 @@ const File_tree = ()=> {
   },[setting.fetchURL]);
 
 
-   const handleDelete = async (e: any) => {
+   const handleDelete =  (e: any) => {
     const number: number = 1;
-    //await Delete(e, number);
+    const data = {
+      deletePathSuffix : e,
+      algorithmId : number,
+  }
+    dispatch(Delete(data));
   };
-   const handleCreateFolder = async (e: any) => {
+   const handleCreateFolder =  (e: any) => {
     const number: number = 1;
     const path: string = e + setting.filename + "/";
     const data = {
       createPath : path,
       algorithmId : number
     }
-    Create(data);
+    dispatch(Create(data));
     unmount(e);
   };
    const handleCreaterootFolder = async (e: any) => {
@@ -121,20 +124,21 @@ const File_tree = ()=> {
       createPath : setting.filename + "/",
       algorithmId : number
     }
-    Create(data);
+    console.log(data);
+    dispatch(Create(data));
     unmount(e);
   };
-   const handleCreateFile = async (e: any) => {
+   const handleCreateFile =  (e: any) => {
     const number: number = 1;
     const path: string = e + setting.filename;
     const data = {
       createPath : path,
       algorithmId : number
     }
-    Create(data);
+    dispatch(Create(data));
     unmount(e);
   };
-   const handleDragNdrop = async (dragkey: any, dragtitle: any, drop: any) => {
+   const handleDragNdrop =  (dragkey: any, dragtitle: any, drop: any) => {
     const number: number = 1;
     const path: string = drop + dragtitle;
     dragNdrop({beforePath :  dragkey, afterPath : path, algorithmId : number});
@@ -143,7 +147,11 @@ const File_tree = ()=> {
     const number : number = 1;
     if(key[key.length-1] === '/')
       return ;
-    //console.log(await getSelect(key, number));
+    const data = {
+            deletePathSuffix: key,
+            algorithmId: number,
+          };
+    dispatch(getSelect(data));
   }
 
 
@@ -202,9 +210,10 @@ const File_tree = ()=> {
     dispatch(setSelectedKeys([info.node.props.eventKey]));
     renderCm(info);
   };
-
-  const onMouseLeave = (info: any) => {
-    console.log("leave", info);
+  const handleChange = (e: any) => {
+    console.log(e.target.value);
+    if(e.target.value !== "")
+      dispatch(setFilename(e.target.value));
   };
 
   const getContainer = () => {
@@ -293,9 +302,6 @@ const File_tree = ()=> {
       ReactDOM.unmountComponentAtNode(cmContainer);
       toolTip = null;
     }
-    const handleChange = (e: any) => {
-      dispatch(setFilename(e.target.value));
-    };
     getContainer();
     toolTip = (
       <div id="Tooltip">
@@ -331,9 +337,6 @@ const File_tree = ()=> {
       toolTip = null;
     }
     getContainer();
-    const handleChange = (e: any) => {
-      dispatch(setFilename(e.target.value));
-    };
     toolTip = (
       <div id="Tooltip">
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
@@ -366,9 +369,7 @@ const File_tree = ()=> {
       ReactDOM.unmountComponentAtNode(cmContainer);
       toolTip = null;
     }
-    const handleChange = (e: any) => {
-      dispatch(setFilename(e.target.value));
-    };
+
     getContainer();
     toolTip = (
       <div id="Tooltip">
