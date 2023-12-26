@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-// import { useNavigate } from 'react-router-dom';
 import axios from "../../api/axios"
 // import { UserInfo } from './../../types/UserInfo.type';
 
-const UserComponent: React.FC<{id:string;nickname:string;email:string}> = ({ id, nickname, email }) => {
+const UserComponent: React.FC<{ id: number; nickname: string; email: string; }> = ({ id, nickname, email }) => {
 
-  // const navigate = useNavigate();
   const [deleteMod, setDeleteMod] = useState(false);
 
   const handleDelete = async () => {
@@ -28,7 +26,7 @@ const UserComponent: React.FC<{id:string;nickname:string;email:string}> = ({ id,
         </div>
       </div>
       :
-      <div className="w-full bg-[#c4c4c4] h-[60px] flex flex-row items-center justify-between p-6 mb-5 rounded-xl shadow-xl whitespace-nowrap">
+      <div className={"w-full bg-[#c4c4c4] h-[60px] flex flex-row items-center justify-between p-6 mb-5 rounded-xl shadow-xl whitespace-nowrap"}>
         <div className="bg-transparent flex flex-row justify-center whitespace-nowrap">
           <p className="bg-transparent">{id}</p>
           <p className="bg-transparent ml-3">{nickname}</p>
