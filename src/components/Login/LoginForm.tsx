@@ -3,7 +3,7 @@ import GoogleIcon from '../../assets/images/google_icon.png'
 import NaverIcon from '../../assets/images/naver_icon.png'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { userLogin } from '../../api/api';
 
 const LoginForm = () => {
@@ -67,9 +67,9 @@ const LoginForm = () => {
       </button>
       <span className=" text-sm text-slate-700 mt-8 mb-5">Or continue with</span>
       <div className="w-full flex flex-row justify-evenly">
-        <img src={GoogleIcon} alt="google icon" className="w-10 h-10 mx-2 shadow-2xl" onClick={() => { }} />
-        <img src={NaverIcon} alt="naver icon" className="w-10 h-10 mx-2 shadow-2xl" onClick={() => { }} />
-        <img src={KakaoIcon} alt="kakao icon" className="w-10 h-10 mx-2 shadow-2xl" onClick={() => { }} />
+        <Link to={'https://eb.goojeans-server.com/login/oauth2/code/google'}><img src={GoogleIcon} alt="google icon" className="w-10 h-10 mx-2 shadow-2xl"/></Link>
+        <Link to={'https://eb.goojeans-server.com/login/oauth2/code/naver'}><img src={NaverIcon} alt="naver icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
+        <Link to={'https://eb.goojeans-server.com/login/oauth2/code/kakao'}><img src={KakaoIcon} alt="kakao icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
       </div>
     </div>
   )
