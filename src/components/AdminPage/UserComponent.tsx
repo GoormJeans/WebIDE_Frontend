@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from "../../api/axios"
-import { UserInfo } from './../../types/UserInfo.type';
+// import { UserInfo } from './../../types/UserInfo.type';
 
 const UserComponent: React.FC<{id:string;nickname:string;email:string}> = ({ id, nickname, email }) => {
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [deleteMod, setDeleteMod] = useState(false);
 
   const handleDelete = async () => {
