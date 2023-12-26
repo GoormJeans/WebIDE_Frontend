@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useState } from 'react'
 import InfoEditInputTag from './InfoEditInputTag'
-import axios from 'axios';
 import Modal from '../Modal';
 import { useNavigate } from 'react-router-dom';
+import { changePassword } from '../../api/api';
 
 export const ChangePassword = () => {
   const [password, setPassword] = useState('');
@@ -25,29 +25,14 @@ export const ChangePassword = () => {
   };
 
   const handleChangePassword = async () => {
-    try {
-      const accessToken = localStorage.getItem('AccessToken');
-      const response = await axios.post(`https://eb.goojeans-server.com/mypage/edit/password`, {
-        password: password,
-      },
-        {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
-          },
-        });
-      if (response.data.status !== 200) {
-        console.error(`Change password failed[${response.data.status}]: ${response.data.error}`);
-        return;
-      }
-      else {
-        setIsModified(false);
-        setIsChangedModalOpen(true);
-        console.log(response.data.data[0].message);
-      }
-    } catch (error) {
-      console.error('Error fetching user information:', error);
+    const message = await changePassword(password);
+    if (message) {
+      setIsModified(false);
+      setIsChangedModalOpen(true);
+      console.log(message);
     }
   }
+
   return (
     <div className='mx-5 my-5 px-5 py-5 rounded-3xl bg-nav-color shadow-xl'>
       <span className=" text-3xl">Change Password</span>

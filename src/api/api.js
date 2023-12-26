@@ -88,3 +88,40 @@ export const userRegister = async (email, password, nickname, blog, city, terms,
     console.error('Sign up failed:', error);
   }
 };
+
+export const userLogin = async (email, password) => {
+  try {
+    const response = await axios.post(`https://eb.goojeans-server.com/login`, { email, password });
+    return response;
+  } catch (error) {
+    console.error('Login failed:', error);
+    throw error;
+  }
+};
+
+export const changePassword= async (password) => {
+  try {
+    const accessToken = localStorage.getItem('AccessToken');
+    const response = await axios.post(
+      `https://eb.goojeans-server.com/mypage/edit/password`,
+      {
+        password: password,
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    if (response.data.status !== 200) {
+      console.error(`Change password failed[${response.data.status}]: ${response.data.error}`);
+      return null;
+    } else {
+      return response.data.data[0].message;
+    }
+  } catch (error) {
+    console.error('Error fetching user information:', error);
+    return null;
+  }
+};
