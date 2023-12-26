@@ -11,7 +11,7 @@ const MainPage = () => {
   const [probs, setProbs] = useState<Algorithm[]>([]);
   const [filter, setFilter] = useState('레벨');
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [unsolved, setUnsolved] = useState<Algorithm[]>([])
   const levels: string[] = ['레벨', 'Lv.1', "Lv.2", 'Lv.3', 'Lv.4'];
 
   // DB에서 probs 가져오기
@@ -19,8 +19,11 @@ const MainPage = () => {
     const fetchProbs = async () => {
       try {
         const request = await axios.get('/api/problems');
-        setInitProbs(request.data)
-        setProbs(request.data)
+        if (request.status === 200) {
+          setInitProbs(request.data)
+          setProbs(request.data)
+          setUnsolved(request.data.filter((x: Algorithm) => x.solved))
+        }
       } catch (error) {
         console.log("error", error);
       }
@@ -49,13 +52,13 @@ const MainPage = () => {
       setProbs(initProbs.filter((element) => element.name.includes(searchTerm.trim())));
       return;
     }
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, searchTerm])
 
   return (
     <div>
-      <LastAlgo />
+      <LastAlgo prob={unsolved[Math.floor(Math.random() * unsolved.length)]} />
       <Search setFilter={setFilter} levels={levels} setSearchTerm={setSearchTerm} />
       <AlgoList probs={probs} />
     </div >

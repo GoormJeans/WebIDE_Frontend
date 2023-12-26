@@ -1,23 +1,32 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom"
+import { Algorithm } from "../../types/Algorithm.type";
 
-const LastAlgo = () => {
+const LastAlgo: React.FC<{ prob: Algorithm }> = ({ prob }) => {
 
   const navigate = useNavigate();
   return (
-    <div className="w-full h-72 mt-5">
-      <div className="w-auto h-full flex flex-col items-center bg-nav-color mx-5 rounded-xl pt-12 px-10 pb-4 shadow-xl">
-        <div className="bg-white w-full h-40 p-5 rounded-xl">
-          <div className="">
-            마지막으로 푼 문제
+    prob ?
+      <div className="w-full h-72 mt-5">
+        <div className="w-auto h-full flex flex-col items-center bg-nav-color mx-5 rounded-xl pt-12 px-10 pb-4 shadow-xl">
+          <div className="bg-white w-full h-40 p-5 rounded-xl">
+            <div className="">
+              아직 안 풀어본 문제
+            </div>
+            <div className=" text-4xl ml-10 mt-7">{prob.name}</div>
           </div>
-          {/* 임시로 넣은 값, 문제 불러오면 ID, 문제 제목 불러오는 기능 추가 예정 */}
-          <div className=" text-4xl ml-10 mt-7">문제번호: 무슨무슨문제</div>
+          <button className="bg-white mt-5 py-2 px-5 rounded-xl" onClick={() => navigate(`${prob.id}`)}>이어하기</button>
         </div>
-        {/* 클릭 시 editor 페이지로 이동 */}
-        <button className="bg-white mt-5 py-2 px-5 rounded-xl" onClick={() => navigate('/editor')}>이어하기</button>
       </div>
-    </div>
+      :
+      <div className="w-full h-72 mt-5">
+        <div className="w-auto h-full flex flex-col items-center bg-nav-color mx-5 rounded-xl pt-12 px-10 pb-4 shadow-xl">
+          <div className="bg-white w-full h-40 p-5 rounded-xl flex items-center justify-center text-4xl">
+            문제 만들고 있어요.
+          </div>
+        </div>
+
+      </div>
   )
 }
 
