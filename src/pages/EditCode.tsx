@@ -1,8 +1,8 @@
 // import { useRef } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../api/store';
-import { setlang_c, setSubmit } from '../api/scripts_c';
+import { setSubmit } from '../api/scripts_c';
 import MainCM from '../components/EditorPage/MainCM';
 import { useNavigate } from 'react-router-dom';
 import Filetree from '../components/EditorPage/FileTree';
