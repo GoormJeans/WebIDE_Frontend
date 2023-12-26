@@ -141,11 +141,10 @@ const File_tree = () => {
   };
   const handleSelect = async (key: any) => {
     if (key[key.length - 1] === "/") return;
-    const data = {
+    dispatch(getSelect({
       algorithmId: setting.probno,
       sourceCodePath: key,
-    };
-    dispatch(getSelect(data));
+    }));
   };
 
   const onDragStart = (info: any) => {
