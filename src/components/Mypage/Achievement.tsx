@@ -14,25 +14,25 @@ const Achievement = () => {
     const generateChartData = async () => {
       const response = await fetchProblemsApi();
   
-      // 문제 데이터에서 언어를 기준으로 그룹핑합니다.
-      const languageGroup = response.reduce((acc: { [x: string]: any[]; }, problem: { language: string | number; }) => {
-        if (!acc[problem.language]) {
-          acc[problem.language] = [];
+      // 문제 데이터에서 태그를 기준으로 그룹핑합니다.
+      const tagGroup = response.reduce((acc: { [x: string]: any[]; }, problem: { tag: string | number; }) => {
+        if (!acc[problem.tag]) {
+          acc[problem.tag] = [];
         }
-        acc[problem.language].push(problem);
+        acc[problem.tag].push(problem);
         return acc;
       }, {});
   
-      // 언어별로 문제 통계를 생성합니다.
-      const languages = Object.keys(languageGroup);
-      const values = languages.map(language => languageGroup[language].length);
+      // 태그별로 문제 통계를 생성합니다.
+      const tags = Object.keys(tagGroup);
+      const values = tags.map(tag => tagGroup[tag].length);
       const sum = values.reduce((acc, val) => acc + val, 0);
       const total = values.reduce((acc, val) => acc + val, 0);
       setTotalValue(total);
   
       // 통계 데이터를 생성합니다.
-      const data = languages.map((language, index) => ({
-        label: language,
+      const data = tags.map((tag, index) => ({
+        label: tag,
         value: values[index],
         percentage: Math.round((values[index] / sum) * 100),
       }));
@@ -42,6 +42,7 @@ const Achievement = () => {
   
     generateChartData();
   }, []);
+  
   
 
   return (
@@ -80,7 +81,7 @@ const Achievement = () => {
             <Table sx={{ backgroundColor: "white" }}>
               <TableHead sx={{ backgroundColor: "white" }}>
                 <TableRow sx={{ borderBottom: 1, borderColor: 'grey.500' }}>
-                  <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>Language</TableCell>
+                  <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>Category</TableCell>
                   <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>Value</TableCell>
                   <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>%</TableCell>
                 </TableRow>
