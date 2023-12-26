@@ -15,11 +15,12 @@ const AlgoList: React.FC<{probs: Algorithm[]; }> = ({ probs }) => {
   if ((probs?.length || 0) > 0) { //검색결과가 있는 경우
     return (
       <div className="w-full h-full pb-5">
-        <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent rounded-xl px-5 pt-5 whitespace-nowrap">
-          {probs.map((element) => <AlgoProbs prob={element} />)}
+
+        <div className="w-auto h-full flex flex-col justify-between items-center rounded-xl px-5 pt-5 whitespace-nowrap">
+          {probs && probs.map((element) => <AlgoProbs prob={element} />)}
           {numPages > 1 && (<div className="justify-between text-white w-1/4 flex flex-row whitespace-nowrap">
             <button onClick={() => setPage(page - 1)} disabled={page === 1} className="text-3xl">&lt;</button>
-            {
+            { pageButtons &&
               pageButtons.map((item, idx) =>
                 <button key={idx + 1} onClick={() => setPage(idx + 1)} className={idx + 1 === page ? "rounded-full text-2xl border-1" : "text-2xl"}>
                   {idx + 1}
@@ -35,7 +36,7 @@ const AlgoList: React.FC<{probs: Algorithm[]; }> = ({ probs }) => {
   else { // 검색결과가 없는 경우
     return (
       <div className="w-full h-full pb-5">
-        <div className="w-auto h-full flex flex-col justify-between items-center bg-transparent m-5 rounded-xl p-5 border-2 text-white">
+        <div className="w-auto h-full flex flex-col justify-between items-center  m-5 rounded-xl p-5 border-2 text-white">
           문제 종류를 선택해보세요.
         </div>
       </div>
