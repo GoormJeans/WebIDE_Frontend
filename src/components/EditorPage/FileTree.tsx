@@ -93,11 +93,13 @@ const File_tree = () => {
     getContainer();
     getfiletree();
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setting.fetchURL]);
   useEffect(()=>{
     if(FileName2.length > 0)
       setFilename(FileName2);
     console.log(FileName);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[FileName2])
 
   const handleDelete = (e: any) => {
