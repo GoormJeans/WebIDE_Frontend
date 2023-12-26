@@ -3,9 +3,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import requests from "./EditfetchUrl";
 import { instance, instanceJSON, init } from "./axios";
 import { solution } from "../assets/file_tree/dataUtil";
-import { setValue_c } from "./scripts_c";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "./store";
 export interface Filetree {
   Data: any;
   gData: any;
@@ -18,6 +15,7 @@ export interface Filetree {
   fileExtension : string;
   filePath : string;
   error: "";
+  sourcode : "",
 }
 
 const initialState: Filetree = {
@@ -32,6 +30,7 @@ const initialState: Filetree = {
   fileExtension : "",
   filePath : "",
   isLoading: false,
+  sourcode : "",
 };
 
 export const FileTree = createSlice({
@@ -121,8 +120,7 @@ export const FileTree = createSlice({
         state.isLoading = false;
         if(action.payload === undefined)
           return ;
-        const dispatch = useDispatch<AppDispatch>();
-        dispatch(setValue_c(action.payload.data[0].sourcecode));
+        state.sourcode = action.payload.data[0].sourcecode;
       })
       .addCase(getSelect.rejected, (state, action: any) => {
         state.isLoading = false;
