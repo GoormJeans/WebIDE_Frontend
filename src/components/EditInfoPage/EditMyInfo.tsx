@@ -4,17 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
 import { setEmailValue, setNicknameValue, setAddressValue, setBioValue } from '../../api/user';
 import axios from 'axios';
+import Modal from '../Modal';
+import { useNavigate } from 'react-router-dom';
 
 export const EditMyInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user);
   const [isModified, setIsModified] = useState(false);
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
+  const navi = useNavigate();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
         const accessToken = localStorage.getItem('AccessToken');
-        const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/api/userInfo`, {},{
+        const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/api/userInfo`, {}, {
           headers: {
             'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
           },
@@ -50,13 +54,20 @@ export const EditMyInfo = () => {
         },
           {
             headers: {
-            'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
-          },
+              'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
+            },
           });
-        const updatedUserInfo = response.data.data[0];
-        dispatch(setAddressValue(updatedUserInfo.address));
-        dispatch(setBioValue(updatedUserInfo.blog));
-        setIsModified(false);
+        if (response.data.statusCode !== 200) {
+          console.error('Error updating user information:', response.data.error);
+          return;
+        }
+        else {
+          const updatedUserInfo = response.data.data[0];
+          dispatch(setAddressValue(updatedUserInfo.address));
+          dispatch(setBioValue(updatedUserInfo.blog));
+          setIsSaveModalOpen(true);
+          setIsModified(false);
+        }
       }
     } catch (error) {
       console.error('Error updating user information:', error);
@@ -94,6 +105,11 @@ export const EditMyInfo = () => {
         >Save
         </button>
       </div>
+      <Modal isOpen={isSaveModalOpen} handleClose={() => { setIsSaveModalOpen(false); navi('/mypage') }}>
+        <span className='flex text-xl'>수정 완료✅</span>
+        <p className='pb-10'>정보 수정이 완료되었습니다.</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => { setIsSaveModalOpen(false); navi('/mypage') }}>닫기</p>
+      </Modal>
     </div>
   )
 }
