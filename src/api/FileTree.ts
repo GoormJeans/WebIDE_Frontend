@@ -127,6 +127,19 @@ export const FileTree = createSlice({
         state.isLoading = false;
         state.Data = action.payload;
       })
+      .addCase(submit.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(submit.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if(action.payload === undefined)
+          return undefined;
+        return action.payload;
+      })
+      .addCase(submit.rejected, (state, action: any) => {
+        state.isLoading = false;
+        state.Data = action.payload;
+      })
   },
 });
 export const execute = createAsyncThunk("post/execute", async (data: any) => {
@@ -142,7 +155,19 @@ export const execute = createAsyncThunk("post/execute", async (data: any) => {
     return undefined;
   }
 });
-
+export const submit = createAsyncThunk("post/submit", async (data: any) => {
+  try {
+    init();
+    console.log(data);
+    const resp = await instanceJSON.post(
+      requests.submit,
+      JSON.stringify(data)
+    );
+    return resp;
+  } catch (e) {
+    return undefined;
+  }
+});
 
 export const getSelect = createAsyncThunk("post/select", async (data: any) => {
   try {
