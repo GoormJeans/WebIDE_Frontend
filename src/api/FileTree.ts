@@ -46,7 +46,7 @@ export const FileTree = createSlice({
     setSelectedKeys: (state, action: PayloadAction<any>) => {
       state.selectedKeys = action.payload;
       state.fileExtension = action.payload[0].split('.')[1];
-      state.selectedKeys = action.payload[0];
+      state.filePath = action.payload[0];
     },
     setProbno: (state, action: PayloadAction<any>) => {
       state.probno = action.payload;
