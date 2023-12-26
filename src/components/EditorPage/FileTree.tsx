@@ -93,6 +93,8 @@ class File_tree extends React.Component {
   toolTip: any = null;
   async getFiletree() {
     const filetree = await getFiletree("1");
+    if(filetree === undefined)
+      return ;
     const Data = await solution(filetree.data);
     this.setState({ gData: Data });
   }
