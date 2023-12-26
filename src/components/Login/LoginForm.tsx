@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Link, useLocation } from 'react-router-dom';
 import { userLogin } from '../../api/api';
-import axios from 'axios';
 import Modal from '../Modal';
 
 const LoginForm = () => {
@@ -37,16 +36,13 @@ const LoginForm = () => {
         navi(from);
       } else {
         console.error('Login failed: unexpected status code', response.data.error);
-        setIsLoginModal(true);
       }
     } catch (error) {
       console.error('Login failed:', error);
+      setIsLoginModal(true);
     }
   };
-  const handleGoogleLogin = async () => {
-    const response = await axios.get('https://eb.goojeans-server.com/login/oauth2/code/google');
-    console.log(response.data);
-  }
+
   return (
     <div className="flex flex-col items-center">
       <input
@@ -74,7 +70,7 @@ const LoginForm = () => {
       </button>
       <span className=" text-sm text-slate-700 mt-8 mb-5">Or continue with</span>
       <div className="w-full flex flex-row justify-evenly">
-        <Link to={'https://eb.goojeans-server.com/oauth2/authorization/google'}><img src={GoogleIcon} alt="google icon" className="w-10 h-10 mx-2 shadow-2xl" onClick={handleGoogleLogin} /></Link>
+        <Link to={'https://eb.goojeans-server.com/oauth2/authorization/google'}><img src={GoogleIcon} alt="google icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
         <Link to={'https://eb.goojeans-server.com/oauth2/authorization/naver'}><img src={NaverIcon} alt="naver icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
         <Link to={'https://eb.goojeans-server.com/oauth2/authorization/kakao'}><img src={KakaoIcon} alt="kakao icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
       </div>
