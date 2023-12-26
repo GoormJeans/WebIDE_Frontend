@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import scripts from './scripts';
 import scriptsC from './scripts_c';
 import userSlice from './user';
+import authSlice from './auth';
 import algoprobs from './algoprobs';
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     scripts: scripts,
     scriptsC: scriptsC,
     user: userSlice,
+    auth: authSlice,
     problems: algoprobs,
   },
 });
