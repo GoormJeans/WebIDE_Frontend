@@ -1,8 +1,8 @@
 // import { useRef } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../api/store';
-import { setSubmit } from '../api/scripts_c';
+import { setSubmit, setlang_c } from '../api/scripts_c';
 import MainCM from '../components/EditorPage/MainCM';
 import { useNavigate } from 'react-router-dom';
 import Filetree from '../components/EditorPage/FileTree';
@@ -28,6 +28,12 @@ const EditCode = () => {
         console.log(Data);
         alert(execute(Data));
     }
+    useEffect(()=>{
+        if(setting.fileExtension === "" || setting.fileExtension === undefined)
+          return ;
+        dispatch(setlang_c(setting.fileExtension));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[setting.fileExtension])
     const handleSumit = () => {
 
         if (setting.now_lang === "cpp" && setting.cpp_submit === setting.cpp_val) {
