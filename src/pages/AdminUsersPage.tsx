@@ -24,8 +24,8 @@ const AdminUsersPage = () => {
     const fetchUsers = async () => {
       try {
         const request = await axios.get('/admin/user');
-        setUsers(request.data);
-        setInitUsers(request.data);
+        setUsers(request.data.data[0]);
+        setInitUsers(request.data.data[0]);
       } catch (error) {
         console.log('error', error);
       }
