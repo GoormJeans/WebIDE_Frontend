@@ -15,6 +15,7 @@ const AdminAlgoPage = () => {
     const fetchProbs = async () => {
       try {
         const request = await axios.get('/api/problems');
+        console.log(request.data);
         setProbs(request.data)
       } catch (error) {
         console.log("error", error);

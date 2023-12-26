@@ -43,8 +43,13 @@ export const EditMyInfo = () => {
         const response = await axios.post('http://localhost:3003/api/update-user-info', {
           city: userInfo.cityValue,
           bio: userInfo.bioValue,
-        });
-        const updatedUserInfo = response.data;
+        },
+          {
+            headers: {
+              'email': localStorage.getItem('email'),
+            },
+          });
+        const updatedUserInfo = response.data.data;
         dispatch(setAddressValue(updatedUserInfo.city));
         dispatch(setBioValue(updatedUserInfo.bio));
         setIsModified(false);

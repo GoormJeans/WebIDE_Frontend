@@ -40,6 +40,7 @@ function App() {
     )
   }
   window.addEventListener("click", ClickEvent);
+
   return (
     <div className='App'>
       <Routes>

@@ -7,7 +7,6 @@ const UserChart = () => {
   // x축에 날짜 지정
   const today = new Date()
   today.setDate(today.getDate() - 7);
-  console.log(today.toLocaleDateString('en-US'))
   const xUserLabels = Array(7).fill(0).map(_ => {
     today.setDate(today.getDate() + 1)
     return today.toLocaleDateString('en-US')

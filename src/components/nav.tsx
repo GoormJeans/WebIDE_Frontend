@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { IconButton } from '@mui/material';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../api/store';
 
 interface NavItemProps {
   path: string;
@@ -29,14 +31,18 @@ const NavItem: React.FC<NavItemProps> = ({ path, label, onClick }) => {
 };
 
 const NavItemList = () => {
+  const email = localStorage.getItem('email');
+  const navi = useNavigate();
   const Logout = () => {
+    localStorage.clear();
     console.log('Logout function executed');
+    navi('/login');
   };
   return (
     <>
       <NavItem path="/algorithms" label="Algorithms" />
-      <NavItem path="/mypage" label="kim goorm" />
-      <NavItem path="/" label="Logout" onClick={Logout}/>
+      <NavItem path="/mypage" label="Mypage" />
+      <NavItem path={email ? `` : `/login`} label={email ? `Logout` : `Login`} onClick={email ? Logout : () => navi('/login') } />
       <NavItem path="/settings" label="Settings" />
     </>
   );
@@ -44,7 +50,6 @@ const NavItemList = () => {
 
 function Nav() {
   const navigate = useNavigate();
-
   const [navItemsVisible, setNavItemsVisible] = useState(false);
 
   const toggleNavItems = () => {
