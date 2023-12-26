@@ -1,9 +1,8 @@
 // import { useRef } from 'react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../api/store';
 import { setlang_c, setSubmit } from '../api/scripts_c';
-import { lang } from '../api/scripts';
 import MainCM from '../components/EditorPage/MainCM';
 import { useNavigate } from 'react-router-dom';
 import Filetree from '../components/EditorPage/FileTree';
@@ -15,9 +14,6 @@ const EditCode = () => {
     const dispatch = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.scriptsC);
     const FileTree: any = useSelector((state: RootState) => state.FileTree);
-    const handlelangs = (e: any) => {
-        dispatch(setlang_c(e.target.value));
-    }
     const AlertSameCode = () => {
         alert("이미 동일한 코드로 제출한 적이 있습니다");
     }
@@ -47,14 +43,15 @@ const EditCode = () => {
         }
         dispatch(setSubmit());
         if (setting.now_lang === "cpp")
-            alert(setting.cpp_val);
+            Submit(setting.cpp_val);
         if (setting.now_lang === "java")
-            alert(setting.java_val);
+            Submit(setting.java_val);
         if (setting.now_lang === "py")
-            alert(setting.py_val);
+            Submit(setting.py_val);
     }
     useEffect(()=>{
         setlang_c(FileTree.fileExtension);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[FileTree.filePath]);
 
     //채팅 페이지 보이게하기용
