@@ -15,6 +15,7 @@ export interface Filetree {
   fileExtension : string;
   filePath : string;
   error: "";
+  sourcode : "",
 }
 
 const initialState: Filetree = {
@@ -29,6 +30,7 @@ const initialState: Filetree = {
   fileExtension : "",
   filePath : "",
   isLoading: false,
+  sourcode : "",
 };
 
 export const FileTree = createSlice({
@@ -118,8 +120,7 @@ export const FileTree = createSlice({
         state.isLoading = false;
         if(action.payload === undefined)
           return ;
-        state.Data = action.payload.data;
-        state.gData = solution(state.Data);
+        state.sourcode = action.payload.data[0].sourcecode;
       })
       .addCase(getSelect.rejected, (state, action: any) => {
         state.isLoading = false;
