@@ -11,6 +11,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const navi = useNavigate();
   const location = useLocation();
+  const isLoginDisabled: boolean = !email || !password;
   const { from } = location.state || { from: { pathname: '/' } }
 
   const validateForm = () => {
@@ -25,10 +26,11 @@ const LoginForm = () => {
 
     try {
       const response = await axios.post(`https://eb.goojeans-server.com/login`, { email, password });
+      console.log(response.data)
       if (response.data.statusCode === 200) {
         const AccessToken = response.data.data[0].message;
         localStorage.setItem('AccessToken', AccessToken);
-        console.log('Login success', );
+        console.log('Login success',);
         navi(from);
       } else {
         console.error('Login failed: unexpected status code', response.data.error);
@@ -57,8 +59,9 @@ const LoginForm = () => {
       />
       <br />
       <button
-        className=" bg-nav-color px-5 py-3 mx-2 w-72 rounded-xl shadow-xl active:bg-slate-500"
+        className=" bg-nav-color px-5 py-3 mx-2 w-72 rounded-xl shadow-xl active:bg-slate-500 disabled:bg-slate-400"
         onClick={handleLogin}
+        disabled={isLoginDisabled}
       >
         Login
       </button>
