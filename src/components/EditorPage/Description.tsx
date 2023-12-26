@@ -11,6 +11,7 @@ const Description = () => {
   useEffect(() => {
     const getDescription = async () => {
       const request = await axios.get(`/editor/algorithm/${param.id}`)
+      console.log(request.data);
       setDescription(request.data[0].algorithmText);
     }
     getDescription();
@@ -20,7 +21,6 @@ const Description = () => {
 
   return (
     <div className="p-3">
-      {/* <h1 className="text-3xl">{prob.name}</h1> */}
       <Markdown remarkPlugins={[remarkGfm]} className="w-full p-3 overflow-auto prose lg:prose-xl" children={description}></Markdown>
     </div>
   )
