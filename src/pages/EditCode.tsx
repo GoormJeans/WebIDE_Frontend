@@ -19,7 +19,7 @@ const EditCode = () => {
     }
     useEffect(()=>{
         console.log(FileTree.fileExtension);
-        setlang_c(FileTree.fileExtension);
+        dispatch(setlang_c(FileTree.fileExtension));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[FileTree.filePath]);
     const Submit = (sourceCode : string) =>{
