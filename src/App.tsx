@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import EditCode from './pages/EditCode';
 import EditUserInfo from './pages/EditUserInfo';
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   const ClickEvent = () => {
@@ -51,6 +52,7 @@ function App() {
           <Route path="mypage/edit" element={<EditUserInfo />} />
           <Route path="detail" element={<DetailPage />} />
           <Route path="settings" element={<DetailPage />} />
+          <Route path="/*" element={<NotFoundPage />} />
 
           <Route path="admin" element={<AdminLayout />} >
             <Route index element={<AdminPage />} />
@@ -58,10 +60,8 @@ function App() {
             <Route path="user" element={<AdminUsersPage />} />
             <Route path="algorithm/:id" element={<AddAlgoPage />} />
           </Route>
-          <Route path="Search" element={<MainPage />} />
         </Route>
-        <Route path="/editor" element={<EditCode />} />
-        <Route path=":id" element={<EditCode />} />
+        <Route path="editor/:id" element={<EditCode />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
       </Routes>
