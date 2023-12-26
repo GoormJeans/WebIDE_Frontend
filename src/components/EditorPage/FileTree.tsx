@@ -142,8 +142,8 @@ const File_tree = () => {
   const handleSelect = async (key: any) => {
     if (key[key.length - 1] === "/") return;
     const data = {
-      deletePathSuffix: key,
-      algorithmId: setting.probno,
+      sourceCodeName: key,
+      algorithmNo: setting.probno,
     };
     dispatch(getSelect(data));
   };
