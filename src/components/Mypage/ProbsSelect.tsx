@@ -1,39 +1,62 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { AppDispatch, RootState } from '../../api/store';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import { addProblems } from '../../api/algoprobs';
 import AlgoList from './AlgoList';
+import { fetchProblemsApi } from '../../api/api';
 
-const btnCSS = ' text-sm font-semibold rounded-full px-6 py-2 mr-3 mt-5  bg-gray-300 hover:opacity-75 active:opacity-50	transition'
+const btnCSS = 'text-sm font-semibold rounded-full px-6 py-2 mr-3 mt-5  bg-gray-300 hover:opacity-75 active:opacity-50 transition'
 
 export const CategoryBtn = () => {
-  const [selectedButton, setSelectedButton] = useState('');
+  const [selectedButton, setSelectedButton] = useState('all');
   const dispatch = useDispatch<AppDispatch>();
-  const problems = useSelector((state: RootState) => state.problems);
-  const fetchProblems = async (category: string) => {
+  const allProblems = useSelector((state: RootState) => state.problems);
+  const [displayProblems, setDisplayProblems] = useState(allProblems);
+
+  const fetchProblems = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:3003/api/problems/${category}`);
-      console.log(response.data);
-      dispatch(addProblems(response.data));
+      const problems = await fetchProblemsApi();  
+      dispatch(addProblems(problems));
+      setDisplayProblems(problems);
     } catch (error) {
       console.error('Error while fetching problems:', error);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
-    fetchProblems(selectedButton);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedButton]);
+    fetchProblems();
+  }, [fetchProblems]);
+
+  useEffect(() => {
+    switch (selectedButton) {
+      case 'all':
+        setDisplayProblems(allProblems);
+        break;
+      case 'solved':
+        setDisplayProblems(allProblems.filter(problem => problem.solved));
+        break;
+      case 'tried':
+        setDisplayProblems(allProblems.filter(problem => !problem.solved));
+        break;
+      default:
+        break;
+    }
+  }, [selectedButton, allProblems]);
 
   const handleButtonClick = (category: string) => {
     setSelectedButton(category);
-
   };
+  
   return (
     <>
       <button
-        className={`${btnCSS} ${selectedButton === 'solved' ? 'bg-green-300	 text-white' : 'bg-gray-200'}`}
+        className={`${btnCSS} ${selectedButton === 'all' ? ' bg-slate-600 text-white' : 'bg-gray-200'}`}
+        onClick={() => handleButtonClick('all')}
+      >
+        All
+      </button>
+      <button
+        className={`${btnCSS} ${selectedButton === 'solved' ? 'bg-green-300 text-white' : 'bg-gray-200'}`}
         onClick={() => handleButtonClick('solved')}
       >
         Solved
@@ -45,8 +68,7 @@ export const CategoryBtn = () => {
         Tried
       </button>
 
-      <AlgoList probs={problems} />
+      <AlgoList probs={displayProblems} />
     </>
   )
 }
-
