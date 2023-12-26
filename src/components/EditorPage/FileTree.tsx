@@ -8,8 +8,8 @@ import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
 import { getFiletree, Delete, Create, dragNdrop, getSelect } from "../../api/EditfetchUrl";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../api/store";
+// import { useDispatch, useSelector } from "react-redux";
+// import { AppDispatch, RootState } from "../../api/store";
 //import { CreateFolder } from "../../api/EditfetchUrl";
 
 const STYLE = `
