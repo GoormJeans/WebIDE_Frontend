@@ -90,7 +90,7 @@ const File_tree = () => {
     getContainer();
     getfiletree();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.fetchURL]);
+  }, []);
   const handleDelete = (e: any) => {
     const data = {
       deletePathSuffix: e,
