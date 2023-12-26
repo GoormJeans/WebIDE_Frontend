@@ -13,7 +13,7 @@ export const fetchProblemsApi = async () => {
     console.error('Error fetching problems:', response.data.error);
     return;
   }
-  return response.data;
+  return response.data.data;
 }
 
 export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue) => {
