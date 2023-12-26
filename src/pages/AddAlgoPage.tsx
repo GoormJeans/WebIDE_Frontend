@@ -5,6 +5,11 @@ import axios from "../api/axios"
 import { Algorithm } from "../types/Algorithm.type";
 import TestCaseInput from "../components/AdminPage/TestCaseInput";
 
+interface AdminAlgorithm extends Algorithm {
+  answers: string[];
+  testcases: string[];
+  description: string;
+}
 
 const AddAlgoPage = () => {
 
@@ -16,7 +21,7 @@ const AddAlgoPage = () => {
   const [name, setName] = useState("");
   const [level, setLevel] = useState('레벨');
   const [tag, setTag] = useState('태그');
-  const [contents, setContents] = useState("");
+  const [description, setDescription] = useState("");
 
   // 테스트케이스 추가하는 방식으로 가기
   // 테스트 케이스는 무조건 배열 방식으로 전송
@@ -28,13 +33,14 @@ const AddAlgoPage = () => {
     if (!isNaN(parseInt(param.id!))) {
       const fetchProb = async () => {
         try {
-          const request = await axios.get(`/api/admin/problems/${param.id}`); //id에 해당하는 문제의 정보 불러오는 코드
-          const prob: Algorithm = request.data[0];
+          const request = await axios.get(`/api/admin/algorithm/${param.id}`); //id에 해당하는 문제의 정보 불러오는 코드
+          const prob: AdminAlgorithm = request.data[0];
           setLevel(levels[prob.level]);
           setName(prob.name);
           setTag(prob.tag);
           setInput([...prob.testcases]);
           setOutput([...prob.answers]);
+          setDescription(prob.description)
         } catch (error) {
           console.log("error", error);
         }
@@ -59,7 +65,7 @@ const AddAlgoPage = () => {
       return;
     }
 
-    if(input.length===0 && output.length===0){
+    if (input.length === 0 && output.length === 0) {
       alert('테스트케이스를 입력하세요.');
       return;
     }
@@ -68,21 +74,23 @@ const AddAlgoPage = () => {
       try {
 
         if (!isNaN(parseInt(param.id!))) { //문제 수정
-          const response = await axios.post(`/api/admin/problems/${param.id}`, {
+          const response = await axios.patch(`/api/admin/algorithm/${param.id}`, {
             algorithmName: name,
+            level: level,
             tag: tag,
             testcases: input,
             answers: output,
-            content: contents
+            description: description
           });
           console.log(response.data);
         } else { //문제 추가
-          const response = await axios.post('/api/admin/problems', {
+          const response = await axios.post('/api/admin/algorithm/add', {
             algorithmName: name,
+            level: level,
             tag: tag,
             testcases: input,
             answers: output,
-            content: contents
+            description: description
           });
           console.log(response.data);
         }
@@ -98,7 +106,7 @@ const AddAlgoPage = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`/api/admin/problems/${param.id}`);
+      const response = await axios.delete(`/api/admin/algorithm/${param.id}`);
       console.log(response);
     } catch (error) {
       console.log("error", error);
@@ -138,11 +146,11 @@ const AddAlgoPage = () => {
             </select>
           </div>
         </div>
-        {input.length!==0 && input.map((_, idx) =>
+        {input.length !== 0 && input.map((_, idx) =>
           <TestCaseInput key={idx} id={idx} input={input} setInput={setInput} output={output} setOutput={setOutput} />
         )}
         <button onClick={handleAddTC}>+</button>
-        <AlgorithmContent contents={contents} setContents={setContents} />
+        <AlgorithmContent description={description} setDescription={setDescription} />
 
         <div className="w-full flex flex-row justify-end mt-5">
           <button type="submit" className="w-fit shadow-xl px-5 py-2 rounded-xl bg-blue-300 mr-3 hover:bg-blue-200" >Submit</button>

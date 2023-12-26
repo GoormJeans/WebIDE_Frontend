@@ -10,7 +10,7 @@ const AdminUsersPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const request = await axios.get('/api/admin/users');
+        const request = await axios.get('/api/admin/user');
         setUsers(request.data);
         console.log(request);
       } catch (error) {
