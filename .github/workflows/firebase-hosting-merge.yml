@@ -27,7 +27,7 @@ jobs:
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --force
+        run: npm ci
 
       - run: npm run build
 
