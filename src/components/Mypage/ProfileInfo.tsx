@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { AppDispatch, RootState } from "../../api/store";
-import { setEmailValue, setNicknameValue, setAddressValue, setBioValue, setImageURLValue } from "../../api/user";
+// import { setEmailValue, setNicknameValue, setAddressValue, setBioValue, setImageURLValue } from "../../api/user";
 
 const HEAD_CSS = 'pr-3 text-2xl font-medium'
 const BUNDLE_CSS = 'mt-3'
