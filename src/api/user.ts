@@ -1,16 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { UserInfo } from "../types/UserInfo.type";
 
-export interface UserInfo {
-  nicknameValue: string;
-  cityValue: string;
-  emailValue: string;
-  passwordValue: string;
-  confirmPasswordValue: string;
-  bioValue: string;
-  imageURLValue: string;
-  isAdminValue: boolean;
-  social_idValue: string;
-}
 
 const initialState: UserInfo = {
   nicknameValue: '',
@@ -19,7 +9,6 @@ const initialState: UserInfo = {
   passwordValue: '',
   confirmPasswordValue: '',
   bioValue: '',
-  imageURLValue: '',
   isAdminValue: false,
   social_idValue: '',
 };
@@ -65,9 +54,6 @@ const userSlice = createSlice({
     setBioValue: (state, action) => {
       state.bioValue = action.payload;
     },
-    setImageURLValue: (state, action) => {
-      state.imageURLValue = action.payload;
-    },
   },
 });
 
@@ -80,7 +66,6 @@ export const {
   setNicknameValue,
   setAddressValue,
   setBioValue,
-  setImageURLValue,
 } = userSlice.actions;
 
 export default userSlice.reducer;
