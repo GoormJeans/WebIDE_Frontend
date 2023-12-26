@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import UserComponent from "./UserComponent";
-import { UserInfo } from "../../types/UserInfo.type";
+import { AdminUserInfo } from "../../pages/AdminUsersPage";
 
-const UserList: React.FC<{ users: UserInfo[] }> = ({ users }) => {
+
+const UserList: React.FC<{ users: AdminUserInfo[] }> = ({ users }) => {
 
   // Pagination용 데이터
   const [page, setPage] = useState(1);
@@ -19,10 +20,11 @@ const UserList: React.FC<{ users: UserInfo[] }> = ({ users }) => {
         users && Array.isArray(users) &&
         users.map((element) =>
           <UserComponent
-            key={element.social_idValue}
-            id={element.social_idValue}
-            nickname={element.nicknameValue}
-            email={element.emailValue}
+            key={element.id}
+            id={element.id}
+            nickname={element.nickname}
+            email={element.email}
+            // isAdmin={element.isAdminValue}
           />)
       }
 
