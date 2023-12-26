@@ -1,20 +1,22 @@
 import { UserInfo } from './UserInfo.type';
 
 export const user2: UserInfo = {
-  nickname: 'Kim Goorm',
-  city: 'Seoul, Korea',
-  email: 'kimgoorm@gmail.com',
-  bio: 'https://github.com/kimgoorm',
-  imageURL: '',
-  isAdmin: false,
-  social_id: ''
+  nicknameValue: 'Kim Goorm',
+  cityValue: 'Seoul, Korea',
+  emailValue: 'kimgoorm@gmail.com',
+  bioValue: 'https://github.com/kimgoorm',
+  isAdminValue: false,
+  social_idValue: '',
+  passwordValue: "",
+  confirmPasswordValue: "",
 }
 export const user1: UserInfo = {
-  nickname: 'Lee Goorm',
-  city: 'Jeju, Korea',
-  email: 'leegoorm@naver.com',
-  bio: 'https://github.com/leegoorm',
-  imageURL: '',
-  isAdmin: false,
-  social_id: ''
+  nicknameValue: 'Lee Goorm',
+  cityValue: 'Jeju, Korea',
+  emailValue: 'leegoorm@naver.com',
+  bioValue: 'https://github.com/leegoorm',
+  isAdminValue: false,
+  social_idValue: '',
+  passwordValue: "",
+  confirmPasswordValue: "",
 }

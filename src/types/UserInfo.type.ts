@@ -1,10 +1,11 @@
 // types.ts
 export interface UserInfo {
-  nickname: string;
-  city: string;
-  email: string;
-  bio: string;
-  imageURL: string;
-  isAdmin: boolean;
-  social_id: string;
+  nicknameValue: string;
+  cityValue: string;
+  emailValue: string;
+  passwordValue: string;
+  confirmPasswordValue: string;
+  bioValue: string;
+  isAdminValue: boolean;
+  social_idValue: string;
 }
