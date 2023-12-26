@@ -7,6 +7,7 @@ const requests : {
     sourcecode : string,
     getprob : string,
     execute : string,
+    submit : string,
 } = {
     fetchFiletree : 'editor/filetrees/',
     delete : 'editor/delete',
@@ -15,7 +16,7 @@ const requests : {
     sourcecode : 'editor/sourcecode',   //post
     getprob : 'editor/algorithm/',  //get
     execute : 'editor/execute', //post  
-    
+    submit : '/editor/submit',
 };
 
 export default requests;

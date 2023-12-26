@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Filetree from '../components/EditorPage/FileTree';
 import MessagePanel from "../components/ChattingPage/MessagePanel";
 import Description from "../components/EditorPage/Description";
-import { execute } from '../api/FileTree';
+import { execute, submit } from '../api/FileTree';
 const EditCode = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -19,14 +19,14 @@ const EditCode = () => {
     }
     const Submit = (sourceCode : string) =>{
         const Data = {
-            algorithmId : FileTree.probno,
+            problemId : FileTree.probno,
             sourceCode : sourceCode,
+            edited : true,
             filePath : FileTree.filePath,
             fileExtension : FileTree.fileExtension,
-            testCase : "",
         };
         console.log(Data);
-        alert(execute(Data));
+        console.log(submit(Data));
     }
     useEffect(()=>{
         if(setting.fileExtension === "" || setting.fileExtension === undefined)
