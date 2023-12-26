@@ -9,7 +9,7 @@ class Node {
   constructor(value = "", word = "") {
     this.key = value;
     this.title =
-      word.charAt(word.length - 1) == "/"
+      word.charAt(word.length - 1) === "/"
         ? word.substring(0, word.length - 1)
         : word;
     this.children = [];
@@ -31,7 +31,7 @@ class Trie {
     if (line[line.length - 1] === "/") words[words.length - 1] = undefined;
     for (let i=0;i< words.length;i++) {
       const word = words[i];
-      if (word == undefined) continue;
+      if (word === undefined) continue;
       if (!currentNode.children[word]) {
         currentNode.children[word] = new Node(currentNode.key + word, word);
       }
@@ -69,7 +69,7 @@ class Trie {
 }
 
 export const solution = (data1) => {
-  if (data1 == undefined) {
+  if (data1 === undefined) {
     const trie = new Trie();
     const loop = data2.data.length;
     for (let i = 0; i < loop; i++) {

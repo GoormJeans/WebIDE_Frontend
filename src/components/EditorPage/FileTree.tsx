@@ -170,38 +170,38 @@ class File_tree extends React.Component {
     const dropPosition =
       info.dropPosition - Number(dropPos[dropPos.length - 1]);
 
-    const loop = (data: any, key: any, callback: any) => {
-      data.forEach((item: any, index: any, arr: any) => {
-        if (item.key === key) {
-          callback(item, index, arr);
-          return;
-        }
-        if (item.children) {
-          loop(item.children, key, callback);
-        }
-      });
-    };
-    const data = [...this.state.gData];
+    // const loop = (data: any, key: any, callback: any) => {
+    //   data.forEach((item: any, index: any, arr: any) => {
+    //     if (item.key === key) {
+    //       callback(item, index, arr);
+    //       return;
+    //     }
+    //     if (item.children) {
+    //       loop(item.children, key, callback);
+    //     }
+    //   });
+    // };
+    // const data = [...this.state.gData];
 
     // Find dragObject
-    let dragObj: any;
-    loop(data, dragKey, (item: any, index: any, arr: any) => {
-      arr.splice(index, 1);
-      dragObj = item;
-    });
+    // let dragObj: any;
+    // loop(data, dragKey, (item: any, index: any, arr: any) => {
+    //   arr.splice(index, 1);
+    //   dragObj = item;
+    // });
 
-    if (!allow(dropKey) && dropPosition == 0) return;
+    if (!allow(dropKey) && dropPosition === 0) return;
 
-    if (dropPosition == 0) {
+    if (dropPosition === 0) {
       dragtitle =
-        dragKey[dragKey.length - 1] == "/" ? dragtitle + "/" : dragtitle;
+        dragKey[dragKey.length - 1] === "/" ? dragtitle + "/" : dragtitle;
       this.handleDragNdrop(dragKey, dragtitle, dropKey);
     } else {
       dragtitle =
-        dragKey[dragKey.length - 1] == "/" ? dragtitle + "/" : dragtitle;
+        dragKey[dragKey.length - 1] === "/" ? dragtitle + "/" : dragtitle;
       const drops = dropKey.substr(
         0,
-        dropKey[dropKey.length - 1] == "/"
+        dropKey[dropKey.length - 1] === "/"
           ? dropKey.length - droptitle.length - 1
           : dropKey.length - droptitle.length
       );
