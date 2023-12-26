@@ -13,7 +13,6 @@ const SignupForm = () => {
   const [city, setcity] = useState('');
   const [blog, setBlog] = useState('');
   const [terms, setTerms] = useState(false);
-  const [detailsVisible, setDetailsVisible] = useState(false);
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
@@ -25,14 +24,11 @@ const SignupForm = () => {
   const isButtonDisabled: boolean = !terms || !isEmailValid || !isNicknameValid || !isPasswordValid || !isConfirmPasswordValid;
 
   const navi = useNavigate();
-  const toggleDetails = () => {
-    setDetailsVisible(!detailsVisible);
-  };
+
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/sign-up`, { email, password, nickname, blog, city, terms });
-      console.log(response.data);
+      const response = await axios.post(`https://eb.goojeans-server.com/sign-up`, { email, password, nickname, blog, city, terms });
       if (response.data.statusCode === 200) {
         console.log(response.data.data[0].message);
         setIsSuccessModalOpen(true);
@@ -133,16 +129,8 @@ const SignupForm = () => {
           <div className='flex flex-row mt-10'>
             <input type="checkbox" id="agreement" name="agreement" value="agreement" onChange={() => setTerms(!terms)} />
             <label className=' text-lg ml-3' htmlFor="agreement">[필수] 개인정보 사용에 동의합니다</label>
-            <button
-              className=' text-lg ml-3'
-              onClick={toggleDetails}
-            >
-              {detailsVisible ? 'Hide Details' : 'Show Details'}
-            </button>
+
           </div>
-          {detailsVisible && (
-            <p>Details about personal information agreement...</p>
-          )}
           <button disabled={isButtonDisabled} className={`bg-nav-color disabled:bg-slate-400 px-5 py-3 ml-3 mt-3 w-80 rounded-xl shadow-xl`} onClick={handleRegister}>Go to register!</button>
         </div>
       </FadeIn>
