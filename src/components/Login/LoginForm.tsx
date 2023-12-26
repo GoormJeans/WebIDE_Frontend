@@ -5,6 +5,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
+import { userLogin } from '../../api/api';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -25,7 +26,7 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post(`https://eb.goojeans-server.com/login`, { email, password });
+      const response = await userLogin(email, password);
       console.log(response.data)
       if (response.data.status === 200) {
         const AccessToken = response.data.data[0].message;
