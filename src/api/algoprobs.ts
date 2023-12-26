@@ -5,8 +5,8 @@ const initialState: Algorithm[] = [
   
 ]
 
-export const algoprobsmypage = createSlice({
-  name: 'algoprobsmypage',
+export const algoprobs = createSlice({
+  name: 'algoprobs',
   initialState,
   reducers: {
     addProblems: (state, action: PayloadAction<Algorithm[]>) => {
@@ -15,5 +15,5 @@ export const algoprobsmypage = createSlice({
   }
 })
 
-export const { addProblems } = algoprobsmypage.actions;
-export default algoprobsmypage.reducer;
+export const { addProblems } = algoprobs.actions;
+export default algoprobs.reducer;
