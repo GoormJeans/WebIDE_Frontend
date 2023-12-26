@@ -3,7 +3,7 @@ import LastAlgo from "../components/MainPage/LastAlgo"
 import Search from "../components/MainPage/Search"
 import AlgoList from "../components/MainPage/AlgoList"
 import { Algorithm } from "../types/Algorithm.type"
-import axios from "../api/axios"
+import { fetchProblemsApi } from '../api/api'
 
 const MainPage = () => {
 
@@ -18,12 +18,10 @@ const MainPage = () => {
   useEffect(() => {
     const fetchProbs = async () => {
       try {
-        const request = await axios.get('/api/problems');
-        if (request.status === 200) {
-          setInitProbs(request.data)
-          setProbs(request.data)
-          setUnsolved(request.data.filter((x: Algorithm) => x.solved))
-        }
+        const data = await fetchProblemsApi();
+        setInitProbs(data);
+        setProbs(data);
+        setUnsolved(data ? data.filter((x: Algorithm) => x.solved) : []);
       } catch (error) {
         console.log("error", error);
       }
