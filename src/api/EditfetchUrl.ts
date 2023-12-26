@@ -12,10 +12,10 @@ const requests : {
     delete : 'editor/delete',
     create : 'editor/filecreate',
     modify : 'editor/modification',
-
     sourcecode : 'editor/sourcecode',   //post
     getprob : 'editor/algorithm/',  //get
     execute : 'editor/execute', //post  
+    
 };
 
 export default requests;
