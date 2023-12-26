@@ -73,6 +73,8 @@ export const FileTree = createSlice({
       .addCase(dragNdrop.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload.data);
+        if(action.payload === undefined)
+          return ;
         state.Data = action.payload.data;
         state.gData = solution(state.Data);
       })
@@ -86,6 +88,8 @@ export const FileTree = createSlice({
       .addCase(Create.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload);
+        if(action.payload === undefined)
+          return ;
         state.Data = action.payload.data;
         state.gData = solution(state.Data);
       })
@@ -98,6 +102,8 @@ export const FileTree = createSlice({
       })
       .addCase(Delete.fulfilled, (state, action) => {
         state.isLoading = false;
+        if(action.payload === undefined)
+          return ;
         state.Data = action.payload.data;
         state.gData = solution(state.Data);
       })
@@ -110,6 +116,8 @@ export const FileTree = createSlice({
       })
       .addCase(getSelect.fulfilled, (state, action) => {
         state.isLoading = false;
+        if(action.payload === undefined)
+          return ;
         state.Data = action.payload.data;
         state.gData = solution(state.Data);
       })
