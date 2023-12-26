@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
 import CodeMirror from '@uiw/react-codemirror';
-import { setValue_c, setlang_c, setsave } from '../../api/scripts_c';
+import { setValue_c,  setsave } from '../../api/scripts_c';
 import { python } from '@codemirror/lang-python';
 import { java } from '@codemirror/lang-java';
 import { cpp } from '@codemirror/lang-cpp';
@@ -10,7 +10,6 @@ import { CompletionContext, autocompletion } from '@codemirror/autocomplete';
 import { createTheme } from '@uiw/codemirror-themes';
 
 import { tags as t } from '@lezer/highlight';
-import { useEffect } from 'react';
 
 const pythonCompletions = [
   { label: "print", type: "function" },
