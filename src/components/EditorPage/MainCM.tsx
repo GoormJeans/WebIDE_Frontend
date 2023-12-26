@@ -116,6 +116,7 @@ const MainCM = () => {
   }
   useEffect(()=>{
     dispatch(setlang_c(setting.fileExtension));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[setting.fileExtension])
   return (
     <div className='w-6/12'>
