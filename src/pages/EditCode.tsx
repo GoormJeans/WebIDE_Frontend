@@ -33,7 +33,7 @@ const EditCode = () => {
           return ;
         dispatch(setlang_c(setting.fileExtension));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      },[setting.fileExtension])
+      },[])
     const handleSumit = () => {
 
         if (setting.now_lang === "cpp" && setting.cpp_submit === setting.cpp_val) {
