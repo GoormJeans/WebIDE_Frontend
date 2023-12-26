@@ -21,7 +21,7 @@ const DetailPage = () => {
         if (request.status === 200) {
           setInitProbs(request.data)
           setProbs(request.data)
-          setUnsolved(request.data.filter((x: Algorithm) => x.solved))
+          setUnsolved(request.data ? request.data.filter((x: Algorithm) => x.solved) : [])
         }
       } catch (error) {
         console.log("error", error);
