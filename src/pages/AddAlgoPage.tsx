@@ -28,7 +28,7 @@ const AddAlgoPage = () => {
     if (!isNaN(parseInt(param.id!))) {
       const fetchProb = async () => {
         try {
-          const request = await axios.get(`/api/admin/problems/${param.id}`); //id에 해당하는 문제의 정보 불러오는 코드
+          const request = await axios.get(`/api/admin/algorithm/${param.id}`); //id에 해당하는 문제의 정보 불러오는 코드
           const prob: Algorithm = request.data[0];
           setLevel(levels[prob.level]);
           setName(prob.name);
@@ -68,21 +68,23 @@ const AddAlgoPage = () => {
       try {
 
         if (!isNaN(parseInt(param.id!))) { //문제 수정
-          const response = await axios.post(`/api/admin/problems/${param.id}`, {
+          const response = await axios.patch(`/api/admin/algorithm/${param.id}`, {
             algorithmName: name,
+            level: level,
             tag: tag,
             testcases: input,
             answers: output,
-            content: contents
+            description: contents
           });
           console.log(response.data);
         } else { //문제 추가
-          const response = await axios.post('/api/admin/problems', {
+          const response = await axios.post('/api/admin/algorithm/add', {
             algorithmName: name,
+            level: level,
             tag: tag,
             testcases: input,
             answers: output,
-            content: contents
+            description: contents
           });
           console.log(response.data);
         }
@@ -98,7 +100,7 @@ const AddAlgoPage = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`/api/admin/problems/${param.id}`);
+      const response = await axios.delete(`/api/admin/algorithm/${param.id}`);
       console.log(response);
     } catch (error) {
       console.log("error", error);

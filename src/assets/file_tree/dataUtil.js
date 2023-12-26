@@ -70,16 +70,12 @@ class Trie {
 
 export const solution = (data1) => {
   if (data1 === undefined) {
-    const trie = new Trie();
-    const loop = data2.data.length;
-    for (let i = 0; i < loop; i++) {
-      trie.insert(data2.data[i].path);
-    }
-    const asd = trie.print();
-    return asd;
+    return ;
   }
   const trie = new Trie();
   console.log(data1);
+  if(data1 === undefined)
+    return ;
   const loop = data1.data.length;
   for (let i = 0; i < loop; i++) {
     trie.insert(data1.data[i].path);

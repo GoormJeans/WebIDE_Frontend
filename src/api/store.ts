@@ -4,6 +4,7 @@ import scriptsC from './scripts_c';
 import userSlice from './user';
 import authSlice from './auth';
 import algoprobs from './algoprobs';
+import FileTree from './FileTree';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     user: userSlice,
     auth: authSlice,
     problems: algoprobs,
+    FileTree : FileTree,
   },
 });
 

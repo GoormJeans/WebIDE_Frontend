@@ -11,7 +11,6 @@ export const CategoryBtn = () => {
   const [selectedButton, setSelectedButton] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const problems = useSelector((state: RootState) => state.problems);
-
   const fetchProblems = async (category: string) => {
     try {
       const response = await axios.get(`http://localhost:3003/api/problems/${category}`);
@@ -44,12 +43,6 @@ export const CategoryBtn = () => {
         onClick={() => handleButtonClick('tried')}
       >
         Tried
-      </button>
-      <button
-        className={`${btnCSS} ${selectedButton === 'saved' ? 'bg-orange-300			 text-white' : 'bg-gray-200'}`}
-        onClick={() => handleButtonClick('saved')}
-      >
-        Saved
       </button>
 
       <AlgoList probs={problems} />
