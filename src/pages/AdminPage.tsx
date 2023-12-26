@@ -1,10 +1,29 @@
 import { useNavigate } from "react-router-dom"
 import UserChart from "../components/AdminPage/UserChart";
 import LangChart from "../components/AdminPage/LangChart";
+import { useEffect } from "react";
+import axios from "../api/axios";
 
 const AdminPage = () => {
 
   const navigate = useNavigate();
+
+
+  //언어별 정답 수 , 일별 가입자 수 가져오기
+  useEffect(() => {
+    
+    const getAdminDashboard = async ()=>{
+      try {
+        const request = await axios.get('api/admin');
+        console.log(request);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getAdminDashboard();
+  }, [])
+  
 
   return (
     <div className="w-full h-full">

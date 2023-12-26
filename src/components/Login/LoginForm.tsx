@@ -34,7 +34,7 @@ const LoginForm = () => {
         console.error('Login failed: unexpected status code', response.data.error);
       }
     } catch (error) {
-      console.error(`Login failed[${(error as any).response.data.statusCode}]: ${(error as any).response.data.error}`);
+      console.error('Login failed:', error);
     }
   };
 

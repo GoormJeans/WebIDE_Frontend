@@ -11,10 +11,10 @@ module.exports = {
         'editor-color' : '#7C7B7B73',
       },
       screens: {
-        'sm': '640px',  // customize the screen size as needed
-        'md': '980px',
-        'lg': '1145px',
-        'xl': '1536px',
+        'sm': {'max' : '800px'},  
+        'md': {'min' : '801px', 'max':'980px'},
+        'lg': {'min' : '981px', 'max':'1535px'},
+        'xl': {'min' : '1536px'},
         'mobile': {'max': '639px'},
         'tablet': {'min': '640px', 'max': '1023px'},
         'desktop': {'min': '1024px'},

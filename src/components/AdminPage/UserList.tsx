@@ -19,10 +19,10 @@ const UserList: React.FC<{ users: UserInfo[] }> = ({ users }) => {
         users && Array.isArray(users) &&
         users.map((element) =>
           <UserComponent
-            key={element.social_id}
-            id={element.social_id}
-            nickname={element.nickname}
-            email={element.email}
+            key={element.social_idValue}
+            id={element.social_idValue}
+            nickname={element.nicknameValue}
+            email={element.emailValue}
           />)
       }
 

@@ -5,6 +5,5 @@ export interface Algorithm {
   tag: string;
   level: number;
   solved: boolean;
-  testcases: string[];
-  answers: string[];
+  language: string;
 }

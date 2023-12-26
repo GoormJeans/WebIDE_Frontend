@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { IconButton } from '@mui/material';
+import Modal from './Modal';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../api/store';
 
@@ -20,7 +21,7 @@ const NavItem: React.FC<NavItemProps> = ({ path, label, onClick }) => {
     } else {
       navigate(path);
     }
-    
+
   };
 
   return (
@@ -31,19 +32,25 @@ const NavItem: React.FC<NavItemProps> = ({ path, label, onClick }) => {
 };
 
 const NavItemList = () => {
-  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('AccessToken');
   const navi = useNavigate();
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const Logout = () => {
     localStorage.clear();
-    console.log('Logout function executed');
+    console.log('Successfully logged out');
     navi('/login');
   };
   return (
     <>
       <NavItem path="/algorithms" label="Algorithms" />
       <NavItem path="/mypage" label="Mypage" />
-      <NavItem path={email ? `` : `/login`} label={email ? `Logout` : `Login`} onClick={email ? Logout : () => navi('/login') } />
+      <NavItem path={token ? `` : `/login`} label={token ? `Logout` : `Login`} onClick={token ? () => setIsLogoutModalOpen(true) : () => navi('/login')} />
       <NavItem path="/settings" label="Settings" />
+      <Modal isOpen={isLogoutModalOpen} handleClose={() => { setIsLogoutModalOpen(false); Logout() }}>
+        <span className='flex text-xl pb-3'>정상적으로 로그아웃되었습니다.</span>
+        <p className='pb-10'>다음에 또 만나요 🥹</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => { setIsLogoutModalOpen(false); Logout() }}>닫기</p>
+      </Modal>
     </>
   );
 }
