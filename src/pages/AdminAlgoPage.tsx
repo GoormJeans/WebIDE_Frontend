@@ -22,7 +22,7 @@ const AdminAlgoPage = () => {
   useEffect(() => {
     const fetchProbs = async () => {
       try {
-        const request = await axios.get('/api/algorithm');
+        const request = await axios.get('/admin/algorithm');
         setInitProbs(request.data)
         setProbs(request.data)
       } catch (error) {
