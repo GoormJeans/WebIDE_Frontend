@@ -1,14 +1,20 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ReactDOM from "react-dom";
-// import { gData, solution } from "../../assets/file_tree/dataUtil";
 import "../../assets/file_tree/index.css";
 import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
-// import { Create,dragNdrop,getFiletree,setData, setExpandedKeys, setSelectedKeys, setFilename, setProbno} from "../../api/FileTree";
-import { Create,dragNdrop,getFiletree, setExpandedKeys, setSelectedKeys, setFilename} from "../../api/FileTree";
+import {
+  getSelect,
+  Delete,
+  Create,
+  dragNdrop,
+  getFiletree,
+  setExpandedKeys,
+  setSelectedKeys,
+} from "../../api/FileTree";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../api/store";
 
@@ -25,18 +31,6 @@ const STYLE = `
 
 }
 `;
-
-// function contains(root: any, n: any) {
-//   let node = n;
-//   while (node) {
-//     if (node === root) {
-//       return true;
-//     }
-//     node = node.parentNode;
-//   }
-//   return false;
-// }
-
 const allowDrop: any = (paramobj: { dropNode: any; dropPosition: any }) => {
   if (!paramobj.dropNode.children) {
     if (paramobj.dropPosition === 0) return false;
@@ -84,84 +78,82 @@ const getSvgIcon = (path: any, view: any, iStyle = {}) => (
 );
 let cmContainer: any = null;
 let toolTip: any = null;
-const File_tree = ()=> {
+const File_tree = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const setting: any = useSelector((state: RootState) => state.FileTree);    
-
-
- 
-  // const getfiletree : any = async () => {
-  //   const filetree = getFiletree(1);
-  //   if(filetree === undefined)
-  //     return ;
-  //   const Data = await solution(filetree);
-  //   dispatch(setData(Data));
-  // }
+  const setting: any = useSelector((state: RootState) => state.FileTree);
+  let FileName2 = "";
+  const getfiletree: any = () => {
+    dispatch(getFiletree(setting.probno));
+    //const Data = await solution(setting.Data);
+    // dispatch(setData(Data));
+  };
 
   useEffect(() => {
     getContainer();
-    dispatch(getFiletree(1));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+    getfiletree();
 
-
-   const handleDelete = async (e: any) => {
-    // const number: number = 1;
-    //await Delete(e, number);
-  };
-   const handleCreateFolder = async (e: any) => {
-    const number: number = 1;
-    const path: string = e + setting.filename + "/";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setting.fetchURL]);
+  const handleDelete = (e: any) => {
     const data = {
-      createPath : path,
-      algorithmId : number
-    }
-    Create(data);
-    unmount(e);
+      deletePathSuffix: e,
+      algorithmId: setting.probno,
+    };
+    dispatch(Delete(data));
   };
-   const handleCreaterootFolder = async (e: any) => {
-    const number: number = 1;
-    const data = {
-      createPath : setting.filename + "/",
-      algorithmId : number
-    }
-    Create(data);
-    unmount(e);
-  };
-   const handleCreateFile = async (e: any) => {
-    const number: number = 1;
-    const path: string = e + setting.filename;
-    const data = {
-      createPath : path,
-      algorithmId : number
-    }
-    Create(data);
-    unmount(e);
-  };
-   const handleDragNdrop = async (dragkey: any, dragtitle: any, drop: any) => {
-    const number: number = 1;
-    const path: string = drop + dragtitle;
-    dragNdrop({beforePath :  dragkey, afterPath : path, algorithmId : number});
-  };
-   const handleSelect = async (key : any) =>{
-    // const number : number = 1;
-    if(key[key.length-1] === '/')
+  const handleCreateFolder = (e: any) => {
+    if(FileName2 === "")
       return ;
-    //console.log(await getSelect(key, number));
-  }
+    const path: string = e + FileName2 + "/";
+    const data = {
+      createPath: path,
+      algorithmId: setting.probno,
+    };
 
-
-
-
+    dispatch(Create(data));
+    unmount(e);
+  };
+  const handleCreaterootFolder = (e: any) => {
+    if(FileName2 === "")
+      return ;
+    const data = {
+      createPath: FileName2 + "/",
+      algorithmId: setting.probno,
+    };
+    dispatch(Create(data));
+    unmount(e);
+  };
+  const handleCreateFile = (e: any) => {
+    if(FileName2 === "")
+      return ;
+    const path: string = e + FileName2;
+    const data = {
+      createPath: path,
+      algorithmId: setting.probno,
+    };
+    dispatch(Create(data));
+    unmount(e);
+  };
+  const handleDragNdrop = (dragkey: any, dragtitle: any, drop: any) => {
+    const path: string = drop + dragtitle;
+    dragNdrop({
+      beforePath: dragkey,
+      afterPath: path,
+      algorithmId: setting.prob,
+    });
+  };
+  const handleSelect = async (key: any) => {
+    if (key[key.length - 1] === "/") return;
+    const data = {
+      deletePathSuffix: key,
+      algorithmId: setting.probno,
+    };
+    dispatch(getSelect(data));
+  };
 
   const onDragStart = (info: any) => {
     console.log("start", info);
   };
-
-  // const onDragEnter = () => {
-  //   console.log("enter");
-  // };
-
   const onDrop = (info: any) => {
     console.log("drop", info);
     const dropKey = info.node.key;
@@ -196,8 +188,7 @@ const File_tree = ()=> {
   };
   const onSelect = (selectedKeys: any) => {
     dispatch(setSelectedKeys(selectedKeys));
-    if(selectedKeys.length === 0)
-      return ;
+    if (selectedKeys.length === 0) return;
     handleSelect(selectedKeys[0]);
   };
 
@@ -207,9 +198,10 @@ const File_tree = ()=> {
     renderCm(info);
   };
 
-  // const onMouseLeave = (info: any) => {
-  //   console.log("leave", info);
-  // };
+  const handleChange = async (e: any) => {
+    FileName2 = e.target.value;
+    console.log(FileName2);
+  };
 
   const getContainer = () => {
     if (cmContainer == null) {
@@ -267,7 +259,7 @@ const File_tree = ()=> {
     });
 
     ReactDOM.render(toolTip, cmContainer);
-  }
+  };
 
   const switcherIcon = (obj: any) => {
     if (obj.data.key?.startsWith("0-0-3")) {
@@ -297,9 +289,6 @@ const File_tree = ()=> {
       ReactDOM.unmountComponentAtNode(cmContainer);
       toolTip = null;
     }
-    const handleChange = (e: any) => {
-      dispatch(setFilename(e.target.value));
-    };
     getContainer();
     toolTip = (
       <div id="Tooltip">
@@ -335,9 +324,6 @@ const File_tree = ()=> {
       toolTip = null;
     }
     getContainer();
-    const handleChange = (e: any) => {
-      dispatch(setFilename(e.target.value));
-    };
     toolTip = (
       <div id="Tooltip">
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
@@ -370,16 +356,14 @@ const File_tree = ()=> {
       ReactDOM.unmountComponentAtNode(cmContainer);
       toolTip = null;
     }
-    const handleChange = (e: any) => {
-      dispatch(setFilename(e.target.value));
-    };
+
     getContainer();
     toolTip = (
       <div id="Tooltip">
         <div className="flex w-full flex-col bg-stone-300 border-solid border-1 border-stone-200 rounded-lg pt-2 pb-2 shadow-md">
           <input onChange={(e: any) => handleChange(e)}></input>
           <div
-            onClick={handleCreaterootFolder}
+            onClick={(e) => handleCreaterootFolder(e)}
             className="hover:bg-stone-400 pl-4 pr-4"
           >
             폴더 생성하기
@@ -399,41 +383,40 @@ const File_tree = ()=> {
     ReactDOM.render(toolTip, cmContainer);
   };
 
-    return (
-      <div className="flex flex-col overflow-hidden w-100%">
-        <div
-          className="flex justify-end hover:text-white"
-          onClick={Createrootfolder}
-        >
-          +
-        </div>
-        <style dangerouslySetInnerHTML={{ __html: STYLE }} />
-        <div style={{ overflow: "hidden", display: "flex" }}>
-          <div style={{ display: "flex-start" }}>
-            <Tree
-              showLine
-              allowDrop={allowDrop}
-              onRightClick={onRightClick}
-              selectedKeys={setting.selectedKeys}
-              expandedKeys={setting.expandedKeys}
-              onExpand={onExpand}
-              autoExpandParent={true}
-              draggable
-              onDragStart={onDragStart}
-              onDrop={onDrop}
-              showIcon={false}
-              treeData={setting.gData}
-              motion={motion}
-              style={{ height: "100%" }}
-              onSelect={onSelect}
-              switcherIcon={switcherIcon}
-              virtual={true}
-            ></Tree>
-          </div>
+  return (
+    <div className="flex flex-col overflow-hidden w-100%">
+      <div
+        className="flex justify-end hover:text-white"
+        onClick={Createrootfolder}
+      >
+        +
+      </div>
+      <style dangerouslySetInnerHTML={{ __html: STYLE }} />
+      <div style={{ overflow: "hidden", display: "flex" }}>
+        <div style={{ display: "flex-start" }}>
+          <Tree
+            showLine
+            allowDrop={allowDrop}
+            onRightClick={onRightClick}
+            selectedKeys={setting.selectedKeys}
+            expandedKeys={setting.expandedKeys}
+            onExpand={onExpand}
+            autoExpandParent={true}
+            draggable
+            onDragStart={onDragStart}
+            onDrop={onDrop}
+            showIcon={false}
+            treeData={setting.gData}
+            motion={motion}
+            style={{ height: "100%" }}
+            onSelect={onSelect}
+            switcherIcon={switcherIcon}
+            virtual={true}
+          ></Tree>
         </div>
       </div>
-    );
-  }
-
+    </div>
+  );
+};
 
 export default File_tree;

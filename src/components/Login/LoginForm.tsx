@@ -1,16 +1,17 @@
 import KakaoIcon from '../../assets/images/kakao_icon.png'
 import GoogleIcon from '../../assets/images/google_icon.png'
 import NaverIcon from '../../assets/images/naver_icon.png'
-import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
+import { userLogin } from '../../api/api';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navi = useNavigate();
   const location = useLocation();
+  const isLoginDisabled: boolean = !email || !password;
   const { from } = location.state || { from: { pathname: '/' } }
 
   const validateForm = () => {
@@ -24,11 +25,12 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post(`https://eb.goojeans-server.com/login`, { email, password });
-      if (response.data.statusCode === 200) {
+      const response = await userLogin(email, password);
+      console.log(response.data)
+      if (response.data.status === 200) {
         const AccessToken = response.data.data[0].message;
         localStorage.setItem('AccessToken', AccessToken);
-        console.log('Login success', );
+        console.log('Login success',);
         navi(from);
       } else {
         console.error('Login failed: unexpected status code', response.data.error);
@@ -57,8 +59,9 @@ const LoginForm = () => {
       />
       <br />
       <button
-        className=" bg-nav-color px-5 py-3 mx-2 w-72 rounded-xl shadow-xl active:bg-slate-500"
+        className=" bg-nav-color px-5 py-3 mx-2 w-72 rounded-xl shadow-xl active:bg-slate-500 disabled:bg-slate-400"
         onClick={handleLogin}
+        disabled={isLoginDisabled}
       >
         Login
       </button>
