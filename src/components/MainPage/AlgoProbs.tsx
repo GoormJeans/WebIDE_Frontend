@@ -10,7 +10,6 @@ const AlgoProbs: React.FC<{ prob: Algorithm }> = ({ prob }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const url = useLocation();
-  console.log(url.pathname);
 
   return (
     <div className="w-full bg-[#c4c4c4] h-[60px] flex flex-row items-center justify-between p-6 mb-5 rounded-xl shadow-xl whitespace-nowrap hover:cursor-pointer hover:bg-white"
