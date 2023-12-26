@@ -1,36 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import UserChart from "../components/AdminPage/UserChart"
 import UserList from "../components/AdminPage/UserList";
-
-
-export interface UserType {
-  id: number;
-  nickname: string;
-  email: string;
-}
+import axios from "../api/axios"
+import { UserInfo } from "../types/UserInfo.type";
 
 const AdminUsersPage = () => {
 
+  const [users, setUsers] = useState<UserInfo[]>([]);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const request = await axios.get('/api/admin/users');
+        setUsers(request.data);
+        console.log(request);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
 
-
-  // dummy users
-  const users: UserType[] = [
-    {
-      id: 1,
-      nickname: "test1",
-      email: "test1@gmail.com",
-    },
-    {
-      id: 2,
-      nickname: "test2",
-      email: "test2@naver.com",
-    },
-    {
-      id: 3,
-      nickname: "test3",
-      email: "test3@gmail.com",
-    }
-  ]
+    fetchUsers();
+  }, [])
 
   return (
     <div className="w-full h-full">
