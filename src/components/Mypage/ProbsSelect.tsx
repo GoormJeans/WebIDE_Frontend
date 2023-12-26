@@ -33,10 +33,10 @@ export const CategoryBtn = () => {
         setDisplayProblems(allProblems);
         break;
       case 'solved':
-        setDisplayProblems(allProblems.filter(problem => problem.solved));
+        setDisplayProblems(Object.values(allProblems).filter(problem => problem.solved));
         break;
       case 'tried':
-        setDisplayProblems(allProblems.filter(problem => !problem.solved));
+        setDisplayProblems(Object.values(allProblems).filter(problem => !problem.solved));
         break;
       default:
         break;
