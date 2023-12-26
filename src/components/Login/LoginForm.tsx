@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Link, useLocation } from 'react-router-dom';
 import { userLogin } from '../../api/api';
+import Modal from '../Modal';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +14,7 @@ const LoginForm = () => {
   const location = useLocation();
   const isLoginDisabled: boolean = !email || !password;
   const { from } = location.state || { from: { pathname: '/' } }
+  const [isLoginModal, setIsLoginModal] = useState(false);
 
   const validateForm = () => {
     return email.length > 0 && password.length > 0;
@@ -37,6 +39,7 @@ const LoginForm = () => {
       }
     } catch (error) {
       console.error('Login failed:', error);
+      setIsLoginModal(true);
     }
   };
 
@@ -67,10 +70,15 @@ const LoginForm = () => {
       </button>
       <span className=" text-sm text-slate-700 mt-8 mb-5">Or continue with</span>
       <div className="w-full flex flex-row justify-evenly">
-        <Link to={'https://eb.goojeans-server.com/login/oauth2/code/google'}><img src={GoogleIcon} alt="google icon" className="w-10 h-10 mx-2 shadow-2xl"/></Link>
-        <Link to={'https://eb.goojeans-server.com/login/oauth2/code/naver'}><img src={NaverIcon} alt="naver icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
-        <Link to={'https://eb.goojeans-server.com/login/oauth2/code/kakao'}><img src={KakaoIcon} alt="kakao icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
+        <Link to={'https://eb.goojeans-server.com/oauth2/authorization/google'}><img src={GoogleIcon} alt="google icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
+        <Link to={'https://eb.goojeans-server.com/oauth2/authorization/naver'}><img src={NaverIcon} alt="naver icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
+        <Link to={'https://eb.goojeans-server.com/oauth2/authorization/kakao'}><img src={KakaoIcon} alt="kakao icon" className="w-10 h-10 mx-2 shadow-2xl" /></Link>
       </div>
+      <Modal isOpen={isLoginModal} handleClose={() => setIsLoginModal(false)}>
+        <span className='flex text-xl'>로그인 실패⚠️</span>
+        <p className='pb-10'>이메일 또는 비밀번호가 틀렸습니다.</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => setIsLoginModal(false)}>닫기</p>
+      </Modal>
     </div>
   )
 }

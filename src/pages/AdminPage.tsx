@@ -16,8 +16,8 @@ const AdminPage = () => {
     const getAdminDashboard = async ()=>{
       try {
         const request = await axios.get('/admin');
-        setUsersCounts([...request.data[0].userCounts])
-        setAlgos([...request.data[0].algos])
+        setUsersCounts([...request.data.data[0].userCounts])
+        setAlgos([...request.data.data[0].algos])
       } catch (error) {
         console.log(error);
       }

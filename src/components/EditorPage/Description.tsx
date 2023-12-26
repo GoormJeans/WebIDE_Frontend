@@ -12,7 +12,7 @@ const Description = () => {
     const getDescription = async () => {
       const request = await axios.get(`/editor/algorithm/${param.id}`)
       console.log(request.data);
-      setDescription(request.data[0].algorithmText);
+      setDescription(request.data.data[0].algorithmText);
     }
     getDescription();
 

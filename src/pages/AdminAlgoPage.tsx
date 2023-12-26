@@ -23,8 +23,8 @@ const AdminAlgoPage = () => {
     const fetchProbs = async () => {
       try {
         const request = await axios.get('/admin/algorithm');
-        setInitProbs(request.data)
-        setProbs(request.data)
+        setInitProbs(request.data.data[0])
+        setProbs(request.data.data[0])
       } catch (error) {
         console.log("error", error);
       }

@@ -12,7 +12,7 @@ const LangChart: React.FC<{algos: any}> = ({algos}) => {
     // Generate random data for the chart
     const generateChartData = () => {
       const languages = ['Java', 'Python3', 'C++'];
-      const values = [algos.java, algos.python3, algos.cpp];
+      const values = [algos[0].java, algos[0].python3, algos[0].cpp];
       const sum = algos.total
       const normalizedValues = values.map((val) => Math.round((val / sum) * 100));
       const data = languages.map((language, index) => ({

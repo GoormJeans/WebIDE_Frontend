@@ -14,8 +14,10 @@ const Achievement = () => {
     const generateChartData = async () => {
       const response = await fetchProblemsApi();
   
+      const solvedProblems = response.filter((problem: { solved: any; }) => problem.solved);
+
       // 문제 데이터에서 태그를 기준으로 그룹핑합니다.
-      const tagGroup = response.reduce((acc: { [x: string]: any[]; }, problem: { tag: string | number; }) => {
+      const tagGroup = solvedProblems.reduce((acc: { [x: string]: any[]; }, problem: { tag: string | number; }) => {
         if (!acc[problem.tag]) {
           acc[problem.tag] = [];
         }
