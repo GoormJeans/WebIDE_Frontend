@@ -7,7 +7,9 @@ import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
-import { getFiletree, Delete, Create, dragNdrop } from "../../api/EditfetchUrl";
+import { getFiletree, Delete, Create, dragNdrop, getSelect } from "../../api/EditfetchUrl";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../api/store";
 //import { CreateFolder } from "../../api/EditfetchUrl";
 
 const STYLE = `
@@ -154,6 +156,17 @@ class File_tree extends React.Component {
     const Data = solution(data.data);
     this.setState({ gData: Data });
   };
+  handleSelect = async(key : any) =>{
+    const number : number = 1;
+    if(key[key.length-1] === '/')
+      return ;
+    console.log(await getSelect(key, number));
+  }
+
+
+
+
+
   onDragStart = (info: any) => {
     console.log("start", info);
   };
@@ -171,26 +184,6 @@ class File_tree extends React.Component {
     const dropPos = info.node.pos.split("-");
     const dropPosition =
       info.dropPosition - Number(dropPos[dropPos.length - 1]);
-
-    // const loop = (data: any, key: any, callback: any) => {
-    //   data.forEach((item: any, index: any, arr: any) => {
-    //     if (item.key === key) {
-    //       callback(item, index, arr);
-    //       return;
-    //     }
-    //     if (item.children) {
-    //       loop(item.children, key, callback);
-    //     }
-    //   });
-    // };
-    // const data = [...this.state.gData];
-
-    // Find dragObject
-    // let dragObj: any;
-    // loop(data, dragKey, (item: any, index: any, arr: any) => {
-    //   arr.splice(index, 1);
-    //   dragObj = item;
-    // });
 
     if (!allow(dropKey) && dropPosition === 0) return;
 
@@ -220,6 +213,9 @@ class File_tree extends React.Component {
   };
   onSelect = (selectedKeys: any) => {
     this.setState({ selectedKeys });
+    if(selectedKeys.length === 0)
+      return ;
+    this.handleSelect(selectedKeys[0]);
   };
 
   onRightClick = (info: any) => {
@@ -424,6 +420,8 @@ class File_tree extends React.Component {
     ReactDOM.render(this.toolTip, this.cmContainer);
   };
   render() {
+    //const dispatch = useDispatch<AppDispatch>();
+    //const setting: any = useSelector((state: RootState) => state.FileTree);    
     return (
       <div className="flex flex-col overflow-hidden w-100%">
         <div
