@@ -1,13 +1,14 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import { gData, solution } from "../../assets/file_tree/dataUtil";
+// import { gData, solution } from "../../assets/file_tree/dataUtil";
 import "../../assets/file_tree/index.css";
 import "../../assets/file_tree/animation.less";
 import "../../assets/file_tree/draggable.less";
 import "./contextmenu.css";
 import Tree from "rc-tree";
-import { Create,dragNdrop,getFiletree,setData, setExpandedKeys, setSelectedKeys, setFilename, setProbno} from "../../api/FileTree";
+// import { Create,dragNdrop,getFiletree,setData, setExpandedKeys, setSelectedKeys, setFilename, setProbno} from "../../api/FileTree";
+import { Create,dragNdrop,getFiletree, setExpandedKeys, setSelectedKeys, setFilename} from "../../api/FileTree";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../api/store";
 
@@ -25,16 +26,16 @@ const STYLE = `
 }
 `;
 
-function contains(root: any, n: any) {
-  let node = n;
-  while (node) {
-    if (node === root) {
-      return true;
-    }
-    node = node.parentNode;
-  }
-  return false;
-}
+// function contains(root: any, n: any) {
+//   let node = n;
+//   while (node) {
+//     if (node === root) {
+//       return true;
+//     }
+//     node = node.parentNode;
+//   }
+//   return false;
+// }
 
 const allowDrop: any = (paramobj: { dropNode: any; dropPosition: any }) => {
   if (!paramobj.dropNode.children) {
@@ -100,11 +101,12 @@ const File_tree = ()=> {
   useEffect(() => {
     getContainer();
     dispatch(getFiletree(1));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
 
    const handleDelete = async (e: any) => {
-    const number: number = 1;
+    // const number: number = 1;
     //await Delete(e, number);
   };
    const handleCreateFolder = async (e: any) => {
@@ -142,7 +144,7 @@ const File_tree = ()=> {
     dragNdrop({beforePath :  dragkey, afterPath : path, algorithmId : number});
   };
    const handleSelect = async (key : any) =>{
-    const number : number = 1;
+    // const number : number = 1;
     if(key[key.length-1] === '/')
       return ;
     //console.log(await getSelect(key, number));
@@ -156,9 +158,9 @@ const File_tree = ()=> {
     console.log("start", info);
   };
 
-  const onDragEnter = () => {
-    console.log("enter");
-  };
+  // const onDragEnter = () => {
+  //   console.log("enter");
+  // };
 
   const onDrop = (info: any) => {
     console.log("drop", info);
@@ -205,9 +207,9 @@ const File_tree = ()=> {
     renderCm(info);
   };
 
-  const onMouseLeave = (info: any) => {
-    console.log("leave", info);
-  };
+  // const onMouseLeave = (info: any) => {
+  //   console.log("leave", info);
+  // };
 
   const getContainer = () => {
     if (cmContainer == null) {
