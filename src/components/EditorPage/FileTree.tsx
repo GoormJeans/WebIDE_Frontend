@@ -113,6 +113,8 @@ class File_tree extends React.Component {
   handleDelete = async (e: any) => {
     const number: number = 1;
     const data = await Delete(e, number);
+    if(data === undefined)
+      return ;
     const Data = solution(data.data);
     this.setState({ gData: Data });
   };
@@ -122,6 +124,8 @@ class File_tree extends React.Component {
     const data = await Create(path, number);
     //temp
     //this.getFiletree();
+    if(data === undefined)
+      return ;
     const Data = solution(data.data);
     this.setState({ gData: Data });
     this.unmount(e);
@@ -131,6 +135,8 @@ class File_tree extends React.Component {
     const data = await Create(this.state.filename + "/", number);
     //temp
     //this.getFiletree();
+    if(data === undefined)
+      return ;
     const Data = solution(data.data);
     this.setState({ gData: Data });
     this.unmount(e);
@@ -141,6 +147,8 @@ class File_tree extends React.Component {
     const data = await Create(path, number);
     //temp
     //this.getFiletree();
+    if(data === undefined)
+      return ;
     const Data = solution(data.data);
     this.setState({ gData: Data });
     this.unmount(e);
@@ -151,6 +159,8 @@ class File_tree extends React.Component {
     console.log(dragkey);
     console.log(path);
     const data = await dragNdrop(dragkey, path, number);
+    if(data === undefined)
+      return ;
     const Data = solution(data.data);
     this.setState({ gData: Data });
   };
