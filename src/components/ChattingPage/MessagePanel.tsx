@@ -6,7 +6,7 @@ import { Message } from "../../types/Message.type";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axios from "../../api/axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../api/store";
 
@@ -31,7 +31,7 @@ const MessagePanel = () => {
     const handleUnload = async (e: any) => {
       e.preventDefault();
       if (client.current?.connected) {
-        await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user.nicknameValue}`);
+        await axios.get(`/chat/exit/${chatroom.id}?nickname=${user.nicknameValue}`);
       }
     }
     window.addEventListener("beforeunload", handleUnload);
@@ -41,14 +41,18 @@ const MessagePanel = () => {
 
   const handleConnect = () => {
     setJoin(!join);
+
+    let accessToken = localStorage.getItem('AccessToken');
+    let str = 'Bearer ' + accessToken;
+
     client.current = Stomp.over(() => {
       // 로컬주소
-      const sock = new SockJS("http://localhost:8080/ws/chat");
+      const sock = new SockJS("https://eb.goojeans-server.com/ws/chat");
       return sock;
     })
     setMessages([]);
     client.current.connect(
-      { 'nickname': user.nicknameValue },
+      { 'Authorization': str, },
       () => {
         client.current!.subscribe(`/topic/chat/${chatroom.id}`, function (e) {
 
@@ -80,7 +84,7 @@ const MessagePanel = () => {
     client.current?.disconnect(
       async () => {
         try {
-          await axios.get(`http://localhost:8080/chat/exit/${chatroom.id}?nickname=${user.nicknameValue}`);
+          await axios.get(`/chat/exit/${chatroom.id}?nickname=${user.nicknameValue}`);
         }
         catch (error) {
           console.log(error);
@@ -140,7 +144,7 @@ const MessagePanel = () => {
       return;
     }
     setVisible(true) //뒤로가기 버튼 숨김
-    const request = await axios.get(`http://localhost:8080/chat/search/${chatroom.id}?keyword=${searchTerm}`);
+    const request = await axios.get(`/chat/search/${chatroom.id}?keyword=${searchTerm}`);
     const searchResults = request.data.data;
 
     setSearchResults(searchResults);
