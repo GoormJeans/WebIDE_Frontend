@@ -7,18 +7,38 @@ const requests : {
     delete : string,
     create : string,
     modify : string,
+
+    sourcecode : string,
+    getprob : string,
+    execute : string,
 } = {
     fetchFiletree : 'editor/filetrees/',
     delete : 'editor/delete',
     create : 'editor/filecreate',
-    modify : 'editor/modification'
+    modify : 'editor/modification',
+
+    sourcecode : 'editor/sourcecode',   //post
+    getprob : 'editor/algorithm/',  //get
+    execute : 'editor/execute', //post
+    
 };
 
 
 
-export const getSelect = async () =>{
+export const getSelect = async (key : string, number : number) =>{
     try{
-
+        const data = {
+            deletePathSuffix : key,
+            algorithmId : number
+        }
+        const accessToken = localStorage.getItem('AccessToken');
+        console.log(accessToken);
+        const resp = await instance.post(requests.sourcecode,JSON.stringify(data),{headers: {
+            'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
+            accept: 'application/json',"Content-Type": `application/json`,
+            
+          },} );
+        return resp;
     }catch(e)
     {
         return undefined;
