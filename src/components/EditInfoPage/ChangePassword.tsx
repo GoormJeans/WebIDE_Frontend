@@ -24,7 +24,7 @@ export const ChangePassword = () => {
   const handleChangePassword = async () => {
     try {
       const accessToken = localStorage.getItem('AccessToken');
-      const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/mypage/edit/password`, {
+      const response = await axios.post(`https://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/mypage/edit/password`, {
         password: password,
       },
         {

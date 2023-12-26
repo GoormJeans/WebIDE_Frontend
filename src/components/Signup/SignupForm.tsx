@@ -26,7 +26,7 @@ const SignupForm = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/sign-up`, { email, password, nickname, blog, city, terms });
+      const response = await axios.post(`https://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/sign-up`, { email, password, nickname, blog, city, terms });
       console.log(response);
       if (response.data.status === 200) {
         console.log(response.data.data[0].message);
