@@ -2,17 +2,13 @@ import KakaoIcon from '../../assets/images/kakao_icon.png'
 import GoogleIcon from '../../assets/images/google_icon.png'
 import NaverIcon from '../../assets/images/naver_icon.png'
 import axios from 'axios';
-import{ loginSuccess } from '../../api/auth';
-import { useDispatch } from 'react-redux';
 import React, { useState } from 'react'
-import { AppDispatch } from '../../api/store';
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch<AppDispatch>();
   const navi = useNavigate();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: '/' } }
@@ -28,18 +24,17 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post(`http://localhost:3003/login`, { email, password });
-      if (response.data.statusCode === 2000) {
-        const jwt = response.data.data[0].message;
-        localStorage.setItem('access-token', jwt);
-        localStorage.setItem('email', email);
-        dispatch(loginSuccess(response.data));
+      const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/login`, { email, password });
+      if (response.data.statusCode === 200) {
+        const AccessToken = response.data.data[0].message;
+        localStorage.setItem('AccessToken', AccessToken);
+        console.log('Login success', );
         navi(from);
       } else {
-        console.error('Login failed: unexpected status code', response.data.statusCode);
+        console.error('Login failed: unexpected status code', response.data.error);
       }
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error(`Login failed[${(error as any).response.data.statusCode}]: ${(error as any).response.data.error}`);
     }
   };
 

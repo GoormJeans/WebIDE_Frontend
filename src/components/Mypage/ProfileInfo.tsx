@@ -40,19 +40,18 @@ const ProfileInfo = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const accessToken = localStorage.getItem('access-token'); // 로컬 스토리지에서 토큰을 가져옵니다
-        const email = localStorage.getItem('email');
-        const response = await axios.post(`http://localhost:3003/api/user-info`, {},{
+        const accessToken = localStorage.getItem('AccessToken');
+        const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/api/userInfo`, {},{
           headers: {
-            'access-token': accessToken, // 헤더에 토큰을 포함시킵니다.
-            'email': email,
+            'AccessToken': accessToken, // 헤더에 토큰을 포함시킵니다.
           },
         });
-        dispatch(setEmailValue(response.data.data[0].email));
-        dispatch(setNicknameValue(response.data.data[0].nickname));
-        dispatch(setAddressValue(response.data.data[0].city));
-        dispatch(setBioValue(response.data.data[0].bio));
-        dispatch(setImageURLValue(response.data.data[0].imageURL));
+        // dispatch(setEmailValue(response.data.data[0].email));
+        // dispatch(setNicknameValue(response.data.data[0].nickname));
+        // dispatch(setAddressValue(response.data.data[0].city));
+        // dispatch(setBioValue(response.data.data[0].bio));
+        // dispatch(setImageURLValue(response.data.data[0].imageURL));
+        console.log(response);
       } catch (error) {
         console.error('Error fetching user information:', error);
       }
