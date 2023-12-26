@@ -8,6 +8,7 @@ export const fetchProblemsApi = async () => {
       'Authorization': `Bearer ${accessToken}`,
     },
   });
+  console.log(response.data);
   if (response.data.status !== 200) {
     console.error('Error fetching problems:', response.data.error);
     return;
