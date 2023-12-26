@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { fetchProblemsApi } from '../../api/api';
 
 
 const Achievement = () => {
@@ -10,25 +11,38 @@ const Achievement = () => {
   const [totalValue, setTotalValue] = useState<number>(0);
 
   useEffect(() => {
-    // Generate random data for the chart
-    const generateChartData = () => {
-      const languages = ['Java', 'Python3', 'C++'];
-      const values = languages.map(() => Math.floor(Math.random() * 100));
+    const generateChartData = async () => {
+      const response = await fetchProblemsApi();
+  
+      // 문제 데이터에서 언어를 기준으로 그룹핑합니다.
+      const languageGroup = response.reduce((acc: { [x: string]: any[]; }, problem: { language: string | number; }) => {
+        if (!acc[problem.language]) {
+          acc[problem.language] = [];
+        }
+        acc[problem.language].push(problem);
+        return acc;
+      }, {});
+  
+      // 언어별로 문제 통계를 생성합니다.
+      const languages = Object.keys(languageGroup);
+      const values = languages.map(language => languageGroup[language].length);
       const sum = values.reduce((acc, val) => acc + val, 0);
-      const normalizedValues = values.map((val) => Math.round((val / sum) * 100));
       const total = values.reduce((acc, val) => acc + val, 0);
       setTotalValue(total);
+  
+      // 통계 데이터를 생성합니다.
       const data = languages.map((language, index) => ({
         label: language,
         value: values[index],
-        percentage: normalizedValues[index],
+        percentage: Math.round((values[index] / sum) * 100),
       }));
-
+  
       setChartData(data);
     };
-
+  
     generateChartData();
   }, []);
+  
 
   return (
     <div className='circle-chart bg-white p-3 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>
