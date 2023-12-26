@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import FadeIn from '../FadeIn'
 import SignUpInputTag from './SignUpInputTag';
 import axios from 'axios';
+import Modal from '../Modal';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');
@@ -13,13 +15,16 @@ const SignupForm = () => {
   const [terms, setTerms] = useState(false);
   const [detailsVisible, setDetailsVisible] = useState(false);
 
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isFailModalOpen, setIsFailModalOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const isEmailValid: boolean = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const isNicknameValid: boolean = nickname.length <= 12;
+  const isNicknameValid: boolean = !!nickname && nickname.length <= 12;
   const isPasswordValid: boolean = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/.test(password);
   const isConfirmPasswordValid: boolean = password === confirmPassword;
   const isButtonDisabled: boolean = !terms || !isEmailValid || !isNicknameValid || !isPasswordValid || !isConfirmPasswordValid;
 
-
+  const navi = useNavigate();
   const toggleDetails = () => {
     setDetailsVisible(!detailsVisible);
   };
@@ -27,10 +32,24 @@ const SignupForm = () => {
   const handleRegister = async () => {
     try {
       const response = await axios.post(`http://goojeans-webide-docker.ap-northeast-2.elasticbeanstalk.com/sign-up`, { email, password, nickname, blog, city, terms });
-      console.log(response);
-      if (response.data.status === 200) {
+      console.log(response.data);
+      if (response.data.statusCode === 200) {
         console.log(response.data.data[0].message);
-      } else {
+        setIsSuccessModalOpen(true);
+      }
+      else if (response.data.statusCode === 4001) {
+        setErrorMsg('이미 존재하는 이메일입니다.');
+        setIsFailModalOpen(true);
+      }
+      else if (response.data.statusCode === 4011) {
+        setErrorMsg('이미 존재하는 닉네임입니다.');
+        setIsFailModalOpen(true);
+      }
+      else if (response.data.statusCode === 4012) {
+        setErrorMsg('필요한 정보를 모두 입력해주세요.');
+        setIsFailModalOpen(true);
+      }
+      else {
         console.error(`Sign up failed[${response.data.statusCode}]: ${response.data.error}`);
       }
     } catch (error) {
@@ -122,11 +141,22 @@ const SignupForm = () => {
             </button>
           </div>
           {detailsVisible && (
-              <p>Details about personal information agreement...</p>
+            <p>Details about personal information agreement...</p>
           )}
-          <button disabled={isButtonDisabled} className={` ${isButtonDisabled ? 'disabled:bg-slate-400' : 'bg-nav-color'} px-5 py-3 ml-3 mt-3 w-80 rounded-xl shadow-xl`} onClick={handleRegister}>Go to register!</button>
+          <button disabled={isButtonDisabled} className={`bg-nav-color disabled:bg-slate-400 px-5 py-3 ml-3 mt-3 w-80 rounded-xl shadow-xl`} onClick={handleRegister}>Go to register!</button>
         </div>
       </FadeIn>
+
+      <Modal isOpen={isSuccessModalOpen} handleClose={() => { setIsSuccessModalOpen(false); navi('/login') }}>
+        <span className='flex text-xl'>회원가입 성공🎉</span>
+        <p className='pb-10'>환영합니다! 이제 로그인해 보세요.</p>
+        <Link to={"/login"} className='flex bg-nav-color rounded-md p-1 justify-center'>로그인하러 가기</Link>
+      </Modal>
+      <Modal isOpen={isFailModalOpen} handleClose={() => setIsFailModalOpen(false)}>
+        <span className='flex text-xl'>회원가입 오류⚠️</span>
+        <p className='pb-10'>{errorMsg}</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => setIsFailModalOpen(false)}>닫기</p>
+      </Modal>
     </div>
   )
 }
