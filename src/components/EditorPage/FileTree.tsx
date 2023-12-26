@@ -89,18 +89,16 @@ const File_tree = ()=> {
 
 
  
-  // const getfiletree : any = async () => {
-  //   const filetree = getFiletree(1);
-  //   if(filetree === undefined)
-  //     return ;
-  //   const Data = await solution(filetree);
-  //   dispatch(setData(Data));
-  // }
+  const getfiletree : any = async () => {
+    dispatch(getFiletree(setting.probno));
+    //const Data = await solution(setting.Data);
+   // dispatch(setData(Data));
+  }
 
   useEffect(() => {
     getContainer();
-    dispatch(getFiletree(1));
-  },[]);
+    getfiletree();
+  },[setting.fetchURL]);
 
 
    const handleDelete = async (e: any) => {

@@ -2,7 +2,9 @@ import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import requests from "./EditfetchUrl"
 import {instance,instanceJSON, init} from "./axios";
+import { solution } from '../assets/file_tree/dataUtil';
 export interface Filetree {
+    Data : any
     gData: any,
     autoExpandParent: boolean,
     expandedKeys: [],
@@ -15,6 +17,7 @@ export interface Filetree {
 }
 
 const initialState : Filetree = {
+    Data : undefined,
     gData : undefined,
     autoExpandParent: true,
     expandedKeys: [],
@@ -54,23 +57,24 @@ export const FileTree = createSlice({
             })
             .addCase(getFiletree.fulfilled, (state, action)=>{
                 state.isLoading = false;
-                console.log(action.payload.data.data);
-                state.gData = action.payload.data.data;
+                console.log(action.payload.data);
+                state.Data = action.payload.data;
+                state.gData=solution(state.Data);
             })
             .addCase(getFiletree.rejected, (state, action: any) => {
                 state.isLoading = false;
-                state.gData = action.payload;
+                state.Data = action.payload;
             })
             .addCase(dragNdrop.pending, (state) =>{
                 state.isLoading = true;
             })
             .addCase(dragNdrop.fulfilled, (state, action)=>{
                 state.isLoading = false;
-                state.gData = action.payload.data.data;
+                state.Data = action.payload.data;
             })
             .addCase(dragNdrop.rejected, (state, action: any) => {
                 state.isLoading = false;
-                state.gData = action.payload;
+                state.Data = action.payload;
             })
             .addCase(Create.pending, (state) =>{
                 state.isLoading = true;
@@ -78,11 +82,11 @@ export const FileTree = createSlice({
             .addCase(Create.fulfilled, (state, action)=>{
                 state.isLoading = false;
                 console.log(action.payload);
-                state.gData = action.payload.data.data;
+                state.Data = action.payload.data;
             })
             .addCase(Create.rejected, (state, action: any) => {
                 state.isLoading = false;
-                state.gData = action.payload;
+                state.Data = action.payload;
             })
     }
 });
