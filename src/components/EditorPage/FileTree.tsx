@@ -1,5 +1,5 @@
 /* eslint-disable no-console, react/no-access-state-in-setstate */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import "../../assets/file_tree/index.css";
 import "../../assets/file_tree/animation.less";
@@ -81,8 +81,7 @@ let toolTip: any = null;
 const File_tree = () => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
-  const [FileName, setFilename] = useState('');
-  let FileName2 = '';
+  let FileName2 = "";
   const getfiletree: any = () => {
     dispatch(getFiletree(setting.probno));
     //const Data = await solution(setting.Data);
@@ -92,65 +91,56 @@ const File_tree = () => {
   useEffect(() => {
     getContainer();
     getfiletree();
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.fetchURL]);
-  useEffect(()=>{
-    if(FileName2.length > 0)
-      setFilename(FileName2);
-    console.log(FileName);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[FileName2])
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setting.fetchURL]);
   const handleDelete = (e: any) => {
-    const number: number = 1;
     const data = {
       deletePathSuffix: e,
-      algorithmId: number,
+      algorithmId: setting.probno,
     };
     dispatch(Delete(data));
   };
   const handleCreateFolder = (e: any) => {
-    const number: number = 1;
     const path: string = e + FileName2 + "/";
     const data = {
       createPath: path,
-      algorithmId: number,
+      algorithmId: setting.probno,
     };
-    
+
     dispatch(Create(data));
     unmount(e);
   };
   const handleCreaterootFolder = (e: any) => {
-    const number: number = 1;
     const data = {
       createPath: FileName2 + "/",
-      algorithmId: number,
+      algorithmId: setting.probno,
     };
     dispatch(Create(data));
     unmount(e);
   };
   const handleCreateFile = (e: any) => {
-    const number: number = 1;
     const path: string = e + FileName2;
     const data = {
       createPath: path,
-      algorithmId: number,
+      algorithmId: setting.probno,
     };
     dispatch(Create(data));
     unmount(e);
   };
   const handleDragNdrop = (dragkey: any, dragtitle: any, drop: any) => {
-    const number: number = 1;
     const path: string = drop + dragtitle;
-    dragNdrop({ beforePath: dragkey, afterPath: path, algorithmId: number });
+    dragNdrop({
+      beforePath: dragkey,
+      afterPath: path,
+      algorithmId: setting.prob,
+    });
   };
   const handleSelect = async (key: any) => {
-    const number: number = 1;
     if (key[key.length - 1] === "/") return;
     const data = {
       deletePathSuffix: key,
-      algorithmId: number,
+      algorithmId: setting.probno,
     };
     dispatch(getSelect(data));
   };
@@ -203,8 +193,8 @@ const File_tree = () => {
   };
 
   const handleChange = async (e: any) => {
-      FileName2 = e.target.value;
-      console.log(FileName2);
+    FileName2 = e.target.value;
+    console.log(FileName2);
   };
 
   const getContainer = () => {
