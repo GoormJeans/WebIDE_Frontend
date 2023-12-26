@@ -1,7 +1,6 @@
 import KakaoIcon from '../../assets/images/kakao_icon.png'
 import GoogleIcon from '../../assets/images/google_icon.png'
 import NaverIcon from '../../assets/images/naver_icon.png'
-import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
