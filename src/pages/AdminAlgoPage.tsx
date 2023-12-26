@@ -22,7 +22,7 @@ const AdminAlgoPage = () => {
   useEffect(() => {
     const fetchProbs = async () => {
       try {
-        const request = await axios.get('/api/algorithm');
+        const request = await axios.get('/admin/algorithm');
         setInitProbs(request.data)
         setProbs(request.data)
       } catch (error) {
@@ -38,19 +38,19 @@ const AdminAlgoPage = () => {
       setProbs(initProbs)
       //필터에 따라 prob 정리
       if (filter !== '레벨' && searchTerm !== null && searchTerm.trim().length !== 0) {
-        setProbs(initProbs.filter((element) => levels[element.level] === filter && element.name.includes(searchTerm.trim())))
+        setProbs(Object.values(initProbs).filter((element) => levels[element.level] === filter && element.name.includes(searchTerm.trim())))
         return;
       }
   
       //필터에 따라 prob 정리
       if (filter !== '레벨') {
-        setProbs(initProbs.filter((element) => levels[element.level] === filter))
+        setProbs(Object.values(initProbs).filter((element) => levels[element.level] === filter))
         return;
       }
   
       //검색어가 있는 경우 probs 필터
       if (searchTerm !== null && searchTerm.trim().length !== 0) {
-        setProbs(initProbs.filter((element) => element.name.includes(searchTerm.trim())));
+        setProbs(Object.values(initProbs).filter((element) => element.name.includes(searchTerm.trim())));
         return;
       }
   
