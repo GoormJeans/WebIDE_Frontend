@@ -84,14 +84,11 @@ const File_tree = () => {
   let FileName2 = "";
   const getfiletree: any = () => {
     dispatch(getFiletree(setting.probno));
-    //const Data = await solution(setting.Data);
-    // dispatch(setData(Data));
   };
 
   useEffect(() => {
     getContainer();
     getfiletree();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setting.fetchURL]);
   const handleDelete = (e: any) => {
