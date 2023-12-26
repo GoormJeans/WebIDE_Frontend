@@ -1,163 +1,91 @@
+export let data2 = {
+  statusCode: 200,
+  data: [
+    
+  ],
+};
 
+class Node {
+  constructor(value = "", word = "") {
+    this.key = value;
+    this.title =
+      word.charAt(word.length - 1) == "/"
+        ? word.substring(0, word.length - 1)
+        : word;
+    this.children = [];
+    this.isFolder = value.charAt(value.length - 1) === "/" ? false : true;
+  }
+}
 
-export const gData = 
-[{
-    key: '9000',
-    title: '9000',
-    isLeaf : false,
-    children: [
-      { key: '9000/asd.py', title: 'asd.py', isLeaf : true },
-      { key: '9000/as.py', title: 'as.py', isLeaf : true },
-      {
-        key: '9000/1',
-        title: '1',
-        isLeaf : false,
-        children: [
-          { key: '9000/1/asd.cpp', title: 'asd.cpp' ,isLeaf : true},
-          { key: '9000/1/awx.cpp', title: 'awx.cpp', isLeaf : true },
-          { key: '9000/1/qwe.cpp', title: 'qwe.cpp', isLeaf : true },
-        ],
-      },
-      { key: '9000/12', title: '12', isLeaf : true },
-      { key: '9000/13', title: '13', isLeaf : true },
-    ],
-  },];
-
-function isPositionPrefix(smallPos, bigPos) {
-    if (bigPos.length < smallPos.length) {
-        return false;
+class Trie {
+  constructor() {
+    this.root = new Node();
+    this.output = "";
+  }
+  insert(line) {
+    let currentNode = this.root;
+    const words = line.split("/");
+    words.shift();
+    words.shift();
+    for (let i = 0; i < words.length - 1; i++) words[i] = words[i] + "/";
+    if (line[line.length - 1] === "/") words[words.length - 1] = undefined;
+    for (let i=0;i< words.length;i++) {
+      const word = words[i];
+      if (word == undefined) continue;
+      if (!currentNode.children[word]) {
+        currentNode.children[word] = new Node(currentNode.key + word, word);
+      }
+      currentNode = currentNode.children[word];
+      if(currentNode.children.length >= 1)
+        currentNode.isLeaf = true;
     }
-    // attention: "0-0-1" "0-0-10"
-    if (bigPos.length > smallPos.length && bigPos.charAt(smallPos.length) !== '-') {
-        return false;
+  }
+  makeOutputForm(length, curNode) {
+    let curNode1 = [];
+    if (length === 0) {
+      curNode = this.root;
+      for (const child of Object.keys(curNode.children).sort()) {
+        curNode1.push(this.makeOutputForm(length + 1, curNode.children[child]));
+      }
+    } else {
+      curNode1 = {
+        key: curNode.key,
+        title: curNode.title,
+        isLeaf: curNode.isLeaf,
+        isFolder : curNode.isFolder,
+        children: [],
+      };
+      for (const child of Object.keys(curNode.children).sort()) {
+        curNode1.children.push(
+          this.makeOutputForm(length + 1, curNode.children[child])
+        );
+      }
     }
-    return bigPos.substr(0, smallPos.length) === smallPos;
+    return curNode1;
+  }
+  print() {
+    return this.makeOutputForm(0);
+  }
 }
-// console.log(isPositionPrefix("0-1", "0-10-1"));
 
-// arr.length === 628, use time: ~20ms
-export function filterParentPosition(arr) {
-    const levelObj = {};
-    arr.forEach(item => {
-        const posLen = item.split('-').length;
-        if (!levelObj[posLen]) {
-            levelObj[posLen] = [];
-        }
-        levelObj[posLen].push(item);
-    });
-    const levelArr = Object.keys(levelObj).sort();
-    for (let i = 0; i < levelArr.length; i += 1) {
-        if (levelArr[i + 1]) {
-            levelObj[levelArr[i]].forEach(ii => {
-                for (let j = i + 1; j < levelArr.length; j += 1) {
-                    levelObj[levelArr[j]].forEach((_i, index) => {
-                        if (isPositionPrefix(ii, _i)) {
-                            levelObj[levelArr[j]][index] = null;
-                        }
-                    });
-                    levelObj[levelArr[j]] = levelObj[levelArr[j]].filter(p => p);
-                }
-            });
-        }
+export const solution = (data1) => {
+  if (data1 == undefined) {
+    const trie = new Trie();
+    const loop = data2.data.length;
+    for (let i = 0; i < loop; i++) {
+      trie.insert(data2.data[i].path);
     }
-    let nArr = [];
-    levelArr.forEach(i => {
-        nArr = nArr.concat(levelObj[i]);
-    });
-    return nArr;
-}
-// console.log(filterParentPosition(
-//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
-// ));
+    const asd = trie.print();
+    return asd;
+  }
+  const trie = new Trie();
+  console.log(data1);
+  const loop = data1.data.length;
+  for (let i = 0; i < loop; i++) {
+    trie.insert(data1.data[i].path);
+  }
+  const asd = trie.print();
+  return asd;
+};
 
-function loopData(data, callback) {
-    const loop = (d, level = 0) => {
-        d.forEach((item, index) => {
-            const pos = `${level}-${index}`;
-            if (item.children) {
-                loop(item.children, pos);
-            }
-            callback(item, index, pos);
-        });
-    };
-    loop(data);
-}
-
-function spl(str) {
-    return str.split('-');
-}
-function splitLen(str) {
-    return str.split('-').length;
-}
-
-export function getFilterExpandedKeys(data, expandedKeys) {
-    const expandedPosArr = [];
-    loopData(data, (item, index, pos) => {
-        if (expandedKeys.indexOf(item.key) > -1) {
-            expandedPosArr.push(pos);
-        }
-    });
-    const filterExpandedKeys = [];
-    loopData(data, (item, index, pos) => {
-        expandedPosArr.forEach(p => {
-            if (
-                ((splitLen(pos) < splitLen(p) && p.indexOf(pos) === 0) || pos === p) &&
-                filterExpandedKeys.indexOf(item.key) === -1
-            ) {
-                filterExpandedKeys.push(item.key);
-            }
-        });
-    });
-    return filterExpandedKeys;
-}
-
-function isSibling(pos, pos1) {
-    pos.pop();
-    pos1.pop();
-    return pos.join(',') === pos1.join(',');
-}
-
-export function getRadioSelectKeys(data, selectedKeys, key) {
-    const res = [];
-    const pkObjArr = [];
-    const selPkObjArr = [];
-    loopData(data, (item, index, pos) => {
-        if (selectedKeys.indexOf(item.key) > -1) {
-            pkObjArr.push([pos, item.key]);
-        }
-        if (key && key === item.key) {
-            selPkObjArr.push(pos, item.key);
-        }
-    });
-    const lenObj = {};
-    const getPosKey = (pos, k) => {
-        const posLen = splitLen(pos);
-        if (!lenObj[posLen]) {
-            lenObj[posLen] = [[pos, k]];
-        } else {
-            lenObj[posLen].forEach((pkArr, i) => {
-                if (isSibling(spl(pkArr[0]), spl(pos))) {
-                    // 后来覆盖前者
-                    lenObj[posLen][i] = [pos, k];
-                } else if (spl(pkArr[0]) !== spl(pos)) {
-                    lenObj[posLen].push([pos, k]);
-                }
-            });
-        }
-    };
-    pkObjArr.forEach(pk => {
-        getPosKey(pk[0], pk[1]);
-    });
-    if (key) {
-        getPosKey(selPkObjArr[0], selPkObjArr[1]);
-    }
-
-    Object.keys(lenObj).forEach(item => {
-        lenObj[item].forEach(i => {
-            if (res.indexOf(i[1]) === -1) {
-                res.push(i[1]);
-            }
-        });
-    });
-    return res;
-}
+export const gData = solution(data2);
