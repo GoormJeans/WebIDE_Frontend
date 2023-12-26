@@ -27,7 +27,7 @@ const LoginForm = () => {
     try {
       const response = await axios.post(`https://eb.goojeans-server.com/login`, { email, password });
       console.log(response.data)
-      if (response.data.statusCode === 200) {
+      if (response.data.status === 200) {
         const AccessToken = response.data.data[0].message;
         localStorage.setItem('AccessToken', AccessToken);
         console.log('Login success',);
