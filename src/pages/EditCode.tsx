@@ -17,11 +17,6 @@ const EditCode = () => {
     const AlertSameCode = () => {
         alert("이미 동일한 코드로 제출한 적이 있습니다");
     }
-    // useEffect(()=>{
-    //     console.log(FileTree.fileExtension);
-    //     dispatch(setlang_c(FileTree.fileExtension));
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // },[FileTree.filePath]);
     const Submit = (sourceCode : string) =>{
         const Data = {
             algorithmId : FileTree.probno,
@@ -30,7 +25,8 @@ const EditCode = () => {
             fileExtension : FileTree.fileExtension,
             testCase : "",
         };
-        console.log(execute(Data));
+        console.log(Data);
+        alert(execute(Data));
     }
     const handleSumit = () => {
 
