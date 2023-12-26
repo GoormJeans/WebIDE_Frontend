@@ -35,8 +35,8 @@ export const ChangePassword = () => {
             'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
           },
         });
-      if (response.data.statusCode !== 200) {
-        console.error(`Change password failed[${response.data.statusCode}]: ${response.data.error}`);
+      if (response.data.status !== 200) {
+        console.error(`Change password failed[${response.data.status}]: ${response.data.error}`);
         return;
       }
       else {
