@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { InputTagProps } from '../../types/Input.type';
 
-const SignUpInputTag: React.FC<InputTagProps> = ({ inputType, value, onChange, isErrored }) => {
+const SignUpInputTag: React.FC<InputTagProps> = ({ inputType, value, onChange, isErrored, disabled }) => {
   const inputClassName = ` bg-slate-300 px-5 py-3 w-72 rounded-xl shadow-xl border-2 ${isErrored ? 'border-rose-500' : ''} `;
   return (
     <>
@@ -13,6 +13,7 @@ const SignUpInputTag: React.FC<InputTagProps> = ({ inputType, value, onChange, i
         placeholder={inputType.placeholder}
         value={value}
         onChange={onChange}
+        disabled={disabled}
       />
     </>
   )

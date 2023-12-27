@@ -24,7 +24,6 @@ export const DeleteAccount = () => {
   }
 
   const handleConfirmDelete = async () => {
-    setIsDeleteModalOpen(false);
     await handleDeleteAccount();
   };
 
@@ -32,7 +31,7 @@ export const DeleteAccount = () => {
     <div className='mx-5 my-5 px-5 py-5 rounded-3xl bg-nav-color shadow-xl'>
       <span className=" text-3xl">Delete Account</span>
       <div className='flex items-center justify-center'>
-        <button className=" bg-red-500 px-5 py-3 mt-5 w-96 rounded-lg shadow-xl hover:opacity-75 active:opacity-30" onClick={handleDeleteAccount}>Delete Account
+        <button className=" bg-red-500 px-5 py-3 mt-5 w-96 rounded-lg shadow-xl hover:opacity-75 active:opacity-30" onClick={()=>{setIsDeleteModalOpen(true)}}>Delete Account
         </button>
       </div>
       <Modal isOpen={isDeleteModalOpen} handleClose={() => setIsDeleteModalOpen(false)}>

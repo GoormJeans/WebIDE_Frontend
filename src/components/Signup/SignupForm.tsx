@@ -25,9 +25,8 @@ const SignupForm = () => {
 
   const navi = useNavigate();
 
-  const handleRegister =  () => {
+  const handleRegister = async() => {
     userRegister(email, password, nickname, blog, city, terms, setIsSuccessModalOpen, setIsFailModalOpen, setErrorMsg);
-
   };
 
   return (
