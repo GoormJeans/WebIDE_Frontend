@@ -66,7 +66,7 @@ export const EditMyInfo = () => {
       <Modal isOpen={isSaveModalOpen} handleClose={() => { setIsSaveModalOpen(false); navi('/mypage') }}>
         <span className='flex text-xl'>수정 완료✅</span>
         <p className='pb-10'>정보 수정이 완료되었습니다.</p>
-        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => { setIsSaveModalOpen(false); navi('/mypage') }}>닫기</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center hover:opacity-75 active:opacity-35' onClick={() => { setIsSaveModalOpen(false); navi('/mypage') }}>닫기</p>
       </Modal>
     </div>
   )
