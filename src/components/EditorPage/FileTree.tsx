@@ -148,8 +148,6 @@ const File_tree = () => {
       algorithmId: setting.probno,
       sourceCodePath: key,
     }));
-    dispatch(setValue_c(setting.sourceCode));
-    dispatch(setsave());
   };
 
   const onDragStart = (info: any) => {
