@@ -10,4 +10,5 @@ export type InputTagProps = {
   defaultValue?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isErrored: boolean;
+  disabled?: boolean;
 };
