@@ -53,7 +53,7 @@ function App() {
           <Route path="mypage/edit" element={<PrivateRoute><EditUserInfo /></PrivateRoute>} />
           <Route path="detail" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
           <Route path="settings" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
-          <Route path="/*" element={<NotFoundPage />} />
+          <Route path="/*" element={<PrivateRoute><NotFoundPage /></PrivateRoute>} />
 
           <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>} >
             <Route index element={<PrivateRoute><AdminPage /></PrivateRoute>} />
