@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import FadeIn from '../FadeIn'
 import SignUpInputTag from './SignUpInputTag';
 import Modal from '../Modal';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
 import { OauthSignUpApi } from '../../api/api';
