@@ -215,7 +215,7 @@ export const submit = createAsyncThunk("post/submit", async (data: any) => {
       filePathSuffix : data.filePathSuffix,
       fileExtension: data.fileExtension,
     };
-    console.log(data);
+    console.log(postdata);
     const resp = await instanceJSON.post(requests.submit, JSON.stringify(postdata));
     return resp;
   } catch (e) {
