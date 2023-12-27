@@ -13,10 +13,12 @@ import {
   setSubmit,
   setProbno,
 } from "../api/FileTree";
+import Modal from "../components/Modal";
 const EditCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
+  const [result, setresult] = useState(undefined);
   const AlertSameCode = () => {
     alert("이미 동일한 코드로 제출한 적이 있습니다");
   };
@@ -34,7 +36,7 @@ const EditCode = () => {
       fileExtension: hardcoding[setting.fileExtension],
     };
     dispatch(submit(Data));
-    console.log(setting.result);
+    setresult(setting.result);
   };
   useEffect(()=>{
     const probid = localStorage.getItem('id');
@@ -71,6 +73,7 @@ const EditCode = () => {
 
   //채팅 페이지 보이게하기용
   const [visible, setVisible] = useState(true);
+
 
   return (
     <>
@@ -114,6 +117,11 @@ const EditCode = () => {
           {/* 채팅 페이지 보이게하기 */}
           <MessagePanel />
         </div>
+        <Modal isOpen={result !== undefined} handleClose={() => { setresult(undefined); } }>
+          {
+            <p>{result}</p>
+          }
+        </Modal>
       </div>
     </>
   );
