@@ -18,7 +18,7 @@ const AlgoProbs: React.FC<{ prob: AdminAlgo }> = ({ prob }) => {
         {prob.algorithmId}
         <p className=" ml-3">{prob.algorithmName}</p>
       </div>
-      <p className="">{prob.level}</p>
+      <p>{prob.tag !== '태그' && (prob.tag + ' - ')}Lv.{prob.level}</p>
     </div>
   )
 }

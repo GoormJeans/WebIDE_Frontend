@@ -70,20 +70,29 @@ const AddAlgoPage = () => {
   const handleSubmit = (e: any) => {
 
     e.preventDefault();
-    // 태그 제대로 선택안하면 경고
+
+    if (name.length === 0) {
+      alert('문제 제목을 입력하세요.');
+      return;
+    }
+
     if (level === '레벨') {
-      alert('레벨을 선택하세요');
+      alert('레벨을 선택하세요.');
       return;
     }
 
     if (input.length === 0 && output.length === 0) {
-      alert('테스트케이스를 입력하세요.');
+      alert('테스트 케이스를 1개 이상 입력하세요.');
+      return;
+    }
+
+    if (input.filter(x => x.length === 0).length + output.filter(x => x.length === 0).length > 0) {
+      alert('테스트 케이스는 전부 입력해야합니다.');
       return;
     }
 
     const updateProb = async () => {
       try {
-
         if (!isNaN(parseInt(param.id!))) { //문제 수정
           const response = await axios.patch(`/admin/algorithm/${param.id}`, {
             algorithmName: name,
