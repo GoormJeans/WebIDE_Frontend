@@ -138,6 +138,7 @@ const File_tree = () => {
       afterPath: path,
       algorithmId: setting.prob,
     };
+    console.log(dragndrop);
     dispatch(dragNdrop(dragndrop));
   };
   const handleSelect = async (key: any) => {
