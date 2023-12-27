@@ -75,7 +75,7 @@ const EditCode = () => {
 
   //채팅 페이지 보이게하기용
   const [visible, setVisible] = useState(true);
-
+  const [visible2, setVisible2] = useState(true);
 
   return (
     <>
@@ -96,6 +96,14 @@ const EditCode = () => {
           >
             Chat
           </button>
+          <button
+            className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out"
+            onClick={() => {
+              setVisible(!visible2);
+            }}
+          >
+            execute
+          </button>
           <div className="bg-black ml-1 mr-1"></div>
           <button
             className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold mt-1 mb-1 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out"
@@ -114,6 +122,14 @@ const EditCode = () => {
         <div
           className={` fixed transition-all duration-500 top-8 rounded-xl ${
             visible ? "right-[-700px]" : "right-1"
+          }`}
+        >
+          {/* 채팅 페이지 보이게하기 */}
+          <MessagePanel />
+        </div>
+        <div
+          className={` fixed transition-all duration-500 top-8 rounded-xl ${
+            visible2 ? "right-[-700px]" : "right-1"
           }`}
         >
           {/* 채팅 페이지 보이게하기 */}
