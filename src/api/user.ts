@@ -27,7 +27,7 @@ const userSlice = createSlice({
       state.bioValue = bio;
       state.isAdminValue = isAdmin;
     },
-    // 로그아웃 시
+    
     logoutSuccess: (state, action) => {
       state.nicknameValue = '';
       state.cityValue = '';
@@ -35,7 +35,7 @@ const userSlice = createSlice({
       state.bioValue = '';
       state.isAdminValue = false;
     },
-    // 회원가입 시
+    
     setEmailValue: (state, action) => {
       state.emailValue = action.payload;
     },
@@ -54,6 +54,9 @@ const userSlice = createSlice({
     setBioValue: (state, action) => {
       state.bioValue = action.payload;
     },
+    setIsAdminValue: (state, action) => {
+      state.isAdminValue = action.payload;
+    },
   },
 });
 
@@ -66,6 +69,7 @@ export const {
   setNicknameValue,
   setAddressValue,
   setBioValue,
+  setIsAdminValue,
 } = userSlice.actions;
 
 export default userSlice.reducer;

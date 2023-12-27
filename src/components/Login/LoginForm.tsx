@@ -3,7 +3,7 @@ import GoogleIcon from '../../assets/images/google_icon.png'
 import NaverIcon from '../../assets/images/naver_icon.png'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { userLogin } from '../../api/api';
 import Modal from '../Modal';
 
@@ -11,9 +11,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navi = useNavigate();
-  const location = useLocation();
   const isLoginDisabled: boolean = !email || !password;
-  const { from } = location.state || { from: { pathname: '/' } }
   const [isLoginModal, setIsLoginModal] = useState(false);
 
   const validateForm = () => {
@@ -33,7 +31,7 @@ const LoginForm = () => {
         const AccessToken = response.data.data[0].message;
         localStorage.setItem('AccessToken', AccessToken);
         console.log('Login success',);
-        navi(from);
+        navi('/main');
       } else {
         console.error('Login failed: unexpected status code', response.data.error);
       }
