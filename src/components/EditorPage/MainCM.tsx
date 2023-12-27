@@ -113,13 +113,12 @@ const MainCM = () => {
     dispatch(setValue_c(e));
     dispatch(setsave());
   }
-  console.log(setting.sourcecode);
   return (
     <div className='w-6/12'>
 
       <CodeMirror height='97vh' width='100%'
         extensions={[languagesel(setting.fileExtension), autocompletion({ override: [(context) => languageSpecificCompletions(setting.fileExtension, context)]})]}
-        theme={myTheme} value={setting.sourcecode}
+        theme={myTheme} value={setting.sourcode}
         onChange={(e: any, en: any) => onchange(e, en)}
         basicSetup={{
           foldGutter: true,
