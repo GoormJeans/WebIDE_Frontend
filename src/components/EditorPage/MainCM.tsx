@@ -116,6 +116,7 @@ const MainCM = (value : any) => {
   useEffect(()=>{
     if(value === undefined)
       value= "";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[value]);
   return (
     <div className='w-6/12'>
