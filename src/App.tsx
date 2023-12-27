@@ -1,5 +1,5 @@
-import React from 'react';
-import { Outlet, Route, Routes } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
 import DetailPage from './pages/DetailPage';
@@ -14,11 +14,9 @@ import Signup from './pages/Signup';
 import EditCode from './pages/EditCode';
 import EditUserInfo from './pages/EditUserInfo';
 import NotFoundPage from "./pages/NotFoundPage";
-// import { useSelector } from "react-redux";
-// import { RootState } from "./api/store";
 
 function App() {
-  // const user = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
   const ClickEvent = () => {
     const target: any = document.querySelector('#fileTreeRight');
     if (target !== null) {
@@ -44,6 +42,17 @@ function App() {
     )
   }
   window.addEventListener("click", ClickEvent);
+
+  const isLoggedIn = () => {
+    const token = localStorage.getItem('AccessToken');
+    return !!token;
+  }
+
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   return (
     <div className='App'>
