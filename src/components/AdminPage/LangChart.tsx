@@ -1,7 +1,7 @@
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts"
 import React, { useEffect, useState } from 'react'
 
-const LangChart: React.FC<{algos: any}> = ({algos}) => {
+const LangChart: React.FC<{ counts: any }> = ({ counts }) => {
 
   // Language
   const [chartData, setChartData] = useState<{
@@ -9,10 +9,12 @@ const LangChart: React.FC<{algos: any}> = ({algos}) => {
   }[]>([]);
 
   useEffect(() => {
+    const algos = counts[0].algos[0];
+    console.log(algos);
     // Generate random data for the chart
     const generateChartData = () => {
       const languages = ['Java', 'Python3', 'C++'];
-      const values = [algos[0]?.java||0, algos[0]?.python3||0, algos[0]?.cpp||0];
+      const values = [algos?.java || 0, algos?.python3 || 0, algos?.cpp || 0];
       const sum = algos.total
       const normalizedValues = values.map((val) => Math.round((val / sum) * 100));
       const data = languages.map((language, index) => ({
@@ -25,7 +27,7 @@ const LangChart: React.FC<{algos: any}> = ({algos}) => {
     };
 
     generateChartData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="w-full">
