@@ -10,6 +10,7 @@ import { CompletionContext, autocompletion } from '@codemirror/autocomplete';
 import { createTheme } from '@uiw/codemirror-themes';
 
 import { tags as t } from '@lezer/highlight';
+import { useEffect } from 'react';
 
 const pythonCompletions = [
   { label: "print", type: "function" },
@@ -108,7 +109,11 @@ const myTheme = createTheme({
 const MainCM = () => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
-
+  useEffect(()=>{
+    dispatch(setValue_c(setting.sourceCode));
+    dispatch(setsave());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[setting.sourceCode])
   const onchange = (e: any, en: any) => {
     dispatch(setValue_c(e));
     dispatch(setsave());
