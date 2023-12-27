@@ -148,11 +148,11 @@ export const OauthSignUpApi = async (user, dispatch, setAddressValue, setBioValu
     if (response.data.status === 200) {
       dispatch(setAddressValue(response.data.data[0].city));
       dispatch(setBioValue(response.data.data[0].bio));
+      return response;
     }
     else {
       console.error(`Sign up failed[${response.data.status}]: ${response.data.error}`);
     }
-    return response;
   } catch (error) {
     console.error('Error fetching user information:', error);
   }
