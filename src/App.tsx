@@ -16,8 +16,12 @@ import EditUserInfo from './pages/EditUserInfo';
 import NotFoundPage from "./pages/NotFoundPage";
 import PrivateRoute from './privateRoute';
 import OAuthCallbackPage from './pages/OauthSignup';
+import { useSelector } from "react-redux";
+import { RootState } from "./api/store";
 
 function App() {
+  const user = useSelector((state: RootState) => state.user);
+
   const ClickEvent = () => {
     const target: any = document.querySelector('#fileTreeRight');
     if (target !== null) {
@@ -56,17 +60,19 @@ function App() {
           <Route path="settings" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
           <Route path="/*" element={<PrivateRoute><NotFoundPage /></PrivateRoute>} />
 
-          <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>} >
+          {
+            user.isAdminValue &&
+            <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>} >
             <Route index element={<PrivateRoute><AdminPage /></PrivateRoute>} />
             <Route path="algorithm" element={<PrivateRoute><AdminAlgoPage /></PrivateRoute>} />
             <Route path="user" element={<PrivateRoute><AdminUsersPage /></PrivateRoute>} />
             <Route path="algorithm/:id" element={<PrivateRoute><AddAlgoPage /></PrivateRoute>} />
-          </Route>
+          </Route>}
         </Route>
         <Route path="editor/:id" element={<PrivateRoute><EditCode /></PrivateRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
-        <Route path="/oauth/sign-up" element={<OAuthCallbackPage/>} />
+        <Route path="/oauth/sign-up" element={<OAuthCallbackPage />} />
       </Routes>
 
     </div>
