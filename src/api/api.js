@@ -29,7 +29,6 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
       dispatch(setNicknameValue(response.data.data[0].nickname));
       dispatch(setAddressValue(response.data.data[0].city));
       dispatch(setBioValue(response.data.data[0].bio));
-      dispatch(setIsAdminValue(response.data.data[0].isAdmin));
     }
     else {
       console.error(`User Info Fetch Error[${response.data.status}]: ${response.data.error}`);
