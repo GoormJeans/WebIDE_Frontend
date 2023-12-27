@@ -118,7 +118,7 @@ const MainCM = () => {
     <div className='w-6/12'>
 
       <CodeMirror height='97vh' width='100%'
-        extensions={[languagesel(setting.now_lang), autocompletion({ override: [(context) => languageSpecificCompletions(setting.now_lang, context)]})]}
+        extensions={[languagesel(setting.fileExtension), autocompletion({ override: [(context) => languageSpecificCompletions(setting.fileExtension, context)]})]}
         theme={myTheme} value={setting.value}
         onChange={(e: any, en: any) => onchange(e, en)}
         basicSetup={{
