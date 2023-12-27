@@ -87,10 +87,9 @@ const File_tree = () => {
   const setting: any = useSelector((state: RootState) => state.FileTree);
   let FileName2 = "";
   const getfiletree: any = async () => {
-    const request = await axios.get(`/editor/algorithm/${param.id}`)
-    console.log(request.data);
-    dispatch(setProbno(request.data));
-    dispatch(getFiletree(request.data));
+    const request : any = param.id;
+    dispatch(setProbno(request));
+    dispatch(getFiletree(request));
   };
 
   useEffect(() => {
