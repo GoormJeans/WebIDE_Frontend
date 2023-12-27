@@ -4,8 +4,6 @@ import SignUpInputTag from './SignUpInputTag';
 import Modal from '../Modal';
 import { Link, useNavigate } from 'react-router-dom';
 import { userRegister } from '../../api/api';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../api/store';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +13,6 @@ const SignupForm = () => {
   const [city, setcity] = useState('');
   const [blog, setBlog] = useState('');
   const [terms, setTerms] = useState(false);
-  const userInfo = useSelector((state: RootState) => state.user);
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
@@ -42,10 +39,9 @@ const SignupForm = () => {
               placeholder: 'kimgoorm@example.com',
               label: 'Email*',
             }}
-            value={userInfo.emailValue ? userInfo.emailValue :email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             isErrored={!isEmailValid && !!email}
-            disabled={!!userInfo.emailValue}
           />
           {!isEmailValid && email && <p className=" text-rose-500">Invalid email format</p>}
           <SignUpInputTag
@@ -54,10 +50,9 @@ const SignupForm = () => {
               placeholder: 'kim goorm',
               label: 'Nickname* ',
             }}
-            value={userInfo.nicknameValue ? userInfo.nicknameValue :nickname}
+            value={nickname}
             onChange={(e) => setNickname(e.target.value)}
             isErrored={!isNicknameValid && !!nickname}
-            disabled={!!userInfo.nicknameValue}
           />
           {!isNicknameValid && nickname && <p className=" text-rose-500">Nickname must be 12 characters or less</p>}
           <SignUpInputTag

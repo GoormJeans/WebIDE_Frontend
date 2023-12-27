@@ -9,7 +9,7 @@ export interface Filetree {
   autoExpandParent: boolean;
   expandedKeys: [];
   selectedKeys: [];
-  probno: number;
+  probno: any;
   fetchUrl: string;
   isLoading: boolean;
   fileExtension: string;
@@ -31,7 +31,7 @@ const initialState: Filetree = {
   autoExpandParent: true,
   expandedKeys: [],
   selectedKeys: [],
-  probno: 1,
+  probno: undefined,
   fetchUrl: requests.fetchFiletree,
   error: "",
   fileExtension: "java",
@@ -165,6 +165,7 @@ export const FileTree = createSlice({
           state.sourcode = ' ';
           return;
         }
+        console.log(action.payload);
         state.sourcode = action.payload.data.data[0].sourceCode;
       })
       .addCase(getSelect.rejected, (state, action: any) => {
