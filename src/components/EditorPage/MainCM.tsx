@@ -10,7 +10,6 @@ import { CompletionContext, autocompletion } from '@codemirror/autocomplete';
 import { createTheme } from '@uiw/codemirror-themes';
 
 import { tags as t } from '@lezer/highlight';
-import { useEffect } from 'react';
 
 const pythonCompletions = [
   { label: "print", type: "function" },
