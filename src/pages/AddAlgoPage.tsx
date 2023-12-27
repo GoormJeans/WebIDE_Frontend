@@ -40,8 +40,8 @@ const AddAlgoPage = () => {
 
   // 테스트케이스 추가하는 방식으로 가기
   // 테스트 케이스는 무조건 배열 방식으로 전송
-  const [input, setInput] = useState<string[]>([""]);
-  const [output, setOutput] = useState<string[]>([""]);
+  const [input, setInput] = useState<string[]>([]);
+  const [output, setOutput] = useState<string[]>([]);
 
   // DB에서 probs 가져오기
   useEffect(() => {
