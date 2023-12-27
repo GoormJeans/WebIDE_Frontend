@@ -106,7 +106,7 @@ const myTheme = createTheme({
 
 
 
-const MainCM = (value : any) => {
+const MainCM = () => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
   const onchange = (e: any, en: any) => {
