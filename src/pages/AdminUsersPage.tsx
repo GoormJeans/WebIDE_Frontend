@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import UserList from "../components/AdminPage/UserList";
-import axios from "../api/axios"
+import axios from "axios"
 import SearchUser from "../components/AdminPage/SearchUser";
 
 export interface AdminUserInfo {
@@ -23,7 +23,7 @@ const AdminUsersPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const request = await axios.get('/admin/user');
+        const request = await axios.get('http://localhost:3003/admin/user');
         setUsers(request.data.data);
         setInitUsers(request.data.data);
       } catch (error) {
@@ -38,10 +38,10 @@ const AdminUsersPage = () => {
   useEffect(() => {
     setUsers(initUsers)
     if (searchTerm !== null && searchTerm.trim().length !== 0) {
-      setUsers(Object.values(initUsers).filter((element) => element.nickname.includes(searchTerm.trim())
-      || element.city.includes(searchTerm.trim())
-      || element.email.includes(searchTerm.trim())
-      || element.id === parseInt(searchTerm.trim())));
+      setUsers(Object.values(initUsers).filter((element) => element?.nickname?.includes(searchTerm.trim())
+      || element?.city?.includes(searchTerm.trim())
+      || element?.email?.includes(searchTerm.trim())
+      || element?.id === parseInt(searchTerm.trim())));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
