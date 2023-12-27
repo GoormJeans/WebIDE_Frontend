@@ -65,6 +65,8 @@ const EditCode = () => {
       AlertSameCode();
       return;
     }
+    if(setting.fileExtension === undefined)
+      return ;
     dispatch(setSubmit());
     if (setting.fileExtension === "cpp") Submit(setting.cpp_val);
     if (setting.fileExtension === "java") Submit(setting.java_val);
