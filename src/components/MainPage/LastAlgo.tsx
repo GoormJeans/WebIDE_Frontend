@@ -14,7 +14,7 @@ const LastAlgo: React.FC<{ prob: Algorithm }> = ({ prob }) => {
               아직 안 풀어본 문제
             </div>
             <div>
-              Lv.{prob.level} - {prob.tag}
+              Lv.{prob.level}{prob.tag !== '태그' && (' - ' + prob.tag)}
             </div>
             <div className="text-4xl ml-10 mt-5">{prob.name}</div>
           </div>
