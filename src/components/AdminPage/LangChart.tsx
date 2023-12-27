@@ -9,7 +9,7 @@ const LangChart: React.FC<{ counts: any }> = ({ counts }) => {
   }[]>([]);
 
   useEffect(() => {
-    const algos = counts[0].algos[0];
+    const algos = counts[0]?.algos[0] || [];
     console.log(algos);
     // Generate random data for the chart
     const generateChartData = () => {
@@ -28,7 +28,7 @@ const LangChart: React.FC<{ counts: any }> = ({ counts }) => {
 
     generateChartData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [counts]);
   return (
     <div className="w-full">
       <PieChart
