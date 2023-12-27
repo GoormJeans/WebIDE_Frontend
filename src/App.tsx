@@ -59,7 +59,7 @@ function App() {
           <Route path="mypage/edit" element={<PrivateRoute><EditUserInfo /></PrivateRoute>} />
           <Route path="detail" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
           <Route path="settings" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
-          <Route path="/*" element={<PrivateRoute><NotFoundPage /></PrivateRoute>} />
+          <Route path="*" element={<PrivateRoute><NotFoundPage /></PrivateRoute>} />
 
           {
             user.isAdminValue &&
