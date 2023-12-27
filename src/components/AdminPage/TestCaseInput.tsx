@@ -13,6 +13,12 @@ const TestCaseInput: React.FC<TestCaseInputType> = ({ id, input, setInput, outpu
   const [ipValue, setIpValue] = useState(input[id]);
   const [opValue, setOpValue] = useState(output[id]);
 
+  useEffect(()=>{
+    setIpValue(input[id]);
+    setOpValue(output[id])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input.length])
+
   useEffect(() => {
     input[id] = ipValue;
     setInput([...input]);
