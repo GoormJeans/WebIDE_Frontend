@@ -42,7 +42,7 @@ const NavItemList = () => {
   };
   return (
     <>
-      {user.isAdminValue &&   <NavItem path="/admin" label="Admin"/>}
+      {(user.isAdminValue === 'ADMIN') &&   <NavItem path="/admin" label="Admin"/>}
       <NavItem path="/algorithms" label="Algorithms" />
       <NavItem path="/mypage" label="Mypage" />
       <NavItem path={token ? `` : `/login`} label={token ? `Logout` : `Login`} onClick={token ? () => setIsLogoutModalOpen(true) : () => navi('/login')} />
