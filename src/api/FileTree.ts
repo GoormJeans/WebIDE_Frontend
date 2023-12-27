@@ -16,7 +16,7 @@ export interface Filetree {
   filePath: string;
   error: string;
   sourcode: string;
-  result : string;
+  result : any;
   java_val: string;
   py_val: string;
   cpp_val: string;
