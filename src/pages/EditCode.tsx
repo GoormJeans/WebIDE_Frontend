@@ -19,6 +19,7 @@ const EditCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
+  const [isModal, SetisModal] = useState<any>();
   const AlertSameCode = () => {
     alert("이미 동일한 코드로 제출한 적이 있습니다");
   };
@@ -36,6 +37,7 @@ const EditCode = () => {
       fileExtension: hardcoding[setting.fileExtension],
     };
     await dispatch(submit(Data));
+    SetisModal(true);
   };
   useEffect(()=>{
     const probid = localStorage.getItem('id');
@@ -116,8 +118,8 @@ const EditCode = () => {
           {/* 채팅 페이지 보이게하기 */}
           <MessagePanel />
         </div>
-        <Modal isOpen={setting.result !== undefined && setting.isLoading === false} handleClose={() => { dispatch(setResult()); } }>
-            <p className="pb-10">{setting.result === undefined ? '제출한 코드입니다' : setting.result}</p>
+        <Modal isOpen={isModal === true } handleClose={() => {SetisModal(!isModal) } }>
+            <p className="pb-10">제출되었습니다.</p>
         </Modal>
       </div>
     </>
