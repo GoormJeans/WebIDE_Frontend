@@ -14,6 +14,7 @@ import {
   setProbno,
 } from "../api/FileTree";
 import Modal from "../components/Modal";
+import ExecutePanel from "../components/ExecutePage/ExecutePanel";
 const EditCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -133,7 +134,7 @@ const EditCode = () => {
           }`}
         >
           {/* 채팅 페이지 보이게하기 */}
-          <MessagePanel />
+          <ExecutePanel />
         </div>
         <Modal isOpen={isModal === true } handleClose={() => {SetisModal(!isModal) } }>
             <p className="pb-10">제출되었습니다.</p>
