@@ -40,8 +40,8 @@ const AddAlgoPage = () => {
 
   // 테스트케이스 추가하는 방식으로 가기
   // 테스트 케이스는 무조건 배열 방식으로 전송
-  const [input, setInput] = useState<string[]>([]);
-  const [output, setOutput] = useState<string[]>([]);
+  const [input, setInput] = useState<string[]>([""]);
+  const [output, setOutput] = useState<string[]>([""]);
 
   // DB에서 probs 가져오기
   useEffect(() => {
@@ -56,7 +56,8 @@ const AddAlgoPage = () => {
           setTag(prob.tag);
           setInput([...prob.testcases]);
           setOutput([...prob.answers]);
-          setDescription(prob.description)
+          setDescription(prob.description);
+
         } catch (error) {
           console.log("error", error);
         }
@@ -70,12 +71,6 @@ const AddAlgoPage = () => {
 
     e.preventDefault();
     // 태그 제대로 선택안하면 경고
-    if (tag === '태그') {
-      alert('태그를 선택하세요');
-      return;
-    }
-
-    // 레벨 제대로 선택안하면 경고
     if (level === '레벨') {
       alert('레벨을 선택하세요');
       return;
@@ -137,6 +132,15 @@ const AddAlgoPage = () => {
     setOutput([...output]);
   }
 
+  const handleRemoveTC = (e: any) => {
+    e.preventDefault();
+    const id = e.target.id
+    input.splice(id, 1);
+    output.splice(id, 1);
+    setInput([...input]);
+    setOutput([...output]);
+  }
+
   return (
     <div className="w-full h-full">
       <form className="w-auto h-fit flex flex-col mx-5 p-5 whitespace-nowrap bg-nav-color shadow-xl rounded-xl mt-5" onSubmit={handleSubmit}>
@@ -162,7 +166,7 @@ const AddAlgoPage = () => {
           </div>
         </div>
         {input.length !== 0 && input.map((_, idx) =>
-          <TestCaseInput key={idx} id={idx} input={input} setInput={setInput} output={output} setOutput={setOutput} />
+          <TestCaseInput key={idx} id={idx} input={input} setInput={setInput} output={output} setOutput={setOutput} handleRemoveTC={handleRemoveTC} />
         )}
         <button onClick={handleAddTC}>+</button>
         <AlgorithmContent description={description} setDescription={setDescription} />
