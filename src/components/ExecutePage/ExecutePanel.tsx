@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
 import { execute, setTestCase } from '../../api/FileTree';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 const ExecutePanel = () => {
     const dispatch = useDispatch<AppDispatch>();
