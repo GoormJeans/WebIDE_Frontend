@@ -24,7 +24,6 @@ const UserList: React.FC<{ users: AdminUserInfo[] }> = ({ users }) => {
             id={element.id}
             nickname={element.nickname}
             email={element.email}
-            // isAdmin={element.isAdminValue}
           />)
       }
 
