@@ -120,6 +120,7 @@ const MainCM = () => {
         extensions={[languagesel(setting.fileExtension), autocompletion({ override: [(context) => languageSpecificCompletions(setting.fileExtension, context)]})]}
         theme={myTheme} value={setting.sourceCode}
         onChange={(e: any, en: any) => onchange(e, en)}
+        onUpdate={setting.sourceCode}
         basicSetup={{
           foldGutter: true,
           dropCursor: true,
