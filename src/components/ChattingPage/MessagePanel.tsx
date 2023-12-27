@@ -45,7 +45,7 @@ const MessagePanel = () => {
     let accessToken = localStorage.getItem('AccessToken');
     let str = 'Bearer ' + accessToken;
 
-    client.current = Stomp.client("https://eb.goojeans-server.com/ws/chat")
+    client.current = Stomp.client("wss://eb.goojeans-server.com/ws/chat")
     setMessages([]);
     client.current.connect(
       { Authorization: str, },
