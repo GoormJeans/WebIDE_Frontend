@@ -4,7 +4,6 @@ import MessageHeader from "./MessageHeader";
 import MessageComponent from "./MessageComponent";
 import { Message } from "../../types/Message.type";
 import { CompatClient, Stomp } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
 import axios from "../../api/axios";
 import { useSelector } from "react-redux";
@@ -46,11 +45,7 @@ const MessagePanel = () => {
     let accessToken = localStorage.getItem('AccessToken');
     let str = 'Bearer ' + accessToken;
 
-    client.current = Stomp.over(() => {
-      // 로컬주소
-      const sock = new SockJS("https://eb.goojeans-server.com/ws/chat");
-      return sock;
-    })
+    client.current = Stomp.client("wss://eb.goojeans-server.com/ws/chat")
     setMessages([]);
     client.current.connect(
       { Authorization: str, },
