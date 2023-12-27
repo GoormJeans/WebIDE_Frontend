@@ -116,7 +116,7 @@ const EditCode = () => {
           {/* 채팅 페이지 보이게하기 */}
           <MessagePanel />
         </div>
-        <Modal isOpen={setting.result !== undefined} handleClose={() => { dispatch(setResult()); } }>
+        <Modal isOpen={setting.result !== undefined && setting.isLoading === false} handleClose={() => { dispatch(setResult()); } }>
             <p className="pb-10">{setting.result === undefined ? '제출한 코드입니다' : setting.result}</p>
         </Modal>
       </div>
