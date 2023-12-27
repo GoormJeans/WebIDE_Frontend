@@ -48,14 +48,14 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-        <Route element={<Layout />}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="algorithms" element={<DetailPage />} />
           <Route path="mypage" element={<MyPage />} />
           <Route path="mypage/edit" element={<EditUserInfo />} />
           <Route path="detail" element={<DetailPage />} />
           <Route path="settings" element={<DetailPage />} />
-          <Route path="/*" element={<NotFoundPage />} />
+          <Route path="" element={<NotFoundPage />} />
 
           <Route path="admin" element={<AdminLayout />} >
             <Route index element={<AdminPage />} />
