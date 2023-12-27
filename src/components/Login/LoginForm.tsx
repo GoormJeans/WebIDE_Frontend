@@ -80,7 +80,7 @@ const LoginForm = () => {
       <Modal isOpen={isLoginModal} handleClose={() => setIsLoginModal(false)}>
         <span className='flex text-xl'>로그인 실패⚠️</span>
         <p className='pb-10'>이메일 또는 비밀번호가 틀렸습니다.</p>
-        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => setIsLoginModal(false)}>닫기</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center hover:opacity-75 active:opacity-35' onClick={() => setIsLoginModal(false)}>닫기</p>
       </Modal>
     </div>
   )
