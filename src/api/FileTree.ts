@@ -202,7 +202,7 @@ export const execute = createAsyncThunk("post/execute", async (data: any) => {
   }
 });
 const removeNewLines = (code : string) => {
-  return code.replace(/\n/g, ''); // Removes all newline characters
+  return code.replace(/\r?\n|\r/g, '');
 }
 export const submit = createAsyncThunk("post/submit", async (data: any) => {
   try {
