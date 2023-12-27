@@ -33,7 +33,7 @@ const EditCode = () => {
       fileExtension: hardcoding[setting.fileExtension],
     };
     dispatch(submit(Data));
-    alert(setting.result);
+    console.log(setting.result);
   };
   const handleSumit = () => {
     if (
