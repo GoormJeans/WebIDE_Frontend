@@ -14,9 +14,9 @@ import Signup from './pages/Signup';
 import EditCode from './pages/EditCode';
 import EditUserInfo from './pages/EditUserInfo';
 import NotFoundPage from "./pages/NotFoundPage";
+import PrivateRoute from './privateRoute';
 
 function App() {
-  const navigate = useNavigate();
   const ClickEvent = () => {
     const target: any = document.querySelector('#fileTreeRight');
     if (target !== null) {
@@ -43,37 +43,26 @@ function App() {
   }
   window.addEventListener("click", ClickEvent);
 
-  const isLoggedIn = () => {
-    const token = localStorage.getItem('AccessToken');
-    return !!token;
-  }
-
-  useEffect(() => {
-    if (!isLoggedIn()) {
-      navigate('/login');
-    }
-  }, [navigate]);
-
   return (
     <div className='App'>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="main" element={<MainPage />} />
-          <Route path="algorithms" element={<DetailPage />} />
-          <Route path="mypage" element={<MyPage />} />
-          <Route path="mypage/edit" element={<EditUserInfo />} />
-          <Route path="detail" element={<DetailPage />} />
-          <Route path="settings" element={<DetailPage />} />
+          <Route path="main" element={<PrivateRoute><MainPage /></PrivateRoute>} />
+          <Route path="algorithms" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
+          <Route path="mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
+          <Route path="mypage/edit" element={<PrivateRoute><EditUserInfo /></PrivateRoute>} />
+          <Route path="detail" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
+          <Route path="settings" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
           <Route path="/*" element={<NotFoundPage />} />
 
-          <Route path="admin" element={<AdminLayout />} >
-            <Route index element={<AdminPage />} />
-            <Route path="algorithm" element={<AdminAlgoPage />} />
-            <Route path="user" element={<AdminUsersPage />} />
-            <Route path="algorithm/:id" element={<AddAlgoPage />} />
+          <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>} >
+            <Route index element={<PrivateRoute><AdminPage /></PrivateRoute>} />
+            <Route path="algorithm" element={<PrivateRoute><AdminAlgoPage /></PrivateRoute>} />
+            <Route path="user" element={<PrivateRoute><AdminUsersPage /></PrivateRoute>} />
+            <Route path="algorithm/:id" element={<PrivateRoute><AddAlgoPage /></PrivateRoute>} />
           </Route>
         </Route>
-        <Route path="editor/:id" element={<EditCode />} />
+        <Route path="editor/:id" element={<PrivateRoute><EditCode /></PrivateRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
       </Routes>
