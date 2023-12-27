@@ -138,6 +138,7 @@ const EditCode = () => {
         </div>
         <Modal isOpen={isModal === true } handleClose={() => {SetisModal(!isModal) } }>
             <p className="pb-10">제출되었습니다.</p>
+            <p className="pb-10">{setting.isLoading ? '대기중입니다' : setting.result.data} </p>
         </Modal>
       </div>
     </>
