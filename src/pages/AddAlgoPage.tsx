@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
 import AlgorithmContent from "../components/AdminPage/AlgorithmContent";
 import axios from "../api/axios"
-import { Algorithm } from "../types/Algorithm.type";
 import TestCaseInput from "../components/AdminPage/TestCaseInput";
+import { AdminAlgo } from "./AdminAlgoPage";
 
-interface AdminAlgorithm extends Algorithm {
+interface AdminAlgorithm extends AdminAlgo {
   answers: string[];
   testcases: string[];
   description: string;
@@ -49,9 +49,10 @@ const AddAlgoPage = () => {
       const fetchProb = async () => {
         try {
           const request = await axios.get(`/admin/algorithm/${param.id}`); //id에 해당하는 문제의 정보 불러오는 코드
+          console.log(request.data.data[0]);
           const prob: AdminAlgorithm = request.data.data[0];
           setLevel(levels[prob.level]);
-          setName(prob.name);
+          setName(prob.algorithmName);
           setTag(prob.tag);
           setInput([...prob.testcases]);
           setOutput([...prob.answers]);

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import UserChart from "../components/AdminPage/UserChart";
 import LangChart from "../components/AdminPage/LangChart";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 
 const AdminPage = () => {
 
@@ -14,7 +14,7 @@ const AdminPage = () => {
     
     const getAdminDashboard = async ()=>{
       try {
-        const request = await axios.get('http://localhost:3003/admin');
+        const request = await axios.get('/admin');
         console.log(request.data.data);
         setCounts(request.data.data)
       } catch (error) {
