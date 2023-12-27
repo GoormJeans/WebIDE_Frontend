@@ -3,18 +3,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import requests from "./EditfetchUrl";
 import { instance, instanceJSON, init } from "./axios";
 import { solution } from "../assets/file_tree/dataUtil";
-const langs_c: any = {
-  java: {
-    now_lang: "java",
-  },
-  py: {
-    now_lang: "py",
-  },
-  cpp: {
-    now_lang: "cpp",
-  },
-};
-
 export interface Filetree {
   Data: any;
   gData: any;
@@ -97,18 +85,7 @@ export const FileTree = createSlice({
     setValue_c: (state, action: PayloadAction<string>) => {
       state.sourcode = action.payload;
     },
-    setlang_c: (state, action: PayloadAction<string>) => {
-      if (state.fileExtension === "cpp") state.cpp_val = state.sourcode;
-      if (state.fileExtension === "java") state.java_val = state.sourcode;
-      if (state.fileExtension === "py") state.py_val = state.sourcode;
-
-      if (langs_c[action.payload].now_lang === "cpp")
-        state.sourcode = state.cpp_val;
-      if (langs_c[action.payload].now_lang === "java")
-        state.sourcode = state.java_val;
-      if (langs_c[action.payload].now_lang === "py") state.sourcode = state.py_val;
-      state.fileExtension = langs_c[action.payload].now_lang;
-    },
+    
     setsave: (state) => {
       if (state.fileExtension === "cpp") state.cpp_val = state.sourcode;
       if (state.fileExtension === "java") state.java_val = state.sourcode;
@@ -302,7 +279,6 @@ export const {
   setSelectedKeys,
   setProbno,
   setValue_c,
-  setlang_c,
   setsave,
   setSubmit,
 } = FileTree.actions;
