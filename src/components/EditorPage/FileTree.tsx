@@ -19,8 +19,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../api/store";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-//
 const STYLE = `
 .rc-tree-child-tree {
   display: block;
