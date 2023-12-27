@@ -14,11 +14,11 @@ import Signup from './pages/Signup';
 import EditCode from './pages/EditCode';
 import EditUserInfo from './pages/EditUserInfo';
 import NotFoundPage from "./pages/NotFoundPage";
-import { useSelector } from "react-redux";
-import { RootState } from "./api/store";
+// import { useSelector } from "react-redux";
+// import { RootState } from "./api/store";
 
 function App() {
-  const user = useSelector((state: RootState) => state.user);
+  // const user = useSelector((state: RootState) => state.user);
   const ClickEvent = () => {
     const target: any = document.querySelector('#fileTreeRight');
     if (target !== null) {
