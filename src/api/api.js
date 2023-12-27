@@ -34,6 +34,7 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
     else {
       console.error(`User Info Fetch Error[${response.data.status}]: ${response.data.error}`);
     }
+    return
   } catch (error) {
     console.error('Error fetching user information:', error);
   }
