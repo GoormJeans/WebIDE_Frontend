@@ -52,6 +52,7 @@ export const updateUserInfo = async (isModified, user, dispatch, setAddressValue
             'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
           },
         });
+        console.log(response);
       if (response.data.status !== 200) {
         console.error('Error updating user information:', response.data.error);
         return;

@@ -16,15 +16,16 @@ export const EditMyInfo = () => {
 
   useEffect(() => {
     fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue);
-  }, [dispatch]);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
   const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAddressValue(e.target.value);
+    dispatch(setAddressValue(e.target.value));
     setIsModified(true);
   };
 
   const handleBioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setBioValue(e.target.value);
+    dispatch(setBioValue(e.target.value));
     setIsModified(true);
   };
 
