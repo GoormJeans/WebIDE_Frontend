@@ -9,7 +9,7 @@ export interface Filetree {
   autoExpandParent: boolean;
   expandedKeys: [];
   selectedKeys: [];
-  probno: number;
+  probno: any;
   fetchUrl: string;
   isLoading: boolean;
   fileExtension: string;
@@ -31,7 +31,7 @@ const initialState: Filetree = {
   autoExpandParent: true,
   expandedKeys: [],
   selectedKeys: [],
-  probno: 1,
+  probno: undefined,
   fetchUrl: requests.fetchFiletree,
   error: "",
   fileExtension: "java",
