@@ -14,7 +14,7 @@ const OAuthCallbackPage = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-
+      console.log("response : ", response);
       if (response.status === 200) {
         return response.data.data[0]; // 이메일과 닉네임이 포함된 사용자 정보
       }
@@ -36,6 +36,7 @@ const OAuthCallbackPage = () => {
       if (token) {
         localStorage.setItem('AccessToken', token);
         userInfo = await fetchUserInfo(token);
+        console.log("userInfo : ", userInfo);
         dispatch(setAddressValue(userInfo.data.data[0].city));
         dispatch(setBioValue(userInfo.data.data[0].bio));
       }
