@@ -53,16 +53,16 @@ export const updateUserInfo = async (isModified, user, dispatch, setAddressValue
           },
         });
         console.log(response);
-      if (response.data.status !== 200) {
-        console.error('Error updating user information:', response.data.error);
-        return;
-      }
-      else {
+      if (response.data.status === 200) {
         const updatedUserInfo = response.data.data[0];
         dispatch(setAddressValue(updatedUserInfo.address));
         dispatch(setBioValue(updatedUserInfo.blog));
         setIsSaveModalOpen(true);
         setIsModified(false);
+      }
+      else {
+        console.error('Error updating user information:', response.data.error);
+        return;
       }
     }
   } catch (error) {
