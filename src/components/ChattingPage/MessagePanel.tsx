@@ -41,6 +41,7 @@ const MessagePanel = () => {
 
   const handleConnect = () => {
     setJoin(!join);
+    console.log(chatroom);
 
     let accessToken = localStorage.getItem('AccessToken');
     let str = 'Bearer ' + accessToken;
