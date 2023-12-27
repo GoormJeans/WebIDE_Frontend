@@ -37,6 +37,7 @@ const EditCode = () => {
     };
     dispatch(submit(Data));
     setresult(setting.result);
+    console.log(setting.result);
   };
   useEffect(()=>{
     const probid = localStorage.getItem('id');
