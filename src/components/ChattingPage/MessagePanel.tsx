@@ -53,7 +53,7 @@ const MessagePanel = () => {
     })
     setMessages([]);
     client.current.connect(
-      { 'Authorization': str, },
+      { Authorization: str, },
       () => {
         client.current!.subscribe(`/topic/chat/${chatroom.id}`, function (e) {
 
