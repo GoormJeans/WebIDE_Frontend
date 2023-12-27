@@ -7,10 +7,9 @@ const UserChart: React.FC<{ counts: any }> = ({ counts }) => {
   const [userRegstrations, setUserRegstrations] = useState<number[]>([])
 
   useEffect(() => {
-    setXUserLabels(Object.keys(counts[0].usersCounts));
-    setUserRegstrations(Object.values(counts[0].usersCounts))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setXUserLabels(Object.keys(counts[0]?.usersCounts || []));
+    setUserRegstrations(Object.values(counts[0]?.usersCounts || []))
+  }, [counts])
 
   return (
     <div className="w-full h-full">
