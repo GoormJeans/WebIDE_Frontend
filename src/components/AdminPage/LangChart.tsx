@@ -10,7 +10,6 @@ const LangChart: React.FC<{ counts: any }> = ({ counts }) => {
 
   useEffect(() => {
     const algos = counts[0]?.algos[0] || [];
-    console.log(algos);
     // Generate random data for the chart
     const generateChartData = () => {
       const languages = ['Java', 'Python3', 'C++'];
@@ -21,7 +20,7 @@ const LangChart: React.FC<{ counts: any }> = ({ counts }) => {
         label: language,
         value: values[index],
         percentage: normalizedValues[index],
-      }));
+      })).filter((x)=>x.value>0);
 
       setChartData(data);
     };
@@ -30,7 +29,7 @@ const LangChart: React.FC<{ counts: any }> = ({ counts }) => {
   }, [counts]);
   return (
     <div className="w-full">
-      <PieChart
+      {chartData.length>0 ? <PieChart
         colors={['#14B8A6', '#3B82F6', '#EC4899', '#6366F1', '#F59E0B',]}
         series={[
           {
@@ -57,6 +56,11 @@ const LangChart: React.FC<{ counts: any }> = ({ counts }) => {
 
         height={200}
       />
+    :
+    <div>
+      언어 데이터가 없습니다.
+    </div>
+    }
     </div>
   )
 }

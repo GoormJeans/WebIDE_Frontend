@@ -15,7 +15,6 @@ const AdminPage = () => {
     const getAdminDashboard = async ()=>{
       try {
         const request = await axios.get('/admin');
-        console.log(request.data.data);
         setCounts(request.data.data)
       } catch (error) {
         console.log(error);
