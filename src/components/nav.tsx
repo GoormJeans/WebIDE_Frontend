@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { IconButton } from '@mui/material';
 import Modal from './Modal';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../api/store';
+import { useSelector } from 'react-redux';
+import { RootState } from '../api/store';
 
 interface NavItemProps {
   path: string;
@@ -14,7 +14,6 @@ interface NavItemProps {
 
 const NavItem: React.FC<NavItemProps> = ({ path, label, onClick }) => {
   const navigate = useNavigate();
-
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -33,7 +32,7 @@ const NavItem: React.FC<NavItemProps> = ({ path, label, onClick }) => {
 
 const NavItemList = () => {
   const token = localStorage.getItem('AccessToken');
-  // const user = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.user);
   const navi = useNavigate();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const Logout = () => {
@@ -43,7 +42,8 @@ const NavItemList = () => {
   };
   return (
     <>
-      <NavItem path="/admin" label="Admin"/>
+
+      {(user.isAdminValue === 'ADMIN') &&   <NavItem path="/admin" label="Admin"/>}
       <NavItem path="/algorithms" label="Algorithms" />
       <NavItem path="/mypage" label="Mypage" />
       <NavItem path={token ? `` : `/login`} label={token ? `Logout` : `Login`} onClick={token ? () => setIsLogoutModalOpen(true) : () => navi('/login')} />

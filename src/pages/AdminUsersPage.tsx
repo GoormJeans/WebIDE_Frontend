@@ -38,10 +38,10 @@ const AdminUsersPage = () => {
   useEffect(() => {
     setUsers(initUsers)
     if (searchTerm !== null && searchTerm.trim().length !== 0) {
-      setUsers(Object.values(initUsers).filter((element) => element.nickname.includes(searchTerm.trim())
-      || element.city.includes(searchTerm.trim())
-      || element.email.includes(searchTerm.trim())
-      || element.id === parseInt(searchTerm.trim())));
+      setUsers(Object.values(initUsers).filter((element) => element?.nickname?.includes(searchTerm.trim())
+      || element?.city?.includes(searchTerm.trim())
+      || element?.email?.includes(searchTerm.trim())
+      || element?.id === parseInt(searchTerm.trim())));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

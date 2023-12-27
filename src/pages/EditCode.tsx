@@ -84,7 +84,7 @@ const EditCode = () => {
       <div className="flex flex-row bg-black">
         <div
           className="text-white w-1/12 text-1xl mt-1 mb-1  pl-1 hover:cursor-pointer "
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/main")}
         >
           JeansCode
         </div>
@@ -114,8 +114,8 @@ const EditCode = () => {
         <MainCM />
         <Description />
         <div
-          className={`w-fit h-screen bg-editor-color fixed transition-all duration-500 top-[29px] ${
-            visible ? "right-[-700px]" : "right-0"
+          className={` fixed transition-all duration-500 top-8 rounded-xl ${
+            visible ? "right-[-700px]" : "right-1"
           }`}
         >
           {/* 채팅 페이지 보이게하기 */}

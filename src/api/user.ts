@@ -9,7 +9,7 @@ const initialState: UserInfo = {
   passwordValue: '',
   confirmPasswordValue: '',
   bioValue: '',
-  isAdminValue: false,
+  isAdminValue: '',
   social_idValue: '',
 };
 
@@ -33,7 +33,7 @@ const userSlice = createSlice({
       state.cityValue = '';
       state.emailValue = '';
       state.bioValue = '';
-      state.isAdminValue = false;
+      state.isAdminValue = '';
     },
     
     setEmailValue: (state, action) => {

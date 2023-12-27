@@ -6,6 +6,6 @@ export interface UserInfo {
   passwordValue: string;
   confirmPasswordValue: string;
   bioValue: string;
-  isAdminValue: boolean;
+  isAdminValue: string;
   social_idValue: string;
 }

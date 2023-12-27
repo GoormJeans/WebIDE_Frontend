@@ -7,8 +7,11 @@ const UserChart: React.FC<{ counts: any }> = ({ counts }) => {
   const [userRegstrations, setUserRegstrations] = useState<number[]>([])
 
   useEffect(() => {
-    setXUserLabels(Object.keys(counts[0]?.usersCounts || []));
-    setUserRegstrations(Object.values(counts[0]?.usersCounts || []))
+    const label = Object.keys(counts[0]?.usersCounts || []);
+    const number: number[] = Object.values(counts[0]?.usersCounts || [])
+    setXUserLabels(label.reverse());
+    setUserRegstrations(number.reverse());
+
   }, [counts])
 
   return (

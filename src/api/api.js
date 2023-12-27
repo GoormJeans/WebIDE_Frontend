@@ -15,7 +15,7 @@ export const fetchProblemsApi = async () => {
   return response.data.data;
 }
 
-export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue) => {
+export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue) => {
   try {
     const accessToken = localStorage.getItem('AccessToken');
     const response = await axios.post(`https://eb.goojeans-server.com/api/userInfo`, {}, {
@@ -23,10 +23,17 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
         'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
       },
     });
-    dispatch(setEmailValue(response.data.data[0].email));
-    dispatch(setNicknameValue(response.data.data[0].nickname));
-    dispatch(setAddressValue(response.data.data[0].city));
-    dispatch(setBioValue(response.data.data[0].bio));
+    if (response.data.status === 200) {
+      console.log(response.data.data[0]);
+      dispatch(setEmailValue(response.data.data[0].email));
+      dispatch(setNicknameValue(response.data.data[0].nickname));
+      dispatch(setAddressValue(response.data.data[0].city));
+      dispatch(setBioValue(response.data.data[0].bio));
+      dispatch(setIsAdminValue(response.data.data[0].isAdmin));
+    }
+    else {
+      console.error(`User Info Fetch Error[${response.data.status}]: ${response.data.error}`);
+    }
   } catch (error) {
     console.error('Error fetching user information:', error);
   }
@@ -99,7 +106,7 @@ export const userLogin = async (email, password) => {
   }
 };
 
-export const changePassword= async (password) => {
+export const changePassword = async (password) => {
   try {
     const accessToken = localStorage.getItem('AccessToken');
     const response = await axios.post(
@@ -130,7 +137,7 @@ export const deleteAccountApi = async () => {
   const accessToken = localStorage.getItem('AccessToken');
   const response = await axios.get(`https://eb.goojeans-server.com/mypage/edit/unsubscribe`, {
     headers: {
-      'Authorization': `Bearer ${accessToken}`, 
+      'Authorization': `Bearer ${accessToken}`,
     },
   });
   return response;
