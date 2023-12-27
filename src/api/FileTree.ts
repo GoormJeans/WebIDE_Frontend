@@ -165,8 +165,6 @@ export const FileTree = createSlice({
           state.sourcode = "";
           return;
         }
-        console.log(action.payload);
-        console.log(action.payload.data.data[0].sourceCode);
         state.sourcode = action.payload.data.data[0].sourceCode;
       })
       .addCase(getSelect.rejected, (state, action: any) => {

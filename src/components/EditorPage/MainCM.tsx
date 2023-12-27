@@ -114,15 +114,15 @@ const MainCM = () => {
     dispatch(setsave());
   }
   useEffect(()=>{
-    onchange(setting.sourceCode,1);
+    onchange(setting.sourcecode,1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[setting.sourceCode]);
+  },[setting.sourcecode]);
   return (
     <div className='w-6/12'>
 
       <CodeMirror height='97vh' width='100%'
         extensions={[languagesel(setting.fileExtension), autocompletion({ override: [(context) => languageSpecificCompletions(setting.fileExtension, context)]})]}
-        theme={myTheme} value={setting.sourceCode}
+        theme={myTheme} value={setting.sourcecode}
         onChange={(e: any, en: any) => onchange(e, en)}
         basicSetup={{
           foldGutter: true,
