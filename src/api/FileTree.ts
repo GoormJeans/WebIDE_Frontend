@@ -16,7 +16,7 @@ export interface Filetree {
   filePath: string;
   error: string;
   sourcode: string;
-
+  result : string;
   java_val: string;
   py_val: string;
   cpp_val: string;
@@ -37,6 +37,7 @@ const initialState: Filetree = {
   fileExtension: "java",
   filePath: "",
   isLoading: false,
+  result : "",
   sourcode: '',
   /*`class Solution {
     public int solution(int[] num_list) {
@@ -173,7 +174,7 @@ export const FileTree = createSlice({
       .addCase(submit.fulfilled, (state, action) => {
         state.isLoading = false;
         if (action.payload === undefined) return undefined;
-        console.log(action.payload);
+        state.result = action.payload();
         return action.payload;
       })
       .addCase(submit.rejected, (state, action: any) => {
@@ -202,6 +203,7 @@ export const submit = createAsyncThunk("post/submit", async (data: any) => {
     const resp = await instanceJSON.post(requests.submit, JSON.stringify(data));
     return resp;
   } catch (e) {
+    console.log(e);
     return undefined;
   }
 });

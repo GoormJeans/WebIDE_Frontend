@@ -34,8 +34,8 @@ const EditCode = () => {
       filePath: setting.filePath,
       fileExtension: hardcoding[setting.fileExtension],
     };
-    console.log(Data);
-    console.log(submit(Data));
+    dispatch(submit(Data));
+    alert(setting.result);
   };
   const handleSumit = () => {
     if (
