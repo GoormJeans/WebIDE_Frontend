@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
 import CodeMirror from '@uiw/react-codemirror';
-import { setValue_c,  setsave } from '../../api/scripts_c';
+import { setValue_c,  setsave } from '../../api/FileTree';
 import { python } from '@codemirror/lang-python';
 import { java } from '@codemirror/lang-java';
 import { cpp } from '@codemirror/lang-cpp';
@@ -107,7 +107,7 @@ const myTheme = createTheme({
 
 const MainCM = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const setting: any = useSelector((state: RootState) => state.scriptsC);
+  const setting: any = useSelector((state: RootState) => state.FileTree);
 
   const onchange = (e: any, en: any) => {
     dispatch(setValue_c(e));

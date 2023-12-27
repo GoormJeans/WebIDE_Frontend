@@ -1,8 +1,7 @@
 // import { useRef } from 'react';
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../api/store";
-import { setSubmit, setlang_c } from "../api/scripts_c";
 import MainCM from "../components/EditorPage/MainCM";
 import { useNavigate } from "react-router-dom";
 import Filetree from "../components/EditorPage/FileTree";
@@ -11,32 +10,26 @@ import Description from "../components/EditorPage/Description";
 import {
   //execute,
   submit,
+  setSubmit,
 } from "../api/FileTree";
 const EditCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const setting: any = useSelector((state: RootState) => state.scriptsC);
-  const FileTree: any = useSelector((state: RootState) => state.FileTree);
+  const setting: any = useSelector((state: RootState) => state.FileTree);
   const AlertSameCode = () => {
     alert("이미 동일한 코드로 제출한 적이 있습니다");
   };
   const Submit = (sourceCode: string) => {
     const Data = {
-      problemId: FileTree.probno,
+      problemId: setting.probno,
       sourceCode: sourceCode,
       edited: true,
-      filePath: FileTree.filePath,
-      fileExtension: FileTree.fileExtension,
+      filePath: setting.filePath,
+      fileExtension: setting.fileExtension,
     };
     console.log(Data);
     console.log(submit(Data));
   };
-  useEffect(() => {
-    if (setting.fileExtension === "" || setting.fileExtension === undefined)
-      return;
-    dispatch(setlang_c(setting.fileExtension));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const handleSumit = () => {
     if (setting.now_lang === "cpp" && setting.cpp_submit === setting.cpp_val) {
       AlertSameCode();
