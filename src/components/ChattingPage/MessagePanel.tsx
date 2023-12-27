@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import axios from "../../api/axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../api/store";
+import SockJS from "sockjs-client";
 
 const MessagePanel = () => {
 
@@ -45,7 +46,11 @@ const MessagePanel = () => {
     let accessToken = localStorage.getItem('AccessToken');
     let str = 'Bearer ' + accessToken;
 
-    client.current = Stomp.client("wss://eb.goojeans-server.com/ws/chat")
+    client.current =  Stomp.over(() => {
+      // 로컬주소
+      const sock = new SockJS("https://eb.goojeans-server.com/ws/chat");
+      return sock;
+    })
     setMessages([]);
     client.current.connect(
       { Authorization: str, },
