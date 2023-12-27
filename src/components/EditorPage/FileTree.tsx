@@ -144,12 +144,10 @@ const File_tree = () => {
   };
   const handleSelect = async (key: any) => {
     if (key[key.length - 1] === "/") return;
-    dispatch(getSelect({
+    await dispatch(getSelect({
       algorithmId: setting.probno,
       sourceCodePath: key,
     }));
-    dispatch(setValue_c(setting.sourceCode));
-    dispatch(setsave());
   };
 
   const onDragStart = (info: any) => {
