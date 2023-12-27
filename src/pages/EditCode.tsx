@@ -20,12 +20,17 @@ const EditCode = () => {
     alert("이미 동일한 코드로 제출한 적이 있습니다");
   };
   const Submit = (sourceCode: string) => {
+    const hardcoding : any = {
+        java : 'JAVA',
+        py : 'PYTHON3',
+        cpp : 'CPP'
+    }
     const Data = {
       algorithmId: setting.probno,
       sourceCode: sourceCode,
       edited: true,
       filePath: setting.filePath,
-      fileExtension: setting.fileExtension,
+      fileExtension: hardcoding[setting.fileExtension],
     };
     console.log(Data);
     console.log(submit(Data));
