@@ -119,7 +119,7 @@ const MainCM = () => {
 
       <CodeMirror height='97vh' width='100%'
         extensions={[languagesel(setting.fileExtension), autocompletion({ override: [(context) => languageSpecificCompletions(setting.fileExtension, context)]})]}
-        theme={myTheme} value={setting.value}
+        theme={myTheme} value={setting.sourceCode}
         onChange={(e: any, en: any) => onchange(e, en)}
         basicSetup={{
           foldGutter: true,
