@@ -98,7 +98,7 @@ const EditCode = () => {
         <div className="w-2/12 font-mono bg-editor-color p-4">
           <Filetree />
         </div>
-        <MainCM value = {setting.sourcecode}/>
+        <MainCM />
         <Description />
         <div
           className={`w-fit h-screen bg-editor-color fixed transition-all duration-500 top-[29px] ${
