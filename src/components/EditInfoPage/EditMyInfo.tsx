@@ -17,8 +17,13 @@ export const EditMyInfo = () => {
   const navi = useNavigate();
 
   useEffect(() => {
-    fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue);
+    const fetchUser = async () => {
+      await fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue);
+    };
+  
+    fetchUser();
   }, [dispatch]);
+  
   
   const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);
@@ -33,7 +38,8 @@ export const EditMyInfo = () => {
   const handleSave = async () => {
     dispatch(setAddressValue(address));
     dispatch(setBioValue(bio));
-    updateUserInfo(isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified);
+    await updateUserInfo(isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified);
+    setIsModified(false);
   };
 
   return (
