@@ -84,9 +84,10 @@ const File_tree = () => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
   let FileName2 = "";
+  const request : any = param.id;
+  dispatch(setProbno(request));
   const getfiletree: any = async () => {
-    const request : any = param.id;
-    dispatch(setProbno(request));
+    
     dispatch(getFiletree(request));
   };
 
