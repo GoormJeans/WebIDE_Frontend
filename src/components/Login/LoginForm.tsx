@@ -4,8 +4,11 @@ import NaverIcon from '../../assets/images/naver_icon.png'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { userLogin } from '../../api/api';
+import { fetchUserInfo, userLogin } from '../../api/api';
 import Modal from '../Modal';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../api/store';
+import { setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue } from '../../api/user';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +16,7 @@ const LoginForm = () => {
   const navi = useNavigate();
   const isLoginDisabled: boolean = !email || !password;
   const [isLoginModal, setIsLoginModal] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   const validateForm = () => {
     return email.length > 0 && password.length > 0;
@@ -31,6 +35,7 @@ const LoginForm = () => {
         const AccessToken = response.data.data[0].message;
         localStorage.setItem('AccessToken', AccessToken);
         console.log('Login success',);
+        fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue);
         navi('/main');
       } else {
         console.error('Login failed: unexpected status code', response.data.error);

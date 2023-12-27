@@ -18,11 +18,14 @@ const EditCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
-  const [result, setresult] = useState<any>();
+  let result : any;
   const AlertSameCode = () => {
     alert("이미 동일한 코드로 제출한 적이 있습니다");
   };
-  const Submit = (sourceCode: string) => {
+  const setresult = (e : any) =>{
+    result = e;
+  }
+  const Submit = async (sourceCode: string) => {
     const hardcoding: any = {
       java: "JAVA",
       py: "PYTHON3",
@@ -35,9 +38,9 @@ const EditCode = () => {
       filePathSuffix : setting.filePath,
       fileExtension: hardcoding[setting.fileExtension],
     };
-    dispatch(submit(Data));
+    await dispatch(submit(Data));
     setresult(setting.result);
-    console.log(setting.result);
+    console.log(result);
   };
   useEffect(()=>{
     const probid = localStorage.getItem('id');
