@@ -23,48 +23,42 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
         'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
       },
     });
-    if (response.data.status === 200) {
-      console.log(response.data.data[0]);
-      dispatch(setEmailValue(response.data.data[0].email));
-      dispatch(setNicknameValue(response.data.data[0].nickname));
-      dispatch(setAddressValue(response.data.data[0].city));
-      dispatch(setBioValue(response.data.data[0].bio));
-    }
-    else {
-      console.error(`User Info Fetch Error[${response.data.status}]: ${response.data.error}`);
-    }
-    return
+    dispatch(setEmailValue(response.data.data[0].email));
+    dispatch(setNicknameValue(response.data.data[0].nickname));
+    dispatch(setAddressValue(response.data.data[0].city));
+    dispatch(setBioValue(response.data.data[0].bio));
+    dispatch(setIsAdminValue(response.data.data[0].isAdmin ? response.data.data[0].isAdmin : "USER"));
   } catch (error) {
     console.error('Error fetching user information:', error);
   }
 };
 
-export const updateUserInfo = async (user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified) => {
+export const updateUserInfo = async (isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified) => {
   try {
     const accessToken = localStorage.getItem('AccessToken');
-    const address = user.cityValue;
-    const bio = user.bioValue;
-    const response = await axios.post(`https://eb.goojeans-server.com/mypage/edit/blogAndcity?blog=${user.bioValue}&city=${user.cityValue}`, {
-        blog: bio,
-        city: address,
+    if (isModified) {
+      const response = await axios.post(`https://eb.goojeans-server.com/mypage/edit/blogAndcity?blog=${user.bioValue}&city=${user.cityValue}`, {
+        blog: user.bioValue,
+        city: user.cityValue,
       },
         {
           headers: {
             'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
           },
         });
-        console.log(response.data.data[0]);
-      if (response.data.status === 200) {
+        console.log(response);
+      if (response.data.status !== 200) {
+        console.error('Error updating user information:', response.data.error);
+        return;
+      }
+      else {
         const updatedUserInfo = response.data.data[0];
         dispatch(setAddressValue(updatedUserInfo.address));
         dispatch(setBioValue(updatedUserInfo.blog));
         setIsSaveModalOpen(true);
         setIsModified(false);
       }
-      else {
-        console.error('Error updating user information:', response.data.error);
-        return;
-      }
+    }
   } catch (error) {
     console.error('Error updating user information:', error);
   }
@@ -107,7 +101,7 @@ export const userLogin = async (email, password) => {
   }
 };
 
-export const changePassword = async (password) => {
+export const changePassword= async (password) => {
   try {
     const accessToken = localStorage.getItem('AccessToken');
     const response = await axios.post(
@@ -138,7 +132,7 @@ export const deleteAccountApi = async () => {
   const accessToken = localStorage.getItem('AccessToken');
   const response = await axios.get(`https://eb.goojeans-server.com/mypage/edit/unsubscribe`, {
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
+      'Authorization': `Bearer ${accessToken}`, 
     },
   });
   return response;
