@@ -12,6 +12,7 @@ import {
   submit,
   setSubmit,
   setProbno,
+  setResult,
 } from "../api/FileTree";
 import Modal from "../components/Modal";
 const EditCode = () => {
