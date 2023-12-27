@@ -114,7 +114,8 @@ const MainCM = (value : any) => {
     dispatch(setsave());
   }
   useEffect(()=>{
-    
+    if(value === undefined)
+      value= "";
   },[value]);
   return (
     <div className='w-6/12'>
