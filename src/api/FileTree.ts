@@ -162,7 +162,8 @@ export const FileTree = createSlice({
         state.isLoading = false;
         if (action.payload === undefined) return;
         console.log(action.payload);
-        state.sourcode = action.payload.data.data[0].sourcecode;
+        console.log(action.payload.data[0].sourcecode);
+        state.sourcode = action.payload.data[0].sourcecode;
       })
       .addCase(getSelect.rejected, (state, action: any) => {
         state.isLoading = false;
@@ -173,8 +174,9 @@ export const FileTree = createSlice({
       })
       .addCase(submit.fulfilled, (state, action) => {
         state.isLoading = false;
+        if(action.payload === undefined)
+          return ;
         state.result = action.payload;
-        return action.payload;
       })
       .addCase(submit.rejected, (state, action: any) => {
         state.isLoading = false;

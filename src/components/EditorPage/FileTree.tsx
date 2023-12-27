@@ -14,6 +14,8 @@ import {
   getFiletree,
   setExpandedKeys,
   setSelectedKeys,
+  setValue_c,
+  setsave,
 } from "../../api/FileTree";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../api/store";
@@ -133,11 +135,12 @@ const File_tree = () => {
   };
   const handleDragNdrop = (dragkey: any, dragtitle: any, drop: any) => {
     const path: string = drop + dragtitle;
-    dragNdrop({
+    const dragndrop ={
       beforePath: dragkey,
       afterPath: path,
-      algorithmId: setting.prob,
-    });
+      algorithmId: setting.probno,
+    };
+    dispatch(dragNdrop(dragndrop));
   };
   const handleSelect = async (key: any) => {
     if (key[key.length - 1] === "/") return;
@@ -145,6 +148,8 @@ const File_tree = () => {
       algorithmId: setting.probno,
       sourceCodePath: key,
     }));
+    dispatch(setValue_c(setting.sourceCode));
+    dispatch(setsave());
   };
 
   const onDragStart = (info: any) => {
@@ -186,6 +191,7 @@ const File_tree = () => {
     dispatch(setSelectedKeys(selectedKeys));
     if (selectedKeys.length === 0) return;
     handleSelect(selectedKeys[0]);
+
   };
 
   const onRightClick = (info: any) => {
