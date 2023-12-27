@@ -29,7 +29,7 @@ const EditCode = () => {
       algorithmId: setting.probno,
       sourceCode: sourceCode,
       edited: true,
-      filePath: setting.filePath,
+      filePathSuffix : setting.filePath,
       fileExtension: hardcoding[setting.fileExtension],
     };
     dispatch(submit(Data));
