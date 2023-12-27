@@ -115,7 +115,6 @@ const MainCM = () => {
   }
   useEffect(()=>{
     onchange(setting.sourcecode,1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[setting.sourcecode]);
   return (
     <div className='w-6/12'>
