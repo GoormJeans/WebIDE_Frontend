@@ -160,7 +160,11 @@ export const FileTree = createSlice({
       })
       .addCase(getSelect.fulfilled, (state, action) => {
         state.isLoading = false;
-        if (action.payload === undefined) return;
+        if (action.payload === undefined) 
+        {
+          state.sourcode = "";
+          return;
+        }
         console.log(action.payload);
         console.log(action.payload.data[0].sourcecode);
         state.sourcode = action.payload.data[0].sourcecode;
