@@ -106,7 +106,7 @@ const myTheme = createTheme({
 
 
 
-const MainCM = () => {
+const MainCM = (value : any) => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
   const onchange = (e: any, en: any) => {
@@ -114,15 +114,14 @@ const MainCM = () => {
     dispatch(setsave());
   }
   useEffect(()=>{
-    onchange(setting.sourcecode,1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[setting]);
+    
+  },[value]);
   return (
     <div className='w-6/12'>
 
       <CodeMirror height='97vh' width='100%'
         extensions={[languagesel(setting.fileExtension), autocompletion({ override: [(context) => languageSpecificCompletions(setting.fileExtension, context)]})]}
-        theme={myTheme} value={setting.sourcecode}
+        theme={myTheme} value={value}
         onChange={(e: any, en: any) => onchange(e, en)}
         basicSetup={{
           foldGutter: true,
