@@ -134,6 +134,7 @@ export const FileTree = createSlice({
         state.isLoading = false;
         if(action.payload === undefined)
           return undefined;
+        console.log(action.payload);
         return action.payload;
       })
       .addCase(submit.rejected, (state, action: any) => {
