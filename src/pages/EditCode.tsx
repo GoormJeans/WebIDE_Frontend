@@ -25,6 +25,8 @@ const EditCode = () => {
       py: "PYTHON3",
       cpp: "CPP",
     };
+    console.log(1);
+    console.log(hardcoding[setting.fileExtension]);
     const Data = {
       algorithmId: setting.probno,
       sourceCode: sourceCode,
