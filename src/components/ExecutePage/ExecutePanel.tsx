@@ -18,8 +18,8 @@ const ExecutePanel = () => {
             algorithmId : setting.probno,
             sourceCode : setting.sourcode,
             filePath : setting.filePath,
-            fileExtension : setting.fileExtension,
-            testCase : hardcoding[setting.fileExtension],
+            fileExtension : hardcoding[setting.fileExtension],
+            testCase : setting.test_Case,
         };
         const result = await dispatch(execute(data));
         console.log(result);
