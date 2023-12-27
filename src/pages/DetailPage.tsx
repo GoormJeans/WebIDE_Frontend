@@ -3,7 +3,8 @@ import LastAlgo from "../components/MainPage/LastAlgo"
 import Search from "../components/MainPage/Search"
 import AlgoList from "../components/MainPage/AlgoList"
 import { Algorithm } from "../types/Algorithm.type"
-import axios from "../api/axios"
+import { fetchProblemsApi } from '../api/api'
+
 
 const DetailPage = () => {
 
@@ -12,17 +13,15 @@ const DetailPage = () => {
   const [filter, setFilter] = useState('태그');
   const [searchTerm, setSearchTerm] = useState("");
   const [unsolved, setUnsolved] = useState<Algorithm[]>([]);
-  const tags : string[]  = ['태그', '그리디', '수학', 'dp'];
+  const tags : string[]  = ['Greedy', 'BFS', 'DP'];
   // DB에서 probs 가져오기
   useEffect(() => {
     const fetchProbs = async () => {
       try {
-        const request = await axios.get('/api/problems');
-        if (request.status === 200) {
-          setInitProbs(request.data)
-          setProbs(request.data)
-          setUnsolved(request.data ? request.data.filter((x: Algorithm) => x.solved) : [])
-        }
+        const data = await fetchProblemsApi();
+        setInitProbs(data);
+        setProbs(data);
+        setUnsolved(data ? data.filter((x: Algorithm) => !x.solved) : []);
       } catch (error) {
         console.log("error", error);
       }
