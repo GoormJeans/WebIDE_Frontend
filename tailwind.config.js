@@ -18,7 +18,13 @@ module.exports = {
         'mobile': {'max': '639px'},
         'tablet': {'min': '640px', 'max': '1023px'},
         'desktop': {'min': '1024px'},
-      }
+      },
+      width: {
+        'chart': '360px',
+      },
+      height: {
+        'chart': '200px',
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import axios from "../../api/axios"
-// import { UserInfo } from './../../types/UserInfo.type';
 
 const UserComponent: React.FC<{ id: number; nickname: string; email: string; }> = ({ id, nickname, email }) => {
 
@@ -8,7 +7,7 @@ const UserComponent: React.FC<{ id: number; nickname: string; email: string; }> 
 
   const handleDelete = async () => {
     try {
-      const response = axios.delete(`/api/admin/user/${id}`);
+      const response = axios.delete(`/admin/user/${id}`);
       console.log(response);
     } catch (error) {
       console.log("error", error);

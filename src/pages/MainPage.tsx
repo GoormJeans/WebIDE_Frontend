@@ -21,7 +21,7 @@ const MainPage = () => {
         const data = await fetchProblemsApi();
         setInitProbs(data);
         setProbs(data);
-        setUnsolved(data ? data.filter((x: Algorithm) => x.solved) : []);
+        setUnsolved(data ? data.filter((x: Algorithm) => !x.solved) : []);
       } catch (error) {
         console.log("error", error);
       }

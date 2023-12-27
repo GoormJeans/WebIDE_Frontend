@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { AppDispatch, RootState } from "../../api/store";
-import { setEmailValue, setNicknameValue, setAddressValue, setBioValue } from "../../api/user";
+import { setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue } from "../../api/user";
 
 const HEAD_CSS = 'pr-3 text-2xl font-medium'
 const BUNDLE_CSS = 'mt-3'
@@ -46,10 +46,16 @@ const ProfileInfo = () => {
             'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
           },
         });
-        dispatch(setEmailValue(response.data.data[0].email));
-        dispatch(setNicknameValue(response.data.data[0].nickname));
-        dispatch(setAddressValue(response.data.data[0].city));
-        dispatch(setBioValue(response.data.data[0].bio));
+        if (response.data.status !== 200) {
+          throw new Error('Invalid response status');
+        }
+        else {
+          dispatch(setEmailValue(response.data.data[0].email));
+          dispatch(setNicknameValue(response.data.data[0].nickname));
+          dispatch(setAddressValue(response.data.data[0].city));
+          dispatch(setBioValue(response.data.data[0].bio));
+          dispatch(setIsAdminValue(response.data.data[0].isAdmin));
+        }
       } catch (error) {
         console.error('Error fetching user information:', error);
       }
@@ -64,6 +70,7 @@ const ProfileInfo = () => {
         <InfoCard head="Nickname." body={userInfo.nicknameValue} />
         <InfoCard head="Add." body={userInfo.cityValue} />
         <InfoCard head="Bio." body={userInfo.bioValue} />
+        <InfoCard head="Admin." body={(userInfo.isAdminValue).toString()} />
       </div>
     </div>
   )
