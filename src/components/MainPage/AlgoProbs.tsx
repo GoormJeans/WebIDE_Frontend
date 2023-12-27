@@ -14,7 +14,7 @@ const AlgoProbs: React.FC<{ prob: Algorithm }> = ({ prob }) => {
         <p className=" w-4">{prob.solved && "O"}</p>{/* 문제 풀었으면 O로 표시 */}
         <p className=" ml-3">{prob.name}</p>
       </div>
-      <p className="">{prob.tag} - Lv.{prob.level}</p>
+      <p className="">{prob.tag !== '태그' && (prob.tag + ' - ')}Lv.{prob.level}</p>
     </div>
   )
 }

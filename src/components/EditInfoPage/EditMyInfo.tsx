@@ -19,12 +19,12 @@ export const EditMyInfo = () => {
   }, [dispatch]);
 
   const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setAddressValue(e.target.value));
+    setAddressValue(e.target.value);
     setIsModified(true);
   };
 
   const handleBioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setBioValue(e.target.value));
+    setBioValue(e.target.value);
     setIsModified(true);
   };
 
