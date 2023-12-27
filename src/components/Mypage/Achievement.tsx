@@ -49,7 +49,7 @@ const Achievement = () => {
         <p className=' text-sm font-medium '>Your achievement</p>
         <div className=' flex flex-row'>
           <div className='bg-white'>
-            {totalValue === 0 ? <p className='text-center text-2xl font-bold'>푼 문제가 없습니다.</p> : <CustomPieChart chartData={chartData} />}
+            {totalValue === 0 ? <p className='text-center text-2xl font-bold w-chart h-chart'>푼 문제가 없습니다.</p> : <CustomPieChart chartData={chartData} />}
           </div>
           {totalValue > 0 ? <CustomTable chartData={chartData} totalValue={totalValue} /> : <></>}
         </div>
