@@ -10,7 +10,10 @@ function PrivateRoute({ children }) {
   }
 
   useEffect(() => {
-    if (!isLoggedIn()) {
+    const currentPath = window.location.pathname;
+    const isExceptionPath = currentPath === '/sign-up' || currentPath === '/oauth/callback' || currentPath === '/oauth/sign-up' || currentPath === '/login';
+
+    if (!isLoggedIn() && !isExceptionPath) {
       navigate('/login');
     }
   }, [navigate]);
