@@ -21,21 +21,21 @@ const AddAlgoPage = () => {
   const [name, setName] = useState("");
   const [level, setLevel] = useState('레벨');
   const [tag, setTag] = useState('태그');
-  const [description, setDescription] = useState( 
-  '### 문제 제목\n' + 
-  "문제 제목 작성하세요\n\n" + 
+  const [description, setDescription] = useState(
+    '### 문제 제목\n' +
+    "문제 제목 작성하세요\n\n" +
     '### 문제 설명\n' +
-  '문제 설명 작성하세요\n\n' +
-  '### 제한사항\n' +
-  '-  제한사항을 작성하세요\n' +
-  '\n' +
-  '### 입출력 양식\n' +
-  '|input|output|\n' +
-  '|-|-|\n' +
-  '\n' +
-  '### 입출력 예 설명\n' +
-  '입출력 예 1\n\n' +
-  '입출력 예 2\n'
+    '문제 설명 작성하세요\n\n' +
+    '### 제한사항\n' +
+    '-  제한사항을 작성하세요\n' +
+    '\n' +
+    '### 입출력 양식\n' +
+    '|input|output|\n' +
+    '|-|-|\n' +
+    '\n' +
+    '### 입출력 예 설명\n' +
+    '입출력 예 1\n\n' +
+    '입출력 예 2\n'
   );
 
   // 테스트케이스 추가하는 방식으로 가기
@@ -99,6 +99,7 @@ const AddAlgoPage = () => {
             description: description
           });
           console.log(response.data);
+          navigate('/admin/algorithm');
         } else { //문제 추가
           const response = await axios.post('/admin/algorithm/add', {
             algorithmName: name,
@@ -109,15 +110,13 @@ const AddAlgoPage = () => {
             description: description
           });
           console.log(response.data);
+          navigate('/admin/algorithm');
         }
-
       } catch (error) {
         console.log("error", error);
       }
     }
     updateProb();
-
-    navigate('/admin/algorithm');
   }
 
   const handleDelete = async () => {
