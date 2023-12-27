@@ -39,7 +39,7 @@ const TestCaseInput: React.FC<TestCaseInputType> = ({ id, input, setInput, outpu
             <textarea className="bg-white text-sm mb-5 w-full" value={opValue} onChange={(e) => setOpValue(e.target.value)} />
           </div>
         </div>
-        <button id={id.toString()} onClick={handleRemoveTC} className="w-fit p-5 text-red-600">삭제</button>
+        <button id={id.toString()} onClick={handleRemoveTC} className="w-fit p-5 text-red-600 hover:text-red-400">삭제</button>
       </div>
     </div>
   )
