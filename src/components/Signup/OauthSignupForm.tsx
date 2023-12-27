@@ -25,7 +25,7 @@ const OauthSignupForm = () => {
     try {
       const response = await OauthSignUpApi(user, dispatch, setAddressValue, setBioValue,);
       console.log("response : ", response);
-      if (response?.data.status === 201) {
+      if (response?.data.status === 200) {
         setIsSuccessModalOpen(true);
       }
       else {

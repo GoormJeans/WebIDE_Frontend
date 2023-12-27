@@ -24,7 +24,7 @@ export const DeleteAccount = () => {
   }
 
   const handleConfirmDelete = async () => {
-    setIsDeleteModalOpen(false);
+    setIsDeleteModalOpen(true);
     await handleDeleteAccount();
   };
 
