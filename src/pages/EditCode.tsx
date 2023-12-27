@@ -18,7 +18,7 @@ const EditCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
-  const [isModal, SetisModal] = useState<any>();
+  const [isModal, SetisModal] = useState<boolean>(false);
   const AlertSameCode = () => {
     alert("이미 동일한 코드로 제출한 적이 있습니다");
   };
@@ -35,8 +35,8 @@ const EditCode = () => {
       filePathSuffix : setting.filePath,
       fileExtension: hardcoding[setting.fileExtension],
     };
-    await dispatch(submit(Data));
     SetisModal(true);
+    await dispatch(submit(Data));
   };
   useEffect(()=>{
     const probid = localStorage.getItem('id');
