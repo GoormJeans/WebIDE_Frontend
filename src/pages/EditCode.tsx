@@ -59,6 +59,7 @@ const EditCode = () => {
       AlertSameCode();
       return;
     }
+    console.log(setting.fileExtension);
     dispatch(setSubmit());
     console.log(setting.fileExtension);
     if (setting.fileExtension === "cpp") Submit(setting.cpp_val);
