@@ -201,22 +201,10 @@ export const execute = createAsyncThunk("post/execute", async (data: any) => {
     return undefined;
   }
 });
-const removeNewLines = (code : string) => {
-  return code.replace(/\r?\n|\r/g, ' ');
-}
 export const submit = createAsyncThunk("post/submit", async (data: any) => {
   try {
     init();
-    const tmp : string = removeNewLines(data.sourceCode);
-    const postdata = {
-      algorithmId: data.algorithmId,
-      sourceCode: tmp,
-      edited: true,
-      filePathSuffix : data.filePathSuffix,
-      fileExtension: data.fileExtension,
-    };
-    console.log(postdata);
-    const resp = await instanceJSON.post(requests.submit, JSON.stringify(postdata));
+    const resp = await instanceJSON.post(requests.submit, JSON.stringify(data));
     return resp;
   } catch (e) {
     console.log(e);
