@@ -60,6 +60,7 @@ const EditCode = () => {
       return;
     }
     dispatch(setSubmit());
+    console.log(setting.fileExtension);
     if (setting.fileExtension === "cpp") Submit(setting.cpp_val);
     if (setting.fileExtension === "java") Submit(setting.java_val);
     if (setting.fileExtension === "py") Submit(setting.py_val);
