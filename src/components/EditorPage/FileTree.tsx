@@ -14,6 +14,8 @@ import {
   getFiletree,
   setExpandedKeys,
   setSelectedKeys,
+  setValue_c,
+  setsave,
 } from "../../api/FileTree";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../api/store";
@@ -187,6 +189,8 @@ const File_tree = () => {
     dispatch(setSelectedKeys(selectedKeys));
     if (selectedKeys.length === 0) return;
     handleSelect(selectedKeys[0]);
+    dispatch(setValue_c(setting.sourceCode));
+    dispatch(setsave());
   };
 
   const onRightClick = (info: any) => {
