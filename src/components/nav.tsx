@@ -42,6 +42,7 @@ const NavItemList = () => {
   };
   return (
     <>
+
       {(user.isAdminValue === 'ADMIN') &&   <NavItem path="/admin" label="Admin"/>}
       <NavItem path="/algorithms" label="Algorithms" />
       <NavItem path="/mypage" label="Mypage" />
