@@ -1,36 +1,35 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import InfoEditInputTag from './InfoEditInputTag'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
-import { setAddressValue, setBioValue } from '../../api/user';
+import { setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue } from '../../api/user';
 import Modal from '../Modal';
 import { useNavigate } from 'react-router-dom';
-import { updateUserInfo } from '../../api/api';
+import { fetchUserInfo, updateUserInfo } from '../../api/api';
 
 export const EditMyInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user);
-  const [address, setAddress] = useState(user.cityValue);
-  const [bio, setBio] = useState(user.bioValue);
   const [isModified, setIsModified] = useState(false);
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const navi = useNavigate();
-  
+
+  useEffect(() => {
+    fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue);
+  }, [dispatch]);
+
   const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
+    dispatch(setAddressValue(e.target.value));
     setIsModified(true);
   };
 
   const handleBioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setBio(e.target.value);
+    dispatch(setBioValue(e.target.value));
     setIsModified(true);
   };
 
   const handleSave = async () => {
-    dispatch(setAddressValue(address));
-    dispatch(setBioValue(bio));
-    await updateUserInfo(isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified);
-    setIsModified(false);
+    updateUserInfo(isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified);
   };
 
   return (
@@ -51,13 +50,13 @@ export const EditMyInfo = () => {
         type: 'text',
         placeholder: 'Enter your address',
         label: 'address'
-      }} defaultValue={address} value={address} onChange={handleAddressChange} isErrored={false} />
+      }} defaultValue={user.cityValue} value={user.cityValue} onChange={handleAddressChange} isErrored={false} />
 
       <InfoEditInputTag inputType={{
         type: 'text',
         placeholder: 'I am a developer',
         label: 'bio'
-      }} defaultValue={bio} value={bio} onChange={handleBioChange} isErrored={false} />
+      }} defaultValue={user.bioValue} value={user.bioValue} onChange={handleBioChange} isErrored={false} />
       <div className='flex items-center justify-center'>
         <button className={` bg-second-color px-5 py-3 mt-5 w-96 rounded-lg shadow-xl hover:opacity-75 disabled:opacity-50`} onClick={handleSave}
           disabled={!isModified}
