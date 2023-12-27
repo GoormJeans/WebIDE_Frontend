@@ -148,6 +148,8 @@ const File_tree = () => {
       algorithmId: setting.probno,
       sourceCodePath: key,
     }));
+    dispatch(setValue_c(setting.sourceCode));
+    dispatch(setsave());
   };
 
   const onDragStart = (info: any) => {
@@ -189,8 +191,7 @@ const File_tree = () => {
     dispatch(setSelectedKeys(selectedKeys));
     if (selectedKeys.length === 0) return;
     handleSelect(selectedKeys[0]);
-    dispatch(setValue_c(setting.sourceCode));
-    dispatch(setsave());
+
   };
 
   const onRightClick = (info: any) => {
