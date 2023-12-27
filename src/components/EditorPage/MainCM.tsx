@@ -10,7 +10,7 @@ import { CompletionContext, autocompletion } from '@codemirror/autocomplete';
 import { createTheme } from '@uiw/codemirror-themes';
 
 import { tags as t } from '@lezer/highlight';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const pythonCompletions = [
   { label: "print", type: "function" },
@@ -109,14 +109,14 @@ const myTheme = createTheme({
 const MainCM = () => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
-  const onchange = React.useCallback((e: any, en: any) => {
+  const onchange = (e: any, en: any) => {
     console.log(e);
     dispatch(setValue_c(e));
     dispatch(setsave());
-  },[]);
-  useEffect(()=>{
-    
-  },[setting.sourcecode])
+  }
+  dispatch(setting.sourcecode);
+  dispatch(setsave());
+
   return (
     <div className='w-6/12'>
 
