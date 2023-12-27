@@ -21,7 +21,7 @@ const EditCode = () => {
   };
   const Submit = (sourceCode: string) => {
     const Data = {
-      problemId: setting.probno,
+      algorithmId: setting.probno,
       sourceCode: sourceCode,
       edited: true,
       filePath: setting.filePath,
