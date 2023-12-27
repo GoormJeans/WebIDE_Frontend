@@ -70,7 +70,6 @@ const ProfileInfo = () => {
         <InfoCard head="Nickname." body={userInfo.nicknameValue} />
         <InfoCard head="Add." body={userInfo.cityValue} />
         <InfoCard head="Bio." body={userInfo.bioValue} />
-        <InfoCard head="Admin." body={(userInfo.isAdminValue)} />
       </div>
     </div>
   )

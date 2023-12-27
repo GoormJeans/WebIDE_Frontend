@@ -44,16 +44,18 @@ const Achievement = () => {
   }, []);
 
   return (
-    <div className='circle-chart bg-white p-3 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>
-      <div className='chart-background '>
+    <div className={`circle-chart ${totalValue === 0 ? 'bg-second-color' : 'bg-white'} p-3 rounded-2xl shadow-xl sm:hidden md:block lg:block xl:block`}>
+      {totalValue === 0 ? <div className='chart-background items-center justify-center'>
+      <p className='text-center text-3xl font-bold w-chart h-chart justify-center'>푼 문제가 없습니다.</p>
+    </div> : <div className='chart-background '>
         <p className=' text-sm font-medium '>Your achievement</p>
         <div className=' flex flex-row'>
           <div className='flex bg-white items-center justify-center'>
-            {totalValue === 0 ? <p className='text-center text-2xl font-bold w-chart h-chart'>푼 문제가 없습니다.</p> : <CustomPieChart chartData={chartData} />}
+            <CustomPieChart chartData={chartData} />
           </div>
           {totalValue > 0 ? <CustomTable chartData={chartData} totalValue={totalValue} /> : <></>}
         </div>
-      </div>
+      </div>}
     </div>
   )
 }

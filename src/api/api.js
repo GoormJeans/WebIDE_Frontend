@@ -35,12 +35,11 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
 
 export const updateUserInfo = async (user, dispatch, setAddressValue, setBioValue) => {
   try {
-    const blog = user.bioValue;
-    const address = user.cityValue;
+    const { bioValue, cityValue } = user;
     const accessToken = localStorage.getItem('AccessToken');
     const response = await axios.post(`https://eb.goojeans-server.com/mypage/edit/blogAndcity?blog=${user.bioValue}&city=${user.cityValue}`, {
-      blog: blog,
-      city: address,
+      blog: bioValue,
+      city: cityValue,
     },
       {
         headers: {
