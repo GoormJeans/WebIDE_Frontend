@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { fetchProblemsApi } from '../../api/api';
-
+import CustomPieChart from './CustomPieChart';
+import CustomTable from './CustomTable';
 
 const Achievement = () => {
   const [chartData, setChartData] = useState<{
@@ -13,7 +12,7 @@ const Achievement = () => {
   useEffect(() => {
     const generateChartData = async () => {
       const response = await fetchProblemsApi();
-  
+
       const solvedProblems = response.filter((problem: { solved: any; }) => problem.solved);
 
       // 문제 데이터에서 태그를 기준으로 그룹핑합니다.
@@ -24,28 +23,25 @@ const Achievement = () => {
         acc[problem.tag].push(problem);
         return acc;
       }, {});
-  
+
       // 태그별로 문제 통계를 생성합니다.
       const tags = Object.keys(tagGroup);
       const values = tags.map(tag => tagGroup[tag].length);
-      const sum = values.reduce((acc, val) => acc + val, 0);
       const total = values.reduce((acc, val) => acc + val, 0);
       setTotalValue(total);
-  
+
       // 통계 데이터를 생성합니다.
       const data = tags.map((tag, index) => ({
         label: tag,
         value: values[index],
-        percentage: Math.round((values[index] / sum) * 100),
+        percentage: Math.round((values[index] / total) * 100),
       }));
-  
+
       setChartData(data);
     };
-  
+
     generateChartData();
   }, []);
-  
-  
 
   return (
     <div className='circle-chart bg-white p-3 rounded-2xl shadow-xl hidden md:block lg:block xl:block'>
@@ -53,56 +49,9 @@ const Achievement = () => {
         <p className=' text-sm font-medium '>Your achievement</p>
         <div className=' flex flex-row'>
           <div className='bg-white'>
-            <PieChart
-              colors={['#14B8A6', '#3B82F6', '#EC4899', '#6366F1', '#F59E0B',]}
-              series={[
-                {
-                  arcLabel: (item) => `${item.label} (${item.value})`,
-                  highlightScope: { faded: 'global', highlighted: 'item' },
-                  highlighted: { additionalRadius: 2 },
-                  data: chartData,
-                  innerRadius: 70,
-                  outerRadius: 100,
-                  paddingAngle: 3,
-                  cornerRadius: 5,
-                },
-              ]}
-              sx={{
-                backgroundColor: 'white',
-                [`& .${pieArcLabelClasses.root}`]: {
-                  fontSize: '0.7rem',
-                  fontWeight: 'bold',
-                  fontFamily: 'K2D',
-                },
-              }}
-              width={360}
-              height={200}
-            />
+            {totalValue === 0 ? <p className='text-center text-2xl font-bold'>푼 문제가 없습니다.</p> : <CustomPieChart chartData={chartData} />}
           </div>
-          <TableContainer className='bg-white hidden lg:block xl:block' sx={{ marginTop: 1, marginBottom: 1 }}>
-            <Table sx={{ backgroundColor: "white" }}>
-              <TableHead sx={{ backgroundColor: "white" }}>
-                <TableRow sx={{ borderBottom: 1, borderColor: 'grey.500' }}>
-                  <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>Category</TableCell>
-                  <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>Value</TableCell>
-                  <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold', color: "grey.500" }}>%</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {chartData.map((item, index) => (
-                  <TableRow key={index} >
-                    <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', }}>{item.label}</TableCell>
-                    <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold' }}>{item.value}</TableCell>
-                    <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold' }}>{`${item.percentage}%`}</TableCell>
-                  </TableRow>
-                ))}
-                <TableRow>
-                  <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none' }}>Total</TableCell>
-                  <TableCell sx={{ padding: '8px', backgroundColor: "white", border: 'none', fontWeight: 'bold' }}>{totalValue}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {totalValue > 0 ? <CustomTable chartData={chartData} totalValue={totalValue} /> : <></>}
         </div>
       </div>
     </div>
