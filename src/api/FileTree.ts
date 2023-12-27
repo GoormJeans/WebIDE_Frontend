@@ -38,7 +38,7 @@ const initialState: Filetree = {
   fileExtension: "java",
   filePath: "",
   isLoading: false,
-  result : "",
+  result : undefined,
   sourcode: '',
   /*`class Solution {
     public int solution(int[] num_list) {
