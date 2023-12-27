@@ -92,7 +92,7 @@ const AddAlgoPage = () => {
         if (!isNaN(parseInt(param.id!))) { //문제 수정
           const response = await axios.patch(`/admin/algorithm/${param.id}`, {
             algorithmName: name,
-            level: level,
+            level: levels.indexOf(level),
             tag: tag,
             testcases: input,
             answers: output,
@@ -102,7 +102,7 @@ const AddAlgoPage = () => {
         } else { //문제 추가
           const response = await axios.post('/admin/algorithm/add', {
             algorithmName: name,
-            level: level,
+            level: levels.indexOf(level),
             tag: tag,
             testcases: input,
             answers: output,
