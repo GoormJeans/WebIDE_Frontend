@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import React from 'react';
+import { Outlet, Route, Routes } from "react-router-dom";
 import Nav from "./components/nav";
 import MainPage from "./pages/MainPage";
 import DetailPage from './pages/DetailPage';
