@@ -89,8 +89,8 @@ const File_tree = () => {
   const getfiletree: any = async () => {
     const request = await axios.get(`/editor/algorithm/${param.id}`)
     console.log(request.data);
-    dispatch(getFiletree(request.data));
     dispatch(setProbno(request.data));
+    dispatch(getFiletree(request.data));
   };
 
   useEffect(() => {
