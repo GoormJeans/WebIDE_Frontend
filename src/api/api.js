@@ -39,20 +39,21 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
   }
 };
 
-export const updateUserInfo = async (isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified) => {
+export const updateUserInfo = async (user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified) => {
   try {
     const accessToken = localStorage.getItem('AccessToken');
-    if (isModified) {
-      const response = await axios.post(`https://eb.goojeans-server.com/mypage/edit/blogAndcity?blog=${user.bioValue}&city=${user.cityValue}`, {
-        blog: user.bioValue,
-        city: user.cityValue,
+    const address = user.cityValue;
+    const bio = user.bioValue;
+    const response = await axios.post(`https://eb.goojeans-server.com/mypage/edit/blogAndcity?blog=${user.bioValue}&city=${user.cityValue}`, {
+        blog: bio,
+        city: address,
       },
         {
           headers: {
             'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
           },
         });
-        console.log(response);
+        console.log(response.data.data[0]);
       if (response.data.status === 200) {
         const updatedUserInfo = response.data.data[0];
         dispatch(setAddressValue(updatedUserInfo.address));
@@ -64,7 +65,6 @@ export const updateUserInfo = async (isModified, user, dispatch, setAddressValue
         console.error('Error updating user information:', response.data.error);
         return;
       }
-    }
   } catch (error) {
     console.error('Error updating user information:', error);
   }

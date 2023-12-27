@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import InfoEditInputTag from './InfoEditInputTag'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
@@ -29,9 +29,14 @@ export const EditMyInfo = () => {
   const handleSave = async () => {
     dispatch(setAddressValue(address));
     dispatch(setBioValue(bio));
-    await updateUserInfo(isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified);
     setIsModified(false);
   };
+
+  useEffect(() => {
+    if (isModified) {
+      updateUserInfo(user, dispatch, setIsSaveModalOpen, setIsModified);
+    }
+  }, [isModified, user, dispatch]);
 
   return (
     <div className='mx-5 my-5 px-5 py-5 rounded-3xl bg-nav-color shadow-xl'>
