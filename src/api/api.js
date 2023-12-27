@@ -135,3 +135,25 @@ export const deleteAccountApi = async () => {
   });
   return response;
 }
+
+
+export const OauthSignUpApi = async (user, dispatch, setAddressValue, setBioValue) => {
+  try {
+    const accessToken = localStorage.getItem('AccessToken');
+    const response = await axios.post(`https://eb.goojeans-server.com/sign-up/update?blog=${user.bioValue}&city=${user.cityValue}`, {}, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
+      },
+    });
+    if (response.data.status === 200) {
+      dispatch(setAddressValue(response.data.data[0].city));
+      dispatch(setBioValue(response.data.data[0].bio));
+    }
+    else {
+      console.error(`Sign up failed[${response.data.status}]: ${response.data.error}`);
+    }
+    return response;
+  } catch (error) {
+    console.error('Error fetching user information:', error);
+  }
+};

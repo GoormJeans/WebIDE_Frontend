@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { setAddressValue, setBioValue, } from '../api/user'; // Redux 액션
+import { setEmailValue, setNicknameValue, } from '../api/user'; // Redux 액션
 import { useNavigate } from 'react-router-dom';
 
 const OAuthCallbackPage = () => {
@@ -37,17 +37,16 @@ const OAuthCallbackPage = () => {
         localStorage.setItem('AccessToken', token);
         userInfo = await fetchUserInfo(token);
         console.log("userInfo : ", userInfo);
-        dispatch(setAddressValue(userInfo.data.data[0].city));
-        dispatch(setBioValue(userInfo.data.data[0].bio));
+        dispatch(setEmailValue(userInfo.email));
+        dispatch(setNicknameValue(userInfo.nickname));
+        navi('/oauth/sign-up')
       }
-      // 원하는 페이지로 리다이렉트
-      navi('/sign-up')
     };
     handleOAuthRedirect();
   }, [navi, dispatch]);
 
   return (
-    <div>
+    <div className='flex justify-center items-center min-h-screen'>
       Loading...
     </div>
   );
