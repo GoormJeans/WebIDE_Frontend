@@ -18,7 +18,7 @@ const EditCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
-  const [result, setresult] = useState();
+  const [result, setresult] = useState<any>();
   const AlertSameCode = () => {
     alert("이미 동일한 코드로 제출한 적이 있습니다");
   };
@@ -118,7 +118,7 @@ const EditCode = () => {
           <MessagePanel />
         </div>
         <Modal isOpen={result !== undefined} handleClose={() => { setresult(undefined); } }>
-            <p className="pb-10">${`result === undefined ? '제출한 코드입니다' : result.data.data`}</p>
+            <p className="pb-10">{result === undefined ? '제출한 코드입니다' : result.data.data}</p>
         </Modal>
       </div>
     </>
