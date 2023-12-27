@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import UserList from "../components/AdminPage/UserList";
-import axios from "axios"
+import axios from "../api/axios"
 import SearchUser from "../components/AdminPage/SearchUser";
 
 export interface AdminUserInfo {
@@ -23,7 +23,7 @@ const AdminUsersPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const request = await axios.get('http://localhost:3003/admin/user');
+        const request = await axios.get('/admin/user');
         setUsers(request.data.data);
         setInitUsers(request.data.data);
       } catch (error) {
