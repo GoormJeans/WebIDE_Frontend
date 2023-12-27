@@ -14,9 +14,12 @@ import {
   getFiletree,
   setExpandedKeys,
   setSelectedKeys,
+  setProbno,
 } from "../../api/FileTree";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../api/store";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 //
 const STYLE = `
 .rc-tree-child-tree {
@@ -79,11 +82,15 @@ const getSvgIcon = (path: any, view: any, iStyle = {}) => (
 let cmContainer: any = null;
 let toolTip: any = null;
 const File_tree = () => {
+  const param = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
   let FileName2 = "";
-  const getfiletree: any = () => {
-    dispatch(getFiletree(setting.probno));
+  const getfiletree: any = async () => {
+    const request = await axios.get(`/editor/algorithm/${param.id}`)
+    console.log(request.data);
+    dispatch(getFiletree(request.data));
+    dispatch(setProbno(request.data));
   };
 
   useEffect(() => {
