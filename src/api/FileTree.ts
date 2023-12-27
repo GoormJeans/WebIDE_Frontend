@@ -23,6 +23,7 @@ export interface Filetree {
   java_submit: string;
   py_submit: string;
   cpp_submit: string;
+  test_Case : string;
 }
 
 const initialState: Filetree = {
@@ -63,6 +64,7 @@ int solution(vector<int> num_list) {
 }`*/ java_submit: "",
   py_submit: "",
   cpp_submit: "",
+  test_Case : "",
 };
 
 export const FileTree = createSlice({
@@ -98,6 +100,9 @@ export const FileTree = createSlice({
       if (state.fileExtension === "cpp") state.cpp_submit = state.sourcode;
       if (state.fileExtension === "java") state.java_submit = state.sourcode;
       if (state.fileExtension === "py") state.py_submit = state.sourcode;
+    },
+    setTestCase : (state, action: PayloadAction<string>) => {
+      state.test_Case = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -280,6 +285,7 @@ export const getFiletree = createAsyncThunk(
 );
 
 export const {
+  setTestCase,
   setData,
   setExpandedKeys,
   setSelectedKeys,
