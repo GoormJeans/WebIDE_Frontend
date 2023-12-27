@@ -110,9 +110,11 @@ const MainCM = () => {
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
   const onchange = (e: any, en: any) => {
+    console.log(e);
     dispatch(setValue_c(e));
     dispatch(setsave());
   }
+  console.log(setting);
   useEffect(()=>{
 
   },[]);
