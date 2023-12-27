@@ -13,7 +13,7 @@ const DetailPage = () => {
   const [filter, setFilter] = useState('태그');
   const [searchTerm, setSearchTerm] = useState("");
   const [unsolved, setUnsolved] = useState<Algorithm[]>([]);
-  const tags : string[]  = ['태그','Greedy', 'BFS', 'DP'];
+  const tags : string[]  = ['태그','Recursion', 'Two Pointer', 'Search', 'Backtracking', 'Sort', 'sort', 'Linked List', 'String', 'Math'];
   // DB에서 probs 가져오기
   useEffect(() => {
     const fetchProbs = async () => {
