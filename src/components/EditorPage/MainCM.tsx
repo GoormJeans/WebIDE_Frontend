@@ -10,6 +10,7 @@ import { CompletionContext, autocompletion } from '@codemirror/autocomplete';
 import { createTheme } from '@uiw/codemirror-themes';
 
 import { tags as t } from '@lezer/highlight';
+import { useEffect } from 'react';
 
 const pythonCompletions = [
   { label: "print", type: "function" },
@@ -112,7 +113,10 @@ const MainCM = () => {
     dispatch(setValue_c(e));
     dispatch(setsave());
   }
-  
+  useEffect(()=>{
+    onchange(setting.sourceCode,1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[setting.sourceCode]);
   return (
     <div className='w-6/12'>
 
@@ -120,7 +124,6 @@ const MainCM = () => {
         extensions={[languagesel(setting.fileExtension), autocompletion({ override: [(context) => languageSpecificCompletions(setting.fileExtension, context)]})]}
         theme={myTheme} value={setting.sourceCode}
         onChange={(e: any, en: any) => onchange(e, en)}
-        onUpdate={setting.sourceCode}
         basicSetup={{
           foldGutter: true,
           dropCursor: true,
