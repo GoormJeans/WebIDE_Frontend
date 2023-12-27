@@ -162,8 +162,8 @@ export const FileTree = createSlice({
         state.isLoading = false;
         if (action.payload === undefined) return;
         console.log(action.payload);
-        console.log(action.payload.data.data[0].sourcecode);
-        state.sourcode = action.payload.data.data[0].sourcecode;
+        console.log(action.payload.data[0].sourcecode);
+        state.sourcode = action.payload.data[0].sourcecode;
       })
       .addCase(getSelect.rejected, (state, action: any) => {
         state.isLoading = false;
