@@ -100,7 +100,7 @@ const EditCode = () => {
           <button
             className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out"
             onClick={() => {
-              setVisible(!visible2);
+              setVisible2(!visible2);
             }}
           >
             execute
