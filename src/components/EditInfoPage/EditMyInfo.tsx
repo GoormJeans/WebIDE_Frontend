@@ -1,11 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import InfoEditInputTag from './InfoEditInputTag'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
-import { setEmailValue, setNicknameValue, setAddressValue, setBioValue } from '../../api/user';
+import { setAddressValue, setBioValue } from '../../api/user';
 import Modal from '../Modal';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserInfo, updateUserInfo } from '../../api/api';
+import { updateUserInfo } from '../../api/api';
 
 export const EditMyInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,15 +15,6 @@ export const EditMyInfo = () => {
   const [isModified, setIsModified] = useState(false);
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const navi = useNavigate();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      await fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue);
-    };
-  
-    fetchUser();
-  }, [dispatch]);
-  
   
   const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);
