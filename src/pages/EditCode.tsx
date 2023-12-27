@@ -1,5 +1,5 @@
 // import { useRef } from 'react';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../api/store";
 import MainCM from "../components/EditorPage/MainCM";
@@ -11,6 +11,7 @@ import {
   //execute,
   submit,
   setSubmit,
+  setProbno,
 } from "../api/FileTree";
 const EditCode = () => {
   const navigate = useNavigate();
@@ -35,6 +36,11 @@ const EditCode = () => {
     dispatch(submit(Data));
     console.log(setting.result);
   };
+  useEffect(()=>{
+    const probid = localStorage.getItem('id');
+    dispatch(setProbno(Number(probid)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[localStorage.getItem('id')]);
   const handleSumit = () => {
     if (
       setting.fileExtension === "cpp" &&
