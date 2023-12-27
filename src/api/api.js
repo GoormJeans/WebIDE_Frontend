@@ -33,31 +33,29 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
   }
 };
 
-export const updateUserInfo = async (isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified) => {
+export const updateUserInfo = async (user, dispatch, setAddressValue, setBioValue) => {
   try {
+    const blog = user.bioValue;
+    const address = user.cityValue;
     const accessToken = localStorage.getItem('AccessToken');
-    if (isModified) {
-      const response = await axios.post(`https://eb.goojeans-server.com/mypage/edit/blogAndcity?blog=${user.bioValue}&city=${user.cityValue}`, {
-        blog: user.bioValue,
-        city: user.cityValue,
-      },
-        {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
-          },
-        });
-        console.log(response);
-      if (response.data.status !== 200) {
-        console.error('Error updating user information:', response.data.error);
-        return;
-      }
-      else {
-        const updatedUserInfo = response.data.data[0];
-        dispatch(setAddressValue(updatedUserInfo.address));
-        dispatch(setBioValue(updatedUserInfo.blog));
-        setIsSaveModalOpen(true);
-        setIsModified(false);
-      }
+    const response = await axios.post(`https://eb.goojeans-server.com/mypage/edit/blogAndcity?blog=${user.bioValue}&city=${user.cityValue}`, {
+      blog: blog,
+      city: address,
+    },
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
+        },
+      });
+    console.log(response.data);
+    if (response.data.status === 200) {
+      const updatedUserInfo = response.data.data[0];
+      dispatch(setAddressValue(updatedUserInfo.address));
+      dispatch(setBioValue(updatedUserInfo.blog));
+    }
+    else {
+      console.error('Error updating user information:', response.data.error);
+      return;
     }
   } catch (error) {
     console.error('Error updating user information:', error);
@@ -101,7 +99,7 @@ export const userLogin = async (email, password) => {
   }
 };
 
-export const changePassword= async (password) => {
+export const changePassword = async (password) => {
   try {
     const accessToken = localStorage.getItem('AccessToken');
     const response = await axios.post(
@@ -132,7 +130,7 @@ export const deleteAccountApi = async () => {
   const accessToken = localStorage.getItem('AccessToken');
   const response = await axios.get(`https://eb.goojeans-server.com/mypage/edit/unsubscribe`, {
     headers: {
-      'Authorization': `Bearer ${accessToken}`, 
+      'Authorization': `Bearer ${accessToken}`,
     },
   });
   return response;

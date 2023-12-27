@@ -16,7 +16,8 @@ export const EditMyInfo = () => {
 
   useEffect(() => {
     fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue);
-  }, [dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setAddressValue(e.target.value));
@@ -29,7 +30,9 @@ export const EditMyInfo = () => {
   };
 
   const handleSave = async () => {
-    updateUserInfo(isModified, user, dispatch, setAddressValue, setBioValue, setIsSaveModalOpen, setIsModified);
+    await updateUserInfo(user, dispatch, setAddressValue, setBioValue);
+    setIsModified(false);
+    setIsSaveModalOpen(true);
   };
 
   return (
