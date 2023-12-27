@@ -133,11 +133,12 @@ const File_tree = () => {
   };
   const handleDragNdrop = (dragkey: any, dragtitle: any, drop: any) => {
     const path: string = drop + dragtitle;
-    dragNdrop({
+    const dragndrop ={
       beforePath: dragkey,
       afterPath: path,
       algorithmId: setting.prob,
-    });
+    };
+    dispatch(dragNdrop(dragndrop));
   };
   const handleSelect = async (key: any) => {
     if (key[key.length - 1] === "/") return;
