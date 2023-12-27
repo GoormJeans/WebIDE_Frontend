@@ -15,6 +15,7 @@ import EditCode from './pages/EditCode';
 import EditUserInfo from './pages/EditUserInfo';
 import NotFoundPage from "./pages/NotFoundPage";
 import PrivateRoute from './privateRoute';
+import OAuthCallbackPage from './pages/OauthSignup';
 
 function App() {
   const ClickEvent = () => {
@@ -65,6 +66,7 @@ function App() {
         <Route path="editor/:id" element={<PrivateRoute><EditCode /></PrivateRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
+        <Route path="/oauth/sign-up" element={<OAuthCallbackPage/>} />
       </Routes>
 
     </div>

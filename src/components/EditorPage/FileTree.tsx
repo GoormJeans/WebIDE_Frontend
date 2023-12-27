@@ -14,8 +14,6 @@ import {
   getFiletree,
   setExpandedKeys,
   setSelectedKeys,
-  setValue_c,
-  setsave,
 } from "../../api/FileTree";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../api/store";

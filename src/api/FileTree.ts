@@ -162,7 +162,7 @@ export const FileTree = createSlice({
         state.isLoading = false;
         if (action.payload === undefined) 
         {
-          state.sourcode = "";
+          state.sourcode = ' ';
           return;
         }
         state.sourcode = action.payload.data.data[0].sourceCode;
