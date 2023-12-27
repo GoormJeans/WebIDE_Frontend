@@ -13,7 +13,7 @@ const DetailPage = () => {
   const [filter, setFilter] = useState('태그');
   const [searchTerm, setSearchTerm] = useState("");
   const [unsolved, setUnsolved] = useState<Algorithm[]>([]);
-  const tags : string[]  = ['Greedy', 'BFS', 'DP'];
+  const tags : string[]  = ['태그','Greedy', 'BFS', 'DP'];
   // DB에서 probs 가져오기
   useEffect(() => {
     const fetchProbs = async () => {
@@ -35,19 +35,19 @@ const DetailPage = () => {
     setProbs(initProbs)
     //필터에 따라 prob 정리
     if (filter !== '태그' && searchTerm !== null && searchTerm.trim().length !== 0) {
-      setProbs(initProbs.filter((element) => element.tag === filter && element.name.includes(searchTerm.trim())))
+      setProbs(Object.values(initProbs).filter((element) => element.tag === filter && element.name.includes(searchTerm.trim())))
       return;
     }
 
     //필터에 따라 prob 정리
     if (filter !== '태그') {
-      setProbs(initProbs.filter((element) => element.tag === filter))
+      setProbs(Object.values(initProbs).filter((element) => element.tag === filter))
       return;
     }
 
     //검색어가 있는 경우 probs 필터
     if (searchTerm !== null && searchTerm.trim().length !== 0) {
-      setProbs(initProbs.filter((element) => element.name.includes(searchTerm.trim())));
+      setProbs(Object.values(initProbs).filter((element) => element.name.includes(searchTerm.trim())));
       return;
     }
 
