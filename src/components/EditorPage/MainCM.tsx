@@ -114,7 +114,8 @@ const MainCM = () => {
     dispatch(setValue_c(e));
     dispatch(setsave());
   }
-  console.log(setting);
+  dispatch(setting.sourcecode);
+  dispatch(setsave());
   useEffect(()=>{
 
   },[]);
