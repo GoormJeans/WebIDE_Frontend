@@ -1,5 +1,5 @@
 // import { useRef } from 'react';
-import {  useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../api/store";
 import MainCM from "../components/EditorPage/MainCM";
@@ -20,11 +20,11 @@ const EditCode = () => {
     alert("이미 동일한 코드로 제출한 적이 있습니다");
   };
   const Submit = (sourceCode: string) => {
-    const hardcoding : any = {
-        java : 'JAVA',
-        py : 'PYTHON3',
-        cpp : 'CPP'
-    }
+    const hardcoding: any = {
+      java: "JAVA",
+      py: "PYTHON3",
+      cpp: "CPP",
+    };
     const Data = {
       algorithmId: setting.probno,
       sourceCode: sourceCode,
@@ -36,25 +36,31 @@ const EditCode = () => {
     console.log(submit(Data));
   };
   const handleSumit = () => {
-    if (setting.now_lang === "cpp" && setting.cpp_submit === setting.cpp_val) {
+    if (
+      setting.fileExtension === "cpp" &&
+      setting.cpp_submit === setting.cpp_val
+    ) {
       AlertSameCode();
       return;
     }
     if (
-      setting.now_lang === "java" &&
+      setting.fileExtension === "java" &&
       setting.java_submit === setting.java_val
     ) {
       AlertSameCode();
       return;
     }
-    if (setting.now_lang === "py" && setting.py_submit === setting.py_val) {
+    if (
+      setting.fileExtension === "py" &&
+      setting.py_submit === setting.py_val
+    ) {
       AlertSameCode();
       return;
     }
     dispatch(setSubmit());
-    if (setting.now_lang === "cpp") Submit(setting.cpp_val);
-    if (setting.now_lang === "java") Submit(setting.java_val);
-    if (setting.now_lang === "py") Submit(setting.py_val);
+    if (setting.fileExtension === "cpp") Submit(setting.cpp_val);
+    if (setting.fileExtension === "java") Submit(setting.java_val);
+    if (setting.fileExtension === "py") Submit(setting.py_val);
   };
 
   //채팅 페이지 보이게하기용
