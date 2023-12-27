@@ -165,10 +165,10 @@ const MessagePanel = () => {
   }
 
   return join ? (
-    <div className="px-5 pt-5 h-[700px]">
+    <div className="p-5 h-fit bg-[#AFAEAE] rounded-xl">
 
       <MessageHeader handleSearchChange={handleSearchChange} handleSearchMessages={handleSearchMessages} visible={visible} setVisible={setVisible} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResults={setSearchResults} />
-      <div className="w-full h-full border-solid border-[.2rem] border-[#ececec] rounded-xl p-2 mb-2 overflow-y-auto">
+      <div className="w-full min-h-96 h-full border-solid border-[.2rem] border-[#ececec] rounded-xl p-2 mb-2 overflow-y-auto">
         {visible ?
           renderMessages(searchResults)
           :
@@ -181,7 +181,7 @@ const MessagePanel = () => {
       <button className="mt-3 pl-3 pr-3 w-full bg-red-400  hover:bg-red-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleDisconnect}>채팅방 나가기</button>
     </div>
   ) : (
-    <div className="px-5 pt-5 h-[700px] flex items-center">
+    <div className="px-5 pt-5 w-fit bg-[#AFAEAE] h-96 flex items-center rounded-xl">
       <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleConnect}>
         채팅 참가하기
       </button>
