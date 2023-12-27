@@ -15,14 +15,11 @@ import EditCode from './pages/EditCode';
 import EditUserInfo from './pages/EditUserInfo';
 import NotFoundPage from "./pages/NotFoundPage";
 import PrivateRoute from './privateRoute';
-import { useSelector } from "react-redux";
-import { RootState } from "./api/store";
 import OAuthCallbackPage from './pages/OauthCallbackPage';
 import OauthSignup from './pages/OauthSignupPage';
+import AdminRoute from './adminRoute';
 
 function App() {
-  const user = useSelector((state: RootState) => state.user);
-
   const ClickEvent = () => {
     const target: any = document.querySelector('#fileTreeRight');
     if (target !== null) {
@@ -61,13 +58,13 @@ function App() {
           <Route path="settings" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
           <Route path="*" element={<PrivateRoute><NotFoundPage /></PrivateRoute>} />
 
-          {user.isAdminValue === 'ADMIN' &&
-            <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>} >
-              <Route index element={<PrivateRoute><AdminPage /></PrivateRoute>} />
-              <Route path="algorithm" element={<PrivateRoute><AdminAlgoPage /></PrivateRoute>} />
-              <Route path="user" element={<PrivateRoute><AdminUsersPage /></PrivateRoute>} />
-              <Route path="algorithm/:id" element={<PrivateRoute><AddAlgoPage /></PrivateRoute>} />
-            </Route>}
+          <Route path="admin" element={<AdminRoute><AdminLayout /></AdminRoute>} >
+            <Route index element={<AdminRoute><AdminPage /></AdminRoute>} />
+            <Route path="algorithm" element={<AdminRoute><AdminAlgoPage /></AdminRoute>} />
+            <Route path="user" element={<AdminRoute><AdminUsersPage /></AdminRoute>} />
+            <Route path="algorithm/:id" element={<AdminRoute><AddAlgoPage /></AdminRoute>} />
+          </Route>
+
         </Route>
         <Route path="editor/:id" element={<PrivateRoute><EditCode /></PrivateRoute>} />
         <Route path="/login" element={<Login />} />
