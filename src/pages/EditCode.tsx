@@ -25,8 +25,6 @@ const EditCode = () => {
       py: "PYTHON3",
       cpp: "CPP",
     };
-    console.log(1);
-    console.log(hardcoding[setting.fileExtension]);
     const Data = {
       algorithmId: setting.probno,
       sourceCode: sourceCode,
@@ -59,9 +57,7 @@ const EditCode = () => {
       AlertSameCode();
       return;
     }
-    console.log(setting.fileExtension);
     dispatch(setSubmit());
-    console.log(setting.fileExtension);
     if (setting.fileExtension === "cpp") Submit(setting.cpp_val);
     if (setting.fileExtension === "java") Submit(setting.java_val);
     if (setting.fileExtension === "py") Submit(setting.py_val);
