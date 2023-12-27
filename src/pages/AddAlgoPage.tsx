@@ -177,7 +177,7 @@ const AddAlgoPage = () => {
         {input.length !== 0 && input.map((_, idx) =>
           <TestCaseInput key={idx} id={idx} input={input} setInput={setInput} output={output} setOutput={setOutput} handleRemoveTC={handleRemoveTC} />
         )}
-        <button onClick={handleAddTC}>+</button>
+        <button className="hover:text-gray-500" onClick={handleAddTC}>테스트 케이스 추가</button>
         <AlgorithmContent description={description} setDescription={setDescription} />
 
         <div className="w-full flex flex-row justify-end mt-5">
