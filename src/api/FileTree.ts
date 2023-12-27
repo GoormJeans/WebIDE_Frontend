@@ -86,7 +86,9 @@ export const FileTree = createSlice({
     setValue_c: (state, action: PayloadAction<string>) => {
       state.sourcode = action.payload;
     },
-    
+    setResult:  (state) =>{
+      state.result = undefined;
+    },
     setsave: (state) => {
       if (state.fileExtension === "cpp") state.cpp_val = state.sourcode;
       if (state.fileExtension === "java") state.java_val = state.sourcode;
@@ -286,5 +288,6 @@ export const {
   setValue_c,
   setsave,
   setSubmit,
+  setResult,
 } = FileTree.actions;
 export default FileTree.reducer;

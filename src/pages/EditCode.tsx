@@ -12,19 +12,16 @@ import {
   submit,
   setSubmit,
   setProbno,
+  setResult,
 } from "../api/FileTree";
 import Modal from "../components/Modal";
 const EditCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const setting: any = useSelector((state: RootState) => state.FileTree);
-  let result : any;
   const AlertSameCode = () => {
     alert("이미 동일한 코드로 제출한 적이 있습니다");
   };
-  const setresult = (e : any) =>{
-    result = e;
-  }
   const Submit = async (sourceCode: string) => {
     const hardcoding: any = {
       java: "JAVA",
@@ -39,8 +36,6 @@ const EditCode = () => {
       fileExtension: hardcoding[setting.fileExtension],
     };
     await dispatch(submit(Data));
-    setresult(setting.result);
-    console.log(result);
   };
   useEffect(()=>{
     const probid = localStorage.getItem('id');
@@ -121,8 +116,8 @@ const EditCode = () => {
           {/* 채팅 페이지 보이게하기 */}
           <MessagePanel />
         </div>
-        <Modal isOpen={result !== undefined} handleClose={() => { setresult(undefined); } }>
-            <p className="pb-10">{result === undefined ? '제출한 코드입니다' : result.data}</p>
+        <Modal isOpen={setting.result !== undefined} handleClose={() => { dispatch(setResult()); } }>
+            <p className="pb-10">{setting.result === undefined ? '제출한 코드입니다' : setting.result}</p>
         </Modal>
       </div>
     </>
