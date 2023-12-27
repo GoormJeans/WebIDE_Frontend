@@ -1,4 +1,3 @@
-// api.js
 import axios from 'axios';
 
 export const fetchProblemsApi = async () => {
@@ -126,3 +125,13 @@ export const changePassword= async (password) => {
     return null;
   }
 };
+
+export const deleteAccountApi = async () => {
+  const accessToken = localStorage.getItem('AccessToken');
+  const response = await axios.get(`https://eb.goojeans-server.com/mypage/edit/unsubscribe`, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`, 
+    },
+  });
+  return response;
+}
