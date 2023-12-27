@@ -113,8 +113,6 @@ const MainCM = () => {
     dispatch(setValue_c(e));
     dispatch(setsave());
   }
-  dispatch(setting.sourcecode);
-  dispatch(setsave());
 
   return (
     <div className='w-6/12'>
