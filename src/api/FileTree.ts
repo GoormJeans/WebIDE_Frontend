@@ -174,7 +174,7 @@ export const FileTree = createSlice({
       .addCase(submit.fulfilled, (state, action) => {
         state.isLoading = false;
         if (action.payload === undefined) return undefined;
-        state.result = action.payload();
+        state.result = action.payload;
         return action.payload;
       })
       .addCase(submit.rejected, (state, action: any) => {
