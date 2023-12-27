@@ -51,7 +51,7 @@ const NavItemList = () => {
       <Modal isOpen={isLogoutModalOpen} handleClose={() => { setIsLogoutModalOpen(false); Logout() }}>
         <span className='flex text-xl pb-3'>정상적으로 로그아웃되었습니다.</span>
         <p className='pb-10'>다음에 또 만나요 🥹</p>
-        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => { setIsLogoutModalOpen(false); Logout() }}>닫기</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center hover:opacity-75 active:opacity-35' onClick={() => { setIsLogoutModalOpen(false); Logout() }}>닫기</p>
       </Modal>
     </>
   );

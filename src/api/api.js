@@ -34,6 +34,7 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
     else {
       console.error(`User Info Fetch Error[${response.data.status}]: ${response.data.error}`);
     }
+    return
   } catch (error) {
     console.error('Error fetching user information:', error);
   }
@@ -52,16 +53,17 @@ export const updateUserInfo = async (isModified, user, dispatch, setAddressValue
             'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
           },
         });
-      if (response.data.status !== 200) {
-        console.error('Error updating user information:', response.data.error);
-        return;
-      }
-      else {
+        console.log(response);
+      if (response.data.status === 200) {
         const updatedUserInfo = response.data.data[0];
         dispatch(setAddressValue(updatedUserInfo.address));
         dispatch(setBioValue(updatedUserInfo.blog));
         setIsSaveModalOpen(true);
         setIsModified(false);
+      }
+      else {
+        console.error('Error updating user information:', response.data.error);
+        return;
       }
     }
   } catch (error) {

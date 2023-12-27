@@ -56,7 +56,7 @@ export const ChangePassword = () => {
       <Modal isOpen={isChangedModalOpen} handleClose={() => { setIsChangedModalOpen(false); navi('/mypage') }}>
         <span className='flex text-xl'>수정 완료✅</span>
         <p className='pb-10'>비밀번호 수정이 완료되었습니다.</p>
-        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => { setIsChangedModalOpen(false); navi('/mypage') }}>닫기</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center hover:opacity-75 active:opacity-35' onClick={() => { setIsChangedModalOpen(false); navi('/mypage') }}>닫기</p>
       </Modal>
     </div>
   )

@@ -114,12 +114,12 @@ const SignupForm = () => {
       <Modal isOpen={isSuccessModalOpen} handleClose={() => { setIsSuccessModalOpen(false); navi('/login') }}>
         <span className='flex text-xl'>회원가입 성공🎉</span>
         <p className='pb-10'>환영합니다! 이제 로그인해 보세요.</p>
-        <Link to={"/login"} className='flex bg-nav-color rounded-md p-1 justify-center'>로그인하러 가기</Link>
+        <Link to={"/login"} className='flex bg-nav-color rounded-md p-1 justify-center hover:opacity-75 active:opacity-35'>로그인하러 가기</Link>
       </Modal>
       <Modal isOpen={isFailModalOpen} handleClose={() => setIsFailModalOpen(false)}>
         <span className='flex text-xl'>회원가입 오류⚠️</span>
         <p className='pb-10'>{errorMsg}</p>
-        <p className='flex bg-nav-color rounded-md p-1 justify-center' onClick={() => setIsFailModalOpen(false)}>닫기</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center hover:opacity-75 active:opacity-35' onClick={() => setIsFailModalOpen(false)}>닫기</p>
       </Modal>
     </div>
   )
