@@ -1,9 +1,8 @@
-
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
 import { execute, setTestCase } from '../../api/FileTree';
 
-const executePanel = () => {
+const ExecutePanel = () => {
     const dispatch = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.FileTree);
     const handleChange = (e : any) =>{
@@ -27,4 +26,4 @@ const executePanel = () => {
   )
 }
 
-export default executePanel;
+export default ExecutePanel;
