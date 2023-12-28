@@ -202,7 +202,10 @@ export const FileTree = createSlice({
       .addCase(execute.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload);
-        state.executeResult = action.payload;
+        if(action.payload.data.status === 6000)
+          state.result = '시간초과'
+        else
+          state.result = action.payload.data.data[0].executeResult;
       })
       .addCase(execute.rejected, (state, action: any) => {
         state.isLoading = false;
