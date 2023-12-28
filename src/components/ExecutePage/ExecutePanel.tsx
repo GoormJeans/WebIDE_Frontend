@@ -21,7 +21,7 @@ const ExecutePanel = () => {
             fileExtension : hardcoding[setting.fileExtension],
             testCase : setting.test_Case,
         };
-        if(setting.key[setting.key.length-1] === '/')
+        if(setting.filePath[setting.filePath.length-1] === '/')
           return ;
         await dispatch(execute(data));
     }
