@@ -115,7 +115,7 @@ const EditCode = () => {
         </div>
       </div>
       <div className="flex w-full h-100vh bg-white">
-        <div className="w-2/12 font-mono bg-editor-color p-4">
+        <div className="w-4/12 font-mono bg-editor-color p-4">
           <Filetree />
         </div>
         <MainCM />
