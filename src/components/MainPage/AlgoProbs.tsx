@@ -11,7 +11,7 @@ const AlgoProbs: React.FC<{ prob: Algorithm }> = ({ prob }) => {
     <div className="w-full bg-[#c4c4c4] h-[60px] flex flex-row items-center justify-between p-6 mb-5 rounded-xl shadow-xl whitespace-nowrap hover:cursor-pointer hover:bg-white"
       onClick={() => { navigate(url.pathname === '/main' || url.pathname === '/algorithms' ? `/editor/${prob.id}` : `${prob.id}`) }}>
       <div className=" flex flex-row">
-        <p className=" w-4">{prob.solved && "O"}</p>{/* 문제 풀었으면 O로 표시 */}
+        <p className=" w-4">{prob.solved && '✅'}</p>
         <p className=" ml-3">{prob.name}</p>
       </div>
       <p className="">{prob.tag !== '태그' && (prob.tag + ' - ')}Lv.{prob.level}</p>

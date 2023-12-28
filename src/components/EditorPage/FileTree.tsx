@@ -167,7 +167,8 @@ const File_tree = () => {
       info.dropPosition - Number(dropPos[dropPos.length - 1]);
 
     if (!allow(dropKey) && dropPosition === 0) return;
-
+    if(dropKey.dragNode !== undefined)
+      return ;
     if (dropPosition === 0) {
       dragtitle =
         dragKey[dragKey.length - 1] === "/" ? dragtitle + "/" : dragtitle;
