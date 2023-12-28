@@ -158,9 +158,9 @@ const File_tree = () => {
   };
   const onDrop = (info: any) => {
     console.log("drop", info);
-    const dropKey = info.node.key;
+    const dropKey : string = info.node.key;
     const droptitle = info.node.title;
-    const dragKey = info.dragNode.key;
+    const dragKey : string = info.dragNode.key;
     let dragtitle = info.dragNode.title;
     const dropPos = info.node.pos.split("-");
     const dropPosition =
