@@ -24,6 +24,7 @@ export interface Filetree {
   py_submit: string;
   cpp_submit: string;
   test_Case : string;
+  executeResult : any;
 }
 
 const initialState: Filetree = {
@@ -65,6 +66,7 @@ int solution(vector<int> num_list) {
   py_submit: "",
   cpp_submit: "",
   test_Case : "",
+  executeResult : undefined,
 };
 
 export const FileTree = createSlice({
@@ -188,6 +190,18 @@ export const FileTree = createSlice({
         state.result = action.payload;
       })
       .addCase(submit.rejected, (state, action: any) => {
+        state.isLoading = false;
+        state.Data = action.payload;
+      })
+      .addCase(execute.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(execute.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload);
+        state.executeResult = action.payload;
+      })
+      .addCase(execute.rejected, (state, action: any) => {
         state.isLoading = false;
         state.Data = action.payload;
       });
