@@ -10,7 +10,7 @@ function AdminRoute({ children }) {
     return !!token;
   }
 const isAdmin = () => {
-  return user.isAdmin === "ADMIN";
+  return user.isAdminValue === "ADMIN";
 }
   useEffect(() => {
 
