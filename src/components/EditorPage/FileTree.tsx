@@ -181,6 +181,7 @@ const File_tree = () => {
           ? dropKey.length - droptitle.length - 1
           : dropKey.length - droptitle.length
       );
+      console.log(dragKey+ '\n' + drops);
       handleDragNdrop(dragKey, dragtitle, drops);
     }
   };
