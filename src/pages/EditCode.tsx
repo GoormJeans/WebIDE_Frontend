@@ -130,7 +130,7 @@ const EditCode = () => {
         </div>
         <div
           className={` fixed transition-all duration-500 top-8 rounded-xl ${
-            visible2 ? "right-[-700px]" : "right-1"
+            visible2 ? "right-[-5000px]" : "right-1"
           }`}
         >
           {/* 채팅 페이지 보이게하기 */}
