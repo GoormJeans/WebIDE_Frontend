@@ -68,7 +68,7 @@ const EditCode = () => {
     }
     if(setting.fileExtension === undefined)
       return ;
-    if(setting.key[setting.key.length-1] === '/')
+    if(setting.filePath[setting.filePath.length-1] === '/')
       return ;
     dispatch(setSubmit());
     if (setting.fileExtension === "cpp") Submit(setting.cpp_val);
