@@ -8,7 +8,7 @@ const LastAlgo: React.FC<{ prob: Algorithm }> = ({ prob }) => {
   return (
     prob ?
       <div className="w-full h-72 mt-5">
-        <div className="w-auto h-full flex flex-col items-center bg-nav-color mx-5 rounded-xl pt-12 px-10 pb-4 shadow-xl">
+        <div className="w-auto h-full flex flex-col items-center bg-nav-color mx-5 rounded-3xl pt-12 px-10 pb-4 shadow-xl">
           <div className="bg-white w-full h-40 p-5 rounded-xl">
             <div>
               아직 안 풀어본 문제

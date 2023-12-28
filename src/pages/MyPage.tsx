@@ -18,7 +18,7 @@ const MyPage = () => {
         </div>
       </div>
       <div className='problems-card w-full h-auto' >
-        <div className="px-5 w-auto h-full mx-5 mt-5 rounded-3xl bg-nav-color shadow-xl">
+        <div className="px-5 w-auto h-full mx-5 my-5 rounded-3xl bg-nav-color shadow-xl">
           <CategoryBtn />
         </div>
       </div>
