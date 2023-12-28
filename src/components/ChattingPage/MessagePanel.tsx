@@ -145,7 +145,7 @@ const MessagePanel = () => {
       return;
     }
     setVisible(true) //뒤로가기 버튼 숨김
-    const request = await axios.get(`/chat/search/${chatroom.id}?keyword=${searchTerm}`);
+    const request = await axios.get(`/chat/search/${chatroom.id}?keyword=${searchTerm}&nickname=${user.nicknameValue}`);
     const searchResults = request.data.data;
 
     setSearchResults(searchResults);
