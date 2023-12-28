@@ -30,6 +30,7 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
     dispatch(setBioValue(response.data.data[0].bio));
     dispatch(setIsAdminValue(response.data.data[0].isAdmin ? response.data.data[0].isAdmin : "USER"));
     localStorage.setItem('isAdmin', response.data.data[0].isAdmin);
+    localStorage.setItem('nickname', response.data.data[0].nickname);
   } catch (error) {
     console.error('Error fetching user information:', error);
   }

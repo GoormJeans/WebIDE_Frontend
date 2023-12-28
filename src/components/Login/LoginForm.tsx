@@ -35,7 +35,6 @@ const LoginForm = () => {
       if (response.data.status === 200) {
         const AccessToken = response.data.data[0].message;
         localStorage.setItem('AccessToken', AccessToken);
-        localStorage.setItem('nickname', response.data.data[0].nickname);
         console.log('Login success',);
         init();
         fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue);
