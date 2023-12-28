@@ -93,6 +93,7 @@ const EditCode = () => {
             className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out"
             onClick={() => {
               setVisible(!visible);
+              setVisible2(true);
             }}
           >
             Chat
@@ -101,6 +102,7 @@ const EditCode = () => {
             className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out"
             onClick={() => {
               setVisible2(!visible2);
+              setVisible(true);
             }}
           >
             execute
@@ -115,7 +117,7 @@ const EditCode = () => {
         </div>
       </div>
       <div className="flex w-full h-100vh bg-white">
-        <div className="w-2/12 font-mono bg-editor-color p-4">
+        <div className="w-4/12 font-mono bg-editor-color p-4">
           <Filetree />
         </div>
         <MainCM />

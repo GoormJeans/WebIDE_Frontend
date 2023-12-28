@@ -189,8 +189,9 @@ const File_tree = () => {
     dispatch(setExpandedKeys(expandedKeys));
   };
   const onSelect = (selectedKeys: any) => {
-    dispatch(setSelectedKeys(selectedKeys));
+    
     if (selectedKeys.length === 0) return;
+    dispatch(setSelectedKeys(selectedKeys));
     handleSelect(selectedKeys[0]);
 
   };
