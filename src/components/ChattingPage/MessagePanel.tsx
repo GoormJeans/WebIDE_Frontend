@@ -103,7 +103,7 @@ const MessagePanel = () => {
   // 메시지 생성 로직
   const createMessage = (data: any) => {
     const message: Message = {
-      createdAt: new Date(data.createdAt),
+      createdAt: data.createdAt,
       nickname: data.nickname,
       content: data.content,
       id: data.chatId,

@@ -20,7 +20,7 @@ const MessageComponent: React.FC<MessageType> = ({ message, user }) => {
         <div className={`w-fit ${isMessageMine(message, user) ? 'bg-slate-300' : 'bg-white'} px-3 py-2 rounded-xl`}>
           <h6 className="mt-0">{message.nickname}{' '}
             <span className="text-[10px] text-gray-600">
-              {message.createdAt.toLocaleString()}
+              {new Date(message.createdAt).toLocaleString()}
             </span>
           </h6>
           <p className="text-sm">
