@@ -17,7 +17,7 @@ const ExecutePanel = () => {
         const data = {
             algorithmId : setting.probno,
             sourceCode : setting.sourcode,
-            filePath : setting.filePath,
+            filePathSuffix : setting.filePath,
             fileExtension : hardcoding[setting.fileExtension],
             testCase : setting.test_Case,
         };
