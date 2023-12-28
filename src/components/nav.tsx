@@ -45,7 +45,6 @@ const NavItemList = () => {
       <NavItem path="/algorithms" label="Algorithms" />
       <NavItem path="/mypage" label="Mypage" />
       <NavItem path={token ? `` : `/login`} label={token ? `Logout` : `Login`} onClick={token ? () => setIsLogoutModalOpen(true) : () => navi('/login')} />
-      <NavItem path="/settings" label="Settings" />
       <Modal isOpen={isLogoutModalOpen} handleClose={() => { setIsLogoutModalOpen(false); Logout() }}>
         <span className='flex text-xl pb-3'>정상적으로 로그아웃되었습니다.</span>
         <p className='pb-10'>다음에 또 만나요 🥹</p>
