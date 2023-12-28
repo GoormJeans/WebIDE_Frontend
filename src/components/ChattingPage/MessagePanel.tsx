@@ -6,8 +6,6 @@ import { Message } from "../../types/Message.type";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import { useParams } from "react-router-dom";
 import axios from "../../api/axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../../api/store";
 import SockJS from "sockjs-client";
 
 const MessagePanel = () => {
