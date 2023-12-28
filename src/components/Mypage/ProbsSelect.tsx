@@ -35,7 +35,7 @@ export const CategoryBtn = () => {
       case 'solved':
         setDisplayProblems(Object.values(allProblems).filter(problem => problem.solved));
         break;
-      case 'tried':
+      case 'unsolved':
         setDisplayProblems(Object.values(allProblems).filter(problem => !problem.solved));
         break;
       default:
@@ -62,10 +62,10 @@ export const CategoryBtn = () => {
         Solved
       </button>
       <button
-        className={`${btnCSS} ${selectedButton === 'tried' ? 'bg-yellow-300 text-white' : 'bg-gray-200'}`}
-        onClick={() => handleButtonClick('tried')}
+        className={`${btnCSS} ${selectedButton === 'unsolved' ? 'bg-yellow-300 text-white' : 'bg-gray-200'}`}
+        onClick={() => handleButtonClick('unsolved')}
       >
-        Tried
+        Unsolved
       </button>
 
       <AlgoList probs={displayProblems} />

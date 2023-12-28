@@ -145,7 +145,7 @@ const MessagePanel = () => {
       return;
     }
     setVisible(true) //뒤로가기 버튼 숨김
-    const request = await axios.get(`/chat/search/${chatroom.id}?keyword=${searchTerm}`);
+    const request = await axios.get(`/chat/search/${chatroom.id}?keyword=${searchTerm}&nickname=${user.nicknameValue}`);
     const searchResults = request.data.data;
 
     setSearchResults(searchResults);
@@ -170,10 +170,9 @@ const MessagePanel = () => {
   }
 
   return join ? (
-    <div className="p-5 h-fit bg-[#AFAEAE] rounded-xl">
-
+    <div className="w-96 p-5 h-fit min-h-96 bg-[#AFAEAE] rounded-xl">
       <MessageHeader handleSearchChange={handleSearchChange} handleSearchMessages={handleSearchMessages} visible={visible} setVisible={setVisible} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResults={setSearchResults} />
-      <div className="w-full min-h-96 h-full border-solid border-[.2rem] border-[#ececec] rounded-xl p-2 mb-2 overflow-y-auto">
+      <div className="min-h-96 max-h-96 border-solid border-[.2rem] border-[#ececec] rounded-xl p-2 mb-2 overflow-y-auto">
         {visible ?
           renderMessages(searchResults)
           :

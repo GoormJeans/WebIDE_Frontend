@@ -15,9 +15,10 @@ const AlgoList: React.FC<{ probs: Algorithm[]; }> = ({ probs }) => {
   
   if ((probs?.length || 0) > 0) { //검색결과가 있는 경우
     return (
-      <div className="w-full h-full ">
+      <div className="w-full h-full pb-5">
 
-        <div className="w-auto h-full flex flex-col justify-between items-center m-5 rounded-xl px-5 pt-5 border-2 whitespace-nowrap">
+        <div className="w-auto h-full flex flex-col justify-between items-center rounded-xl px-5 pt-11 whitespace-nowrap mx-5
+        ">
           {probs && Array.isArray(probs) &&
             probs.map((element) => <AlgoProbs prob={element} key={element.id} />)
           }
@@ -40,7 +41,7 @@ const AlgoList: React.FC<{ probs: Algorithm[]; }> = ({ probs }) => {
   }
   else { // 검색결과가 없는 경우
     return (
-      <div className="w-full h-full ">
+      <div className="w-full h-full pb-5">
         <div className="w-auto h-full flex flex-col justify-between items-center  m-5 rounded-xl p-5 border-2 text-white">
           검색결과가 없습니다.
         </div>

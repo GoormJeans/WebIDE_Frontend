@@ -23,11 +23,13 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
         'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
       },
     });
+    console.log(response.data.data[0])
     dispatch(setEmailValue(response.data.data[0].email));
     dispatch(setNicknameValue(response.data.data[0].nickname));
     dispatch(setAddressValue(response.data.data[0].city));
     dispatch(setBioValue(response.data.data[0].bio));
     dispatch(setIsAdminValue(response.data.data[0].isAdmin ? response.data.data[0].isAdmin : "USER"));
+    localStorage.setItem('isAdmin', response.data.data[0].isAdmin);
   } catch (error) {
     console.error('Error fetching user information:', error);
   }

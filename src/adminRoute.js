@@ -10,7 +10,8 @@ function AdminRoute({ children }) {
     return !!token;
   }
 const isAdmin = () => {
-  return user.isAdmin === "ADMIN";
+  const isAdmin = localStorage.getItem('isAdmin');
+  return isAdmin === "ADMIN";
 }
   useEffect(() => {
 
@@ -21,7 +22,7 @@ const isAdmin = () => {
       navigate('/main');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate]);
+  }, [navigate, user.isAdminValue]);
 
   return children;
 }
