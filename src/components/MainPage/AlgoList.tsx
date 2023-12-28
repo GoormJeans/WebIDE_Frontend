@@ -17,7 +17,7 @@ const AlgoList: React.FC<{ probs: Algorithm[]; }> = ({ probs }) => {
     return (
       <div className="w-full h-full ">
 
-        <div className="w-auto h-full flex flex-col justify-between items-center m-5 rounded-xl px-5 pt-5 border-2 whitespace-nowrap">
+        <div className="w-auto h-full flex flex-col justify-between items-center rounded-xl px-5 pt-5 whitespace-nowrap">
           {probs && Array.isArray(probs) &&
             probs.map((element) => <AlgoProbs prob={element} key={element.id} />)
           }

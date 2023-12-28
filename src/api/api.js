@@ -23,6 +23,7 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
         'Authorization': `Bearer ${accessToken}`, // 헤더에 토큰을 포함시킵니다.
       },
     });
+    console.log(response.data.data[0])
     dispatch(setEmailValue(response.data.data[0].email));
     dispatch(setNicknameValue(response.data.data[0].nickname));
     dispatch(setAddressValue(response.data.data[0].city));
