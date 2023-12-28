@@ -57,8 +57,12 @@ const DetailPage = () => {
   return (
     <div>
       <LastAlgo prob={unsolved[Math.floor(Math.random() * unsolved.length)]} />
-      <Search setFilter={setFilter} levels={tags} setSearchTerm={setSearchTerm} />
-      <AlgoList probs={probs} />
+      <div className='w-full h-auto'>
+        <div className='px-5 py-5 w-auto h-full mx-5 my-5 rounded-3xl bg-nav-color shadow-xl'>
+          <Search setFilter={setFilter} levels={tags} setSearchTerm={setSearchTerm} />
+          <AlgoList probs={probs} />
+        </div>
+      </div>
     </div >
   )
 }
