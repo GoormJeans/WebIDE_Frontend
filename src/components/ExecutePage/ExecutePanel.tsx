@@ -8,6 +8,7 @@ const ExecutePanel = () => {
     const handleChange = (e : any) =>{
         dispatch(setTestCase(e));
     }
+    let result :any = undefined;
     const handleExecute = async () =>{
         const hardcoding: any = {
             java: "JAVA",
@@ -21,13 +22,12 @@ const ExecutePanel = () => {
             fileExtension : hardcoding[setting.fileExtension],
             testCase : setting.test_Case,
         };
-        const result = await dispatch(execute(data));
-        console.log(result);
+        result = await dispatch(execute(data));
     }
   return (
     <div className="p-5 h-fit bg-[#AFAEAE] rounded-xl">
         <textarea id="algo_content" className="bg-white mb-5 mr-5 w-full rounded-xl p-3" value={setting.test_Case} onChange={(e) => handleChange(e.target.value)} />
-        
+        <p className="pb-10">{(setting.isLoading || result === undefined) ? '대기중입니다' : result} </p>
         <div className="hover:bg-blue-400 pl-4 pr-4" onClick={handleExecute}>제출</div>
     </div>
   )
