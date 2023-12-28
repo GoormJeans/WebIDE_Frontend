@@ -9,6 +9,7 @@ import Modal from '../Modal';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../api/store';
 import { setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue } from '../../api/user';
+import { init } from '../../api/axios';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -36,6 +37,7 @@ const LoginForm = () => {
         localStorage.setItem('AccessToken', AccessToken);
         localStorage.setItem('nickname', response.data.data[0].nickname);
         console.log('Login success',);
+        init();
         fetchUserInfo(dispatch, setEmailValue, setNicknameValue, setAddressValue, setBioValue, setIsAdminValue);
         navi('/main');
       } else {
