@@ -23,7 +23,7 @@ const MessagePanel = () => {
 
   const chatroom = useParams();
 
-  const user = useSelector((state: RootState) => state.user);
+  const userNickname = localStorage.getItem('nickname');
 
 
   // 창 닫을 경우 chat 종료 요청 서버로 전송
@@ -31,7 +31,7 @@ const MessagePanel = () => {
     const handleUnload = async (e: any) => {
       e.preventDefault();
       if (client.current?.connected) {
-        await axios.get(`/chat/exit/${chatroom.id}?nickname=${user.nicknameValue}`);
+        await axios.get(`/chat/exit/${chatroom.id}?nickname=${userNickname}`);
       }
     }
     window.addEventListener("beforeunload", handleUnload);
@@ -71,7 +71,7 @@ const MessagePanel = () => {
   // 입장 메시지 전송
   function sendEnterMessage() {
     const data = {
-      'content': user.nicknameValue
+      'content': userNickname
     };
     // send(destination,헤더,페이로드)
     client.current!.send(`/app/chat/enter/${chatroom.id}`, {}, JSON.stringify(data));
@@ -85,7 +85,7 @@ const MessagePanel = () => {
     client.current?.disconnect(
       async () => {
         try {
-          await axios.get(`/chat/exit/${chatroom.id}?nickname=${user.nicknameValue}`);
+          await axios.get(`/chat/exit/${chatroom.id}?nickname=${userNickname}`);
         }
         catch (error) {
           console.log(error);
@@ -126,7 +126,7 @@ const MessagePanel = () => {
         <MessageComponent
           key={message.id}
           message={message}
-          user={user}
+          userNickname={userNickname || ""}
         />
       )
   }
@@ -145,7 +145,7 @@ const MessagePanel = () => {
       return;
     }
     setVisible(true) //뒤로가기 버튼 숨김
-    const request = await axios.get(`/chat/search/${chatroom.id}?keyword=${searchTerm}&nickname=${user.nicknameValue}`);
+    const request = await axios.get(`/chat/search/${chatroom.id}?keyword=${searchTerm}&nickname=${userNickname}`);
     const searchResults = request.data.data;
 
     setSearchResults(searchResults);
