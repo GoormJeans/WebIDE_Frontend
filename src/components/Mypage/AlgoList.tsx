@@ -37,7 +37,7 @@ const AlgoList: React.FC<{probs: Algorithm[]; }> = ({ probs }) => {
     return (
       <div className="w-full h-full pb-5">
         <div className="w-auto h-full flex flex-col justify-between items-center  m-5 rounded-xl p-5 border-2 text-white">
-          문제 종류를 선택해보세요.
+          문제 정보가 없습니다.
         </div>
       </div>
     );
