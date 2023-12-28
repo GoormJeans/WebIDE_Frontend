@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../api/store';
 import { execute, setTestCase } from '../../api/FileTree';
-
+// 정규식만 추가하면 완성
 const ExecutePanel = () => {
     const dispatch = useDispatch<AppDispatch>();
     const setting: any = useSelector((state: RootState) => state.FileTree);
@@ -21,6 +21,8 @@ const ExecutePanel = () => {
             fileExtension : hardcoding[setting.fileExtension],
             testCase : setting.test_Case,
         };
+        if(setting.key[setting.key.length-1] === '/')
+          return ;
         await dispatch(execute(data));
     }
   return (
