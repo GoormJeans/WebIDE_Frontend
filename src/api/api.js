@@ -24,6 +24,7 @@ export const fetchUserInfo = async (dispatch, setEmailValue, setNicknameValue, s
       },
     });
     console.log(response.data.data[0])
+    localStorage.setItem('nickname', response.data.data[0].nickname);
     dispatch(setEmailValue(response.data.data[0].email));
     dispatch(setNicknameValue(response.data.data[0].nickname));
     dispatch(setAddressValue(response.data.data[0].city));
