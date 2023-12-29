@@ -1,12 +1,15 @@
 [![Deploy to Firebase Hosting on merge](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/firebase-hosting-merge.yml)
+
 # WebIDE_Frontend
 팀 Goojeans Web IDE 프로젝트 Frontend 프로젝트입니다.
+
+<img src="public\logo512.png" width="200px">
 
 ### 🪄 프로젝트 개요
 - Web IDE Frontend
 
 ### 📅 개발 기간:
-- 2023/12/10 ~ 2023/12/22 
+- 2023/12/5 ~ 2023/12/27
 
 ### ⚙️ 개발 환경
 - **`React + TypeScript`**
