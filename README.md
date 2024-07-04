@@ -1,5 +1,9 @@
 [![Deploy to Firebase Hosting on merge](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/firebase-hosting-merge.yml)
 
+jtest : 지우고
+npm audit fix --force
+npm run start
+
 # WebIDE_Frontend
 팀 Goojeans Web IDE 프로젝트 Frontend 프로젝트입니다.
 
