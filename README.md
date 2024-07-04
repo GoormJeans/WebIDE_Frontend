@@ -1,11 +1,13 @@
-[![Deploy to S3](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/main-deploy-work.yml/badge.svg)](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/main-deploy-work.yml)
+[![Deploy to Firebase Hosting on merge](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/GoormJeans/WebIDE_Frontend/actions/workflows/firebase-hosting-merge.yml)
 # WebIDE_Frontend
+
+원복
 
 ### 🪄 프로젝트 개요
 - Web IDE Frontend
 
 ### 📅 개발 기간:
-- 2023/12/10 ~ 2023/12/22
+- 2023/12/10 ~ 2023/12/22 
 
 ### ⚙️ 개발 환경
 - **`React + TypeScript`**

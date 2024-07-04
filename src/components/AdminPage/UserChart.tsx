@@ -1,18 +1,19 @@
 import { LineChart } from "@mui/x-charts"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const UserChart = () => {
+const UserChart: React.FC<{ counts: any }> = ({ counts }) => {
 
-  // Users
-  // x축에 날짜 지정
-  const today = new Date()
-  today.setDate(today.getDate() - 7);
-  console.log(today.toLocaleDateString('en-US'))
-  const xUserLabels = Array(7).fill(0).map(_ => {
-    today.setDate(today.getDate() + 1)
-    return today.toLocaleDateString('en-US')
-  })
-  const userConnections = xUserLabels.map(() => Math.floor(Math.random() * 500)); // 사용자 관련한 접속 통계 가능할지 모르겠지만 
+  const [xUserLabels, setXUserLabels] = useState<string[]>([]);
+  const [userRegstrations, setUserRegstrations] = useState<number[]>([])
+
+  useEffect(() => {
+    const label = Object.keys(counts ? counts[0]?.usersCounts || [] : []);
+    const number: number[] = Object.values(counts ? counts[0]?.usersCounts || [] : [])
+    setXUserLabels(label.reverse());
+    setUserRegstrations(number.reverse());
+
+  }, [counts])
+
   return (
     <div className="w-full h-full">
       <LineChart
@@ -23,7 +24,7 @@ const UserChart = () => {
           borderRadius: "12px"
         }}
         series={[
-          { data: userConnections, label: 'Connected Users' },
+          { data: userRegstrations, label: 'User Register' },
         ]}
         xAxis={[{ scaleType: 'point', data: xUserLabels }]}
       />

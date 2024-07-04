@@ -12,13 +12,16 @@ import AddAlgoPage from './pages/AddAlgoPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import EditCode from './pages/EditCode';
-import MessageTmpPage from "./pages/MessageTmpPage";
 import EditUserInfo from './pages/EditUserInfo';
+import NotFoundPage from "./pages/NotFoundPage";
+import PrivateRoute from './privateRoute';
+import OAuthCallbackPage from './pages/OauthCallbackPage';
+import OauthSignup from './pages/OauthSignupPage';
+import AdminRoute from './adminRoute';
 
 function App() {
   const ClickEvent = () => {
-    const target: any = document.querySelector('.fileTreeRight');
-    console.log(target);
+    const target: any = document.querySelector('#fileTreeRight');
     if (target !== null) {
       while (target.firstChild)
         target.removeChild(target.firstChild);
@@ -42,29 +45,31 @@ function App() {
     )
   }
   window.addEventListener("click", ClickEvent);
+
   return (
     <div className='App'>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage />} />
-          <Route path="algorithms" element={<DetailPage />} />
-          <Route path="mypage" element={<MyPage />} />
-          <Route path="mypage/edit" element={<EditUserInfo />} />
-          <Route path="detail" element={<DetailPage />} />
-          <Route path="settings" element={<DetailPage />} />
+        <Route element={<Layout />}>
+          <Route path="main" element={<PrivateRoute><MainPage /></PrivateRoute>} />
+          <Route path="algorithms" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
+          <Route path="mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
+          <Route path="mypage/edit" element={<PrivateRoute><EditUserInfo /></PrivateRoute>} />
+          <Route path="detail" element={<PrivateRoute><DetailPage /></PrivateRoute>} />
+          <Route path="*" element={<PrivateRoute><NotFoundPage /></PrivateRoute>} />
 
-          <Route path="admin" element={<AdminLayout />} >
-            <Route index element={<AdminPage />} />
-            <Route path="algorithm" element={<AdminAlgoPage />} />
-            <Route path="user" element={<AdminUsersPage />} />
-            <Route path="algorithm/:id" element={<AddAlgoPage />} />
+          <Route path="admin" element={<AdminRoute><AdminLayout /></AdminRoute>} >
+            <Route index element={<AdminRoute><AdminPage /></AdminRoute>} />
+            <Route path="algorithm" element={<AdminRoute><AdminAlgoPage /></AdminRoute>} />
+            <Route path="user" element={<AdminRoute><AdminUsersPage /></AdminRoute>} />
+            <Route path="algorithm/:id" element={<AdminRoute><AddAlgoPage /></AdminRoute>} />
           </Route>
-          <Route path="Search" element={<MainPage />} />
+
         </Route>
-        <Route path="/editor" element={<EditCode />} />
+        <Route path="editor/:id" element={<PrivateRoute><EditCode /></PrivateRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
-        <Route path="/message" element={<MessageTmpPage />} />
+        <Route path="/oauth/callback" element={<OAuthCallbackPage />} />
+        <Route path="/oauth/sign-up" element={<OauthSignup />} />
       </Routes>
 
     </div>

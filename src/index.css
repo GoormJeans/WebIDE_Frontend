@@ -3,7 +3,18 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=K2D&display=swap');
+@font-face {
+  font-family: 'seolleimcool-SemiBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/seolleimcool-SemiBold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
   background-color: #646FA9;
+  font-family: 'K2D','seolleimcool-SemiBold', sans-serif;
+}
+
+::-webkit-scrollbar{
+  display:none;
 }

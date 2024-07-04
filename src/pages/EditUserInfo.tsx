@@ -1,10 +1,14 @@
+import { EditMyInfo } from '../components/EditInfoPage/EditMyInfo'
+import { ChangePassword } from '../components/EditInfoPage/ChangePassword'
+import { DeleteAccount } from '../components/EditInfoPage/DeleteAccount'
 import React from 'react'
-import InfoEditCard from '../components/Mypage/InfoEditCard'
 
 const EditUserInfo = () => {
   return (
     <>
-    <InfoEditCard />
+      <EditMyInfo />
+      <ChangePassword />
+      <DeleteAccount />
     </>
   )
 }

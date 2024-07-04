@@ -2,89 +2,177 @@ import React, { useEffect, useRef, useState } from 'react'
 import MessageForm from "./MessageForm";
 import MessageHeader from "./MessageHeader";
 import MessageComponent from "./MessageComponent";
-import { UserInfo } from "../../types/UserInfo.type";
 import { Message } from "../../types/Message.type";
-// import axios from "../../api/axios";
+import { CompatClient, Stomp } from "@stomp/stompjs";
+import { useParams } from "react-router-dom";
+import axios from "../../api/axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../api/store";
+import SockJS from "sockjs-client";
 
 const MessagePanel = () => {
 
-  //dummy user2, 로그인해서 user에 대한 state가 생기기 전까지 일단 임시로 넣은 user
-  const user2: UserInfo = {
-    name: 'Kim Goorm',
-    address: 'Seoul, Korea',
-    email: 'kimgoorm@gmail.com',
-    bio: 'https://github.com/kimgoorm',
-  }
-  const user1: UserInfo = {
-    name: 'Lee Goorm',
-    address: 'Jeju, Korea',
-    email: 'leegoorm@naver.com',
-    bio: 'https://github.com/leegoorm',
-  }
-
-  const [user, setUser] = useState(false);
-
-  //dummy 코드 끝
-
+  const client = useRef<CompatClient>();
+  const [join, setJoin] = useState(false)
   const [searchTerm, setSearchTerm] = useState("");
+  const [chatMessage, setChatMessage] = useState<Message>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [searchResults, setSearchResults] = useState<Message[]>([]);
   const [visible, setVisible] = useState(false);
+  const [content, setContent] = useState("");
+
+  const chatroom = useParams();
+
+  const userNickname = localStorage.getItem('nickname');
 
 
-  const renderMessages = (messages: Message[]) =>
-    messages.length > 0 &&
-    messages.map(message =>
-      <MessageComponent
-        key={message.id}
-        message={message}
-        user={user2}
-      />
+  // 창 닫을 경우 chat 종료 요청 서버로 전송
+  useEffect(() => {
+    const handleUnload = async (e: any) => {
+      e.preventDefault();
+      if (client.current?.connected) {
+        await axios.get(`/chat/exit/${chatroom.id}?nickname=${userNickname}`);
+      }
+    }
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleConnect = () => {
+    setJoin(!join);
+    console.log(chatroom);
+
+    let accessToken = localStorage.getItem('AccessToken');
+    let str = 'Bearer ' + accessToken;
+
+    client.current =  Stomp.over(() => {
+      // 로컬주소
+      const sock = new SockJS("https://eb.goojeans-server.com/ws/chat");
+      return sock;
+    })
+    setMessages([]);
+    client.current.connect(
+      { Authorization: str, },
+      () => {
+        client.current!.subscribe(`/topic/chat/${chatroom.id}`, function (e) {
+
+          //e.body에 전송된 data가 들어있다
+          let chatMessage = JSON.parse(e.body);
+          showMessage(chatMessage);
+        });
+        sendEnterMessage();
+      }, function (e: any) {
+        alert('에러발생!!!!');
+      }
     )
+  }
+
+  // 입장 메시지 전송
+  function sendEnterMessage() {
+    const data = {
+      'content': userNickname
+    };
+    // send(destination,헤더,페이로드)
+    client.current!.send(`/app/chat/enter/${chatroom.id}`, {}, JSON.stringify(data));
+    setContent("");
+  }
+
+  // 채팅방 나가기
+  const handleDisconnect = () => {
+    setJoin(!join)
+
+    client.current?.disconnect(
+      async () => {
+        try {
+          await axios.get(`/chat/exit/${chatroom.id}?nickname=${userNickname}`);
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
+    );
+  }
+
+  //메시지를 저장하는 부분
+  const showMessage = (data: any) => {
+    const newMessage = createMessage(data);
+    setChatMessage(newMessage);
+  }
+
+  // 메시지 생성 로직
+  const createMessage = (data: any) => {
+    const message: Message = {
+      createdAt: data.createdAt,
+      nickname: data.nickname,
+      content: data.content,
+      id: data.chatId,
+      type: data.type,
+    }
+    return message;
+  }
+
+  useEffect(() => {
+    if (chatMessage) {
+      setMessages([...messages, chatMessage]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatMessage])
+
+  // 채팅 메시지 렌더링
+  const renderMessages = (messages: Message[]) => {
+    return messages.length > 0 &&
+      messages.map(message =>
+        <MessageComponent
+          key={message.id}
+          message={message}
+          userNickname={userNickname || ""}
+        />
+      )
+  }
 
   // 새로운 채팅 시 스크롤 아래로 고정
   const messageEndRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({behavior:'smooth'})
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, visible]);
 
-  const handleSearchMessages = (e: any) => {
-    e.preventDefault();
 
-    if(searchTerm.length===0){
+  // 검색
+  const handleSearchMessages = async (e: any) => {
+    e.preventDefault();
+    if (searchTerm.length === 0) {
       return;
     }
-
     setVisible(true) //뒤로가기 버튼 숨김
+    const request = await axios.get(`/chat/search/${chatroom.id}?keyword=${searchTerm}&nickname=${userNickname}`);
+    const searchResults = request.data.data;
 
-    // Local Search Logic
-    const chatRoomMessages = [...messages];
-    const regex = new RegExp(searchTerm, "gi");
-    const searchResults = chatRoomMessages.reduce((acc: Message[], message: Message) => {
-      if ((message.content && message.content.match(regex)) || message.nickname.match(regex)) {
-        acc.push(message)
-      }
-      return acc;
-    }, []);
-
-    // DB Search Logic
-    // const request = axios.get()
-
-    setSearchResults(searchResults)
-    setSearchTerm("");
+    setSearchResults(searchResults);
   }
 
   const handleSearchChange = (event: any) => {
     setSearchTerm(event.target.value);
   }
 
-  return (
-    <div className="px-8 pt-8">
-      {/* dummy user change button */}
-      <button onClick={() => setUser(!user)}>User</button>
-      <MessageHeader handleSearchChange={handleSearchChange} handleSearchMessages={handleSearchMessages} visible={visible} setVisible={setVisible} searchTerm={searchTerm} />
-      <div className="w-full h-96 border-solid border-[.2rem] border-[#ececec] rounded-xl p-4 mb-4 overflow-y-auto">
+  //제출 시 할 일
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    if (content.length === 0) {
+      return;
+    }
+    const data = {
+      'content': content
+    };
+    //메시지를 저장하는 부분
+    client.current!.send(`/app/chat/${chatroom.id}`, {}, JSON.stringify(data));
+    setContent("");
+  }
+
+  return join ? (
+    <div className="w-96 p-5 h-fit min-h-96 bg-[#AFAEAE] rounded-xl">
+      <MessageHeader handleSearchChange={handleSearchChange} handleSearchMessages={handleSearchMessages} visible={visible} setVisible={setVisible} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResults={setSearchResults} />
+      <div className="min-h-96 max-h-96 border-solid border-[.2rem] border-[#ececec] rounded-xl p-2 mb-2 overflow-y-auto">
         {visible ?
           renderMessages(searchResults)
           :
@@ -93,9 +181,14 @@ const MessagePanel = () => {
         {/* 스크롤 하단 고정용 */}
         <div ref={messageEndRef}></div>
       </div>
-
-      {/* dummy user version */}
-      <MessageForm user={user ? user2 : user1} messages={messages} setMessages={setMessages} />
+      <MessageForm handleSubmit={handleSubmit} content={content} setContent={setContent} />
+      <button className="mt-3 pl-3 pr-3 w-full bg-red-400  hover:bg-red-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleDisconnect}>채팅방 나가기</button>
+    </div>
+  ) : (
+    <div className="px-5 pt-5 w-fit bg-[#AFAEAE] h-96 flex items-center rounded-xl">
+      <button className="pl-3 pr-3 bg-blue-400  hover:bg-blue-700 text-white font-bold my-1 ml-2 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out" onClick={handleConnect}>
+        채팅 참가하기
+      </button>
     </div>
   )
 }

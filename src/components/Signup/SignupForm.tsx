@@ -1,113 +1,126 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { useState } from 'react'
 import FadeIn from '../FadeIn'
-import InputTag from '../InputTag';
-
+import SignUpInputTag from './SignUpInputTag';
+import Modal from '../Modal';
+import { Link, useNavigate } from 'react-router-dom';
+import { userRegister } from '../../api/api';
 
 const SignupForm = () => {
-  const [agreementChecked, setAgreementChecked] = useState(false);
-  const [emailValue, setEmailValue] = useState('');
-  const [nicknameValue, setNicknameValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
-  const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
-  const [addressValue, setAddressValue] = useState('');
-  const [bioValue, setBioValue] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [city, setcity] = useState('');
+  const [blog, setBlog] = useState('');
+  const [terms, setTerms] = useState(false);
 
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmailValue(e.target.value);
-  };
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isFailModalOpen, setIsFailModalOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const isEmailValid: boolean = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isNicknameValid: boolean = !!nickname && nickname.length <= 12;
+  const isPasswordValid: boolean = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/.test(password);
+  const isConfirmPasswordValid: boolean = password === confirmPassword;
+  const isButtonDisabled: boolean = !terms || !isEmailValid || !isNicknameValid || !isPasswordValid || !isConfirmPasswordValid;
 
-  const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNicknameValue(e.target.value);
-  };
+  const navi = useNavigate();
 
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setConfirmPasswordValue(e.target.value);
-  };
-
-  const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAddressValue(e.target.value);
-  };
-
-  const handleBioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setBioValue(e.target.value);
+  const handleRegister = async() => {
+    userRegister(email, password, nickname, blog, city, terms, setIsSuccessModalOpen, setIsFailModalOpen, setErrorMsg);
   };
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col items-center'>
       <FadeIn index={0}>
         <div className='flex flex-col'>
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'email',
               placeholder: 'kimgoorm@example.com',
-              label: 'email',
+              label: 'Email*',
             }}
-            value={emailValue}
-            onChange={handleEmailChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            isErrored={!isEmailValid && !!email}
           />
-          <InputTag
+          {!isEmailValid && email && <p className=" text-rose-500">Invalid email format</p>}
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'kim goorm',
-              label: 'nickname',
+              label: 'Nickname* ',
             }}
-            value={nicknameValue}
-            onChange={handleNicknameChange}
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            isErrored={!isNicknameValid && !!nickname}
           />
-          <InputTag
+          {!isNicknameValid && nickname && <p className=" text-rose-500">Nickname must be 12 characters or less</p>}
+          <SignUpInputTag
             inputType={{
-              type: 'text',
-              placeholder: 'Enter password',
-              label: 'Password',
+              type: 'password',
+              placeholder: 'Enter passwords',
+              label: 'Password* ',
             }}
-            value={passwordValue}
-            onChange={handlePasswordChange}  
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            isErrored={!isPasswordValid && !!password}
           />
-
-          <InputTag
+          {!isPasswordValid && password && <p className=" text-rose-500">Invalid password format</p>}
+          <SignUpInputTag
             inputType={{
-              type: 'text',
-              placeholder: 'Confirm password',
-              label: 'Confirm Password',
+              type: 'password',
+              placeholder: 'Confirm passwords',
+              label: 'Confirm Password*',
             }}
-            value={confirmPasswordValue}
-            onChange={handleConfirmPasswordChange}  
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            isErrored={!isConfirmPasswordValid && !!confirmPassword}
           />
-
-          <InputTag
+          {!isConfirmPasswordValid && confirmPassword && <p className=" text-rose-500">Passwords do not match</p>}
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'Enter address',
               label: 'Address',
             }}
-            value={addressValue}
-            onChange={handleAddressChange} 
+            value={city}
+            onChange={(e) => setcity(e.target.value)}
+            isErrored={false}
           />
 
-          <InputTag
+          <SignUpInputTag
             inputType={{
               type: 'text',
               placeholder: 'Enter bio',
               label: 'Bio',
             }}
-            value={bioValue}
-            onChange={handleBioChange}  
+            value={blog}
+            onChange={(e) => setBlog(e.target.value)}
+            isErrored={false}
           />
         </div>
       </FadeIn>
       <FadeIn index={2}>
-        <div className='flex flex-col justify-center items-center'>
+        <div className='flex flex-col items-center'>
           <div className='flex flex-row mt-10'>
-            <input type="checkbox" id="agreement" name="agreement" value="agreement" onChange={() => setAgreementChecked(!agreementChecked)} />
-            <label className='font-k2d text-lg ml-3' htmlFor="agreement">[필수] 개인정보 사용에 동의합니다</label>
+            <input type="checkbox" id="agreement" name="agreement" value="agreement" onChange={() => setTerms(!terms)} />
+            <label className=' text-lg ml-3' htmlFor="agreement">[필수] 개인정보 사용에 동의합니다</label>
+
           </div>
-          <button disabled={!agreementChecked} className='font-k2d disabled:bg-slate-400  active:bg-slate-500 bg-nav-color px-5 py-3 ml-3 mt-3 w-80 rounded-xl shadow-xl' >Go to register!</button>
+          <button disabled={isButtonDisabled} className={`bg-nav-color disabled:bg-slate-400 px-5 py-3 ml-3 mt-3 w-80 rounded-xl shadow-xl`} onClick={handleRegister}>Go to register!</button>
         </div>
       </FadeIn>
+
+      <Modal isOpen={isSuccessModalOpen} handleClose={() => { setIsSuccessModalOpen(false); navi('/login') }}>
+        <span className='flex text-xl'>회원가입 성공🎉</span>
+        <p className='pb-10'>환영합니다! 이제 로그인해 보세요.</p>
+        <Link to={"/login"} className='flex bg-nav-color rounded-md p-1 justify-center hover:opacity-75 active:opacity-35'>로그인하러 가기</Link>
+      </Modal>
+      <Modal isOpen={isFailModalOpen} handleClose={() => setIsFailModalOpen(false)}>
+        <span className='flex text-xl'>회원가입 오류⚠️</span>
+        <p className='pb-10'>{errorMsg}</p>
+        <p className='flex bg-nav-color rounded-md p-1 justify-center hover:opacity-75 active:opacity-35' onClick={() => setIsFailModalOpen(false)}>닫기</p>
+      </Modal>
     </div>
   )
 }

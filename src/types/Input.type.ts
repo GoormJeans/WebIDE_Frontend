@@ -6,6 +6,9 @@ export type InputType = {
 
 export type InputTagProps = {
   inputType: InputType;
-  value: string;
+  value?: string;
+  defaultValue?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isErrored: boolean;
+  disabled?: boolean;
 };

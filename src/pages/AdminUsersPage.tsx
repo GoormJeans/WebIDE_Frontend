@@ -1,42 +1,56 @@
-import React from 'react'
-import UserChart from "../components/AdminPage/UserChart"
+import React, { useEffect, useState } from 'react'
 import UserList from "../components/AdminPage/UserList";
+import axios from "../api/axios"
+import SearchUser from "../components/AdminPage/SearchUser";
 
-
-export interface UserType {
+export interface AdminUserInfo {
   id: number;
-  nickname: string;
   email: string;
+  nickname: string;
+  bio: string;
+  city: string;
+  socialId: string;
+  createdAt: Date;
 }
 
 const AdminUsersPage = () => {
 
+  const [users, setUsers] = useState<AdminUserInfo[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [initUsers, setInitUsers] = useState<AdminUserInfo[]>([]);
 
 
-  // dummy users
-  const users: UserType[] = [
-    {
-      id: 1,
-      nickname: "test1",
-      email: "test1@gmail.com",
-    },
-    {
-      id: 2,
-      nickname: "test2",
-      email: "test2@naver.com",
-    },
-    {
-      id: 3,
-      nickname: "test3",
-      email: "test3@gmail.com",
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const request = await axios.get('/admin/user');
+        setUsers(request.data.data);
+        setInitUsers(request.data.data);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+
+    fetchUsers();
+  }, [])
+
+  // 여기서 검색결과 필터링 해서 UserList에 prop으로 넘겨줌
+  useEffect(() => {
+    setUsers(initUsers)
+    if (searchTerm !== null && searchTerm.trim().length !== 0) {
+      setUsers(Object.values(initUsers).filter((element) => element?.nickname?.includes(searchTerm.trim())
+      || element?.city?.includes(searchTerm.trim())
+      || element?.email?.includes(searchTerm.trim())
+      || element?.id === parseInt(searchTerm.trim())));
     }
-  ]
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm])
+
 
   return (
     <div className="w-full h-full">
-      <div className="w-auto h-80 flex flex-col mx-5 p-5 whitespace-nowrap bg-nav-color shadow-xl rounded-xl">
-        <UserChart />
-      </div>
+      <SearchUser setSearchTerm={setSearchTerm} />
       <div className="w-auto h-fit flex flex-col mx-5 mt-5 p-5 whitespace-nowrap bg-nav-color shadow-xl rounded-xl">
         <UserList users={users} />
       </div>

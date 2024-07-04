@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 const BannerText = ({isMobile}) => {
   const textSizeClass = classNames({
-    'font-k2d': true,
+    '': true,
     'text-5xl': !isMobile,
     'text-2xl': isMobile,
     'whitespace-nowrap': true,
