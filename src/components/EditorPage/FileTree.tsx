@@ -114,7 +114,13 @@ class File_tree extends React.Component {
         const dragKey = info.dragNode.key;
         const dropPos = info.node.pos.split('-');
         const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
+        //drag& drop API setting
 
+        //get API setting
+
+
+
+        //test code
         const loop = (data: any, key: any, callback: any) => {
             data.forEach((item: any, index: any, arr: any) => {
                 if (item.key === key) {
@@ -197,11 +203,9 @@ class File_tree extends React.Component {
         }
         this.toolTip = (
             <div className='fileTreeRight'>
-                <h4>{info.node.props.title}</h4>
+                <h4>{info.node.key}</h4>
             </div>
         );
-        const container = this.getContainer();
-
         Object.assign(this.cmContainer.style, {
             position: 'absolute',
             left: `${info.event.pageX}px`,
